@@ -1,0 +1,27 @@
+spring:
+    profiles:
+      group:
+        "local": "dev"
+
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "dev"
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dclass?serverTimezone=UTC
+    username: dclass-user
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: true
+
+---
+
