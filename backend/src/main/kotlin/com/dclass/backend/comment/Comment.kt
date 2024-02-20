@@ -32,12 +32,12 @@ class Comment(
         private set
 
     @Embedded
-    var answers: CommentLikes = commentLikes
+    var commentLikes: CommentLikes = commentLikes
         private set
 
     val likeCount: Int
-        get() = answers.count
+        get() = commentLikes.count
 
     fun likedBy(userId: Long) =
-        answers.findUserById(userId)
+        commentLikes.findUserById(userId)
 }
