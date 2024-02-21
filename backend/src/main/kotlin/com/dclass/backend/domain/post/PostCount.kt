@@ -1,4 +1,4 @@
-package com.dclass.backend.post
+package com.dclass.backend.domain.post
 
 import jakarta.persistence.Embeddable
 

@@ -1,4 +1,4 @@
-package com.dclass.backend.reply
+package com.dclass.backend.domain.reply
 
 import jakarta.persistence.Column
 import jakarta.persistence.Embeddable

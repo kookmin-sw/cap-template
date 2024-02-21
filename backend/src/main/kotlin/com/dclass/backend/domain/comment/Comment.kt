@@ -1,4 +1,4 @@
-package com.dclass.backend.comment
+package com.dclass.backend.domain.comment
 
 import com.dclass.support.domain.BaseEntity
 import jakarta.persistence.Column

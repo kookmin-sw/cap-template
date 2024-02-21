@@ -1,4 +1,4 @@
-package com.dclass.backend.reply
+package com.dclass.backend.domain.reply
 
 import com.dclass.support.domain.BaseEntity
 import jakarta.persistence.Column
