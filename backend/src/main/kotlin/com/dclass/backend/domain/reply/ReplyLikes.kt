@@ -19,12 +19,12 @@ class ReplyLikes(
     val count: Int
         get() = _likes.size
 
-    fun add(userId: Long, replyId: Long) {
-        _likes.removeIf { it.userId == userId && it.replyId == replyId }
-        _likes.add(ReplyLike(userId, replyId))
+    fun add(userId: Long) {
+        _likes.removeIf { it.usersId == userId }
+        _likes.add(ReplyLike(userId))
     }
 
     fun findUserById(userId: Long): Boolean {
-        return _likes.any { it.userId == userId }
+        return _likes.any { it.usersId == userId }
     }
 }

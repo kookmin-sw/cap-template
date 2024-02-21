@@ -1,9 +1,7 @@
 package com.dclass.backend.domain.reply
 
 import com.dclass.support.domain.BaseEntity
-import jakarta.persistence.Column
-import jakarta.persistence.Embedded
-import jakarta.persistence.Entity
+import jakarta.persistence.*
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.SQLRestriction
 
@@ -42,6 +40,6 @@ class Reply(
         replyLikes.findUserById(userId)
 
     fun addLike(userId: Long) {
-        replyLikes.add(userId, this.id)
+        replyLikes.add(userId)
     }
 }
