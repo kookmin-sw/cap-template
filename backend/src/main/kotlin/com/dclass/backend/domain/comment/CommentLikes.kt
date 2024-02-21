@@ -20,10 +20,10 @@ class CommentLikes(
         get() = _likes.size
 
     fun add(userId: Long, commentId: Long) {
-        _likes.removeIf { it.userId == userId && it.commentId == commentId }
-        _likes.add(CommentLike(userId, commentId))
+        _likes.removeIf { it.usersId == userId }
+        _likes.add(CommentLike(userId))
     }
 
     fun findUserById(userId: Long) =
-        _likes.any { it.userId == userId }
+        _likes.any { it.usersId == userId }
 }

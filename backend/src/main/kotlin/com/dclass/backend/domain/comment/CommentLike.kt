@@ -6,8 +6,5 @@ import jakarta.persistence.Embeddable
 @Embeddable
 class CommentLike(
     @Column(nullable = false)
-    val userId: Long,
-
-    @Column(nullable = false)
-    val commentId: Long,
+    val usersId: Long,
 )
