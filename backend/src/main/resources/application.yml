@@ -3,6 +3,9 @@ spring:
     group:
       "local": "dev"
 
+  config:
+    import:
+      - classpath:application-security.yml
 
 ---
 

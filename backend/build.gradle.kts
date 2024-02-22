@@ -48,3 +48,15 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+tasks {
+    val copySecret by register<Copy>("copySecret") {
+        from("./dclass-secret") // 서브모듈 디렉토리 경로
+        include("application*.yml") // 복사할 파일들
+        into("./src/main/resources") // 복사 위치
+    }
+
+    named("processResources") {
+        dependsOn(copySecret)
+    }
+}

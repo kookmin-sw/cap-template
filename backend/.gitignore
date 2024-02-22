@@ -38,3 +38,6 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### application.properties ###
+application-security.yml
