@@ -4,10 +4,24 @@ using UnityEngine;
 
 public class interact : MonoBehaviour
 {
-    public float interactDiastance = 1f;
+    public float interactDiastance = 3f;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("onTriggerEnter is activated");
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Debug.Log("onTriggerExit is activated");
+    }
 
     void Update()
     {
+
+
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             RaycastHit hit;

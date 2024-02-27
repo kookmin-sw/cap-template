@@ -172,7 +172,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -633,6 +633,7 @@ GameObject:
   - component: {fileID: 963194234}
   - component: {fileID: 963194235}
   - component: {fileID: 963194236}
+  - component: {fileID: 963194237}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -768,6 +769,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactDiastance: 1
+--- !u!65 &963194237
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2, y: 0.2, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &978044590
 GameObject:
   m_ObjectHideFlags: 0
@@ -1641,7 +1663,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 705507995}
   - {fileID: 2086873760}
-  - {fileID: 1062806977}
   - {fileID: 130030928}
   - {fileID: 963194228}
   - {fileID: 2083133768}
+  - {fileID: 1062806977}
