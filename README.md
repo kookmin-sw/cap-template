@@ -39,7 +39,7 @@
 | **이은선** | 20203118 | 백엔드 | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a47d70cf-02ad-409f-a320-057046f56578" width="100" height="100"/> | [https://github.com/Eun-sun-Lee](https://github.com/Eun-sun-Lee) | 
 | **곽희건** | 20181574 | 프론트엔드 | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/53166aa7-a504-4d5c-889f-545c99249710" width="100" height="100"/> | [https://github.com/VarGun](https://github.com/VarGun) |
 | **김민선** | 20203035 | AI | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a8daeed0-a399-4c60-adda-c17d97d3b4ac" width="100" height="100"/> | [https://github.com/CLM-BONNY](https://github.com/CLM-BONNY) |
-| **백현식** | 20190000 | 프론트엔드 | <img src="" width="100" height="100"/> | [https://github.com/hammsik](https://github.com/hammsik) |
+| **백현식** | 20191605 | 프론트엔드 | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/bb9a6d50-a53d-4456-ae55-7c577e697fb6" width="100" height="100"/> | [https://github.com/hammsik](https://github.com/hammsik) |
 
 ### 4. 사용법
 
