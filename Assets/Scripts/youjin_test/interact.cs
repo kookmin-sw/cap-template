@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class interact : MonoBehaviour
 {
-    public float interactDiastance = 2f;
-    RaycastHit hit;
+    public float interactDiastance = 1f;
 
     void Update()
     {
@@ -22,7 +21,15 @@ public class interact : MonoBehaviour
                     Debug.Log("문 상호작용 ");
                     hit.collider.GetComponent<Door>().ChangeDoorState();
                 }
+
+                if (hit.collider.CompareTag("betteryspawner"))
+                {
+                    Debug.Log("betterySpawner 와 상호작용");
+                    hit.collider.GetComponent<betteryspawner>().create_bettery();
+                }
             }
+
+
         }
 
 

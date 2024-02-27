@@ -5,11 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - door
+  - betteryspawner
+  - actingZone
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Interact
   - Water
   - UI
   - 

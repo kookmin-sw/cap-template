@@ -2,29 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIpressF : MonoBehaviour
+public class actingZone : MonoBehaviour
 {
-    public GameObject text_pressF;
+    public GameObject ob_;
+    Vector3 ob_position;
 
     // Start is called before the first frame update
     void Start()
     {
-        text_pressF.SetActive(false);
+        ob_position = ob_.transform.position;//실제 오브젝트의 위치를 가져와서 
+        gameObject.transform.position = ob_position;//액션존의 위치로 설정해줌
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("onTriggerEnter is activated");
-        text_pressF.SetActive(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-            
         Debug.Log("onTriggerExit is activated");
-        text_pressF.SetActive(false);
-        
     }
 
 
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }

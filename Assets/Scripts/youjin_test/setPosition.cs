@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class setPosition : MonoBehaviour
 {
-    GameObject t;
-    Vector3 target_position = b.GetComponent<Transform>().position;
+    //GameObject t;
+    //Vector3 target_position = b.GetComponent<Transform>().position;
         // Start is called before the first frame update
     void Start()
     {
