@@ -1,10 +1,7 @@
 package com.dclass.backend.domain.user
 
 import com.dclass.support.domain.BaseRootEntity
-import jakarta.persistence.AttributeOverride
-import jakarta.persistence.Column
-import jakarta.persistence.Embedded
-import jakarta.persistence.Entity
+import jakarta.persistence.*
 
 @Entity
 class User(
@@ -15,6 +12,10 @@ class User(
     @AttributeOverride(name = "value", column = Column(name = "password", nullable = false))
     @Embedded
     var password: Password,
+
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "university_id", nullable = false)
+    val university: University,
 
     id: Long = 0L
 ) : BaseRootEntity<User>(id) {
@@ -28,14 +29,18 @@ class User(
     val nickname: String
         get() = information.nickname
 
+    val universityName: String
+        get() = university.name
+
     constructor(
         name: String,
         email: String,
         nickname: String,
         password: Password,
+        university: University,
         id: Long = 0L
     ) : this(
-        UserInformation(name, email, nickname), password, id
+        UserInformation(name, email, nickname), password, university, id,
     )
 
     fun authenticate(password: Password) {
