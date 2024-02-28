@@ -11,6 +11,9 @@ class Post(
     @Column(nullable = false)
     val userId: Long,
 
+    @Column(nullable= false)
+    val communityId: Long,
+
     title: String = "",
 
     content: String = "",
