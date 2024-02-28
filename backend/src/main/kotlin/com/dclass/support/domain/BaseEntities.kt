@@ -27,7 +27,7 @@ abstract class BaseRootEntity<T : AbstractAggregateRoot<T>>(
     val id: Long = 0L
 ) : AbstractAggregateRoot<T>() {
     override fun equals(other: Any?): Boolean =
-        Objects.equals(id, (other as? BaseEntity)?.id)
+        Objects.equals(id, (other as? BaseRootEntity<T>)?.id)
 
     override fun hashCode(): Int =
         Objects.hashCode(id)
