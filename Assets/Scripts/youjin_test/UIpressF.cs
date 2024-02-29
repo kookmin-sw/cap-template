@@ -1,30 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;//UI 관련 라이브러리
 
 public class UIpressF : MonoBehaviour
 {
-    public GameObject text_pressF;
+    public GameObject image_pressF;
 
-    // Start is called before the first frame update
     void Start()
     {
-        text_pressF.SetActive(false);
+        image_pressF = transform.Find("F_UI").gameObject;
+        //Find 함수는 해당 이름의 자식 오브젝트를 검색하고 트랜스폼을 반환
+        image_pressF.SetActive(false);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        Debug.Log("onTriggerEnter is activated");
-        text_pressF.SetActive(true);
+        image_pressF.transform.LookAt(other.transform);
     }
 
-    private void OnTriggerExit(Collider other)
+    public void show_image()
     {
-            
-        Debug.Log("onTriggerExit is activated");
-        text_pressF.SetActive(false);
-        
+        image_pressF.SetActive(true);
     }
 
-
+    public void remove_image()
+    {
+        image_pressF.SetActive(false);
+    }
 }

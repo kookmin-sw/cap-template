@@ -6,7 +6,6 @@ TagManager:
   tags:
   - door
   - betteryspawner
-  - actingZone
   layers:
   - Default
   - TransparentFX

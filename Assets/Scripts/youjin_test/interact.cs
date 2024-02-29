@@ -9,18 +9,18 @@ public class interact : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("onTriggerEnter is activated");
-
+        Debug.Log(other.name);
+        other.GetComponent<UIpressF>().show_image();
     }
 
     private void OnTriggerExit(Collider other)
     {
         Debug.Log("onTriggerExit is activated");
+        other.GetComponent<UIpressF>().remove_image();
     }
 
     void Update()
     {
-
-
 
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -39,7 +39,7 @@ public class interact : MonoBehaviour
                 if (hit.collider.CompareTag("betteryspawner"))
                 {
                     Debug.Log("betterySpawner 와 상호작용");
-                    hit.collider.GetComponent<betteryspawner>().create_bettery();
+                    hit.collider.GetComponent<betteryspawner>().Spawn_bettery();
                 }
             }
 
