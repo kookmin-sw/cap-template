@@ -11,13 +11,23 @@ public class CameraTest : MonoBehaviour
 
     public Vector3 offset;
 
+    Vector3 newPosition;
+
     // Update is called once per frame
-    void Update()
+    void Start()
     {
+        this.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
     private void LateUpdate()
     {
-        Vector3 newPosition = player.gameObject.transform.position + offset;
+        if (player != null)
+        {
+            newPosition = player.gameObject.transform.position + offset;
+        }
+        else
+        {
+            newPosition = new Vector3(0f, 0.2f, 0f) + offset;
+        }
         this.gameObject.transform.position = newPosition;
     }
 }
