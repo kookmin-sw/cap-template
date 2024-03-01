@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScavengerTest : MonoBehaviour
+public class MovementStateManager : MonoBehaviour
 {
-    float xAxis;
-    float zAxis;
-    Vector3 moveDir;
-    [SerializeField] float moveSpeed;
+    [HideInInspector] public float xAxis;
+    [HideInInspector] public float zAxis;
+
+    [HideInInspector] public Vector3 moveDir;
+    public float currentMoveSpeed;
+    public float walkSpeed = 3, walkBackSpeed = 2;
+    public float runSpeed = 7, runBackSpeed = 5;
+    public float crouchSpeed = 2, crouchBackSpeed = 1;
     CharacterController controller;
 
     [SerializeField] float groundYOffset;
@@ -17,12 +21,20 @@ public class ScavengerTest : MonoBehaviour
     [SerializeField] float gravity = -9.81f;
     Vector3 velocity;
 
-    Animator anim;
+    MovementBaseState currentState;
+    public IdleState Idle = new IdleState();
+    public WalkState Walk = new WalkState();
+    public CrouchState Crouch = new CrouchState();
+    public RunState Run = new RunState();
+
+    [HideInInspector] public Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
+        SwitchState(Idle);
     }
 
     // Update is called once per frame
@@ -30,6 +42,17 @@ public class ScavengerTest : MonoBehaviour
     {
         GetDirectionAndMove();
         Gravity();
+
+        anim.SetFloat("xAxis", xAxis);
+        anim.SetFloat("zAxis", zAxis);
+
+        currentState.UpdateState(this);
+    }
+
+    public void SwitchState(MovementBaseState state)
+    {
+        currentState = state;
+        currentState.EnterState(this);
     }
 
     void GetDirectionAndMove()
@@ -42,7 +65,7 @@ public class ScavengerTest : MonoBehaviour
         moveDir = (transform.forward * zAxis + transform.right * xAxis).normalized;
 
         // 플레이어 이동
-        controller.Move(moveDir * moveSpeed * Time.deltaTime);
+        controller.Move(moveDir * currentMoveSpeed * Time.deltaTime);
     }
     // 플레이어가 지면에 닿았는지 확인
     bool IsGrounded()
@@ -66,4 +89,6 @@ public class ScavengerTest : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(spherePos, controller.radius - 0.05f);
     }
+
+
 }

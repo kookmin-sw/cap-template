@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d00bc98586f08e04287d106a563fe381
+guid: d6f5fd2234f3f324f94c7efdb307a444
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,13 +33,13 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
+      name: Right Strafe Walking
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 300
+      lastFrame: 31
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: -65
       level: 0
       cycleOffset: 0
       loop: 0
