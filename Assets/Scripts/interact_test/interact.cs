@@ -1,0 +1,65 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class interact : MonoBehaviour
+{
+    public float interactDiastance = 3f;
+    public GameObject image_F;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("onTriggerEnter is activated");
+        Debug.Log(other.name);
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Interact"))
+        {
+            image_F.GetComponent<UIpressF>().show_image();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Debug.Log("onTriggerExit is activated");
+        if (other.gameObject.layer == LayerMask.NameToLayer("Interact"))
+        {
+            image_F.GetComponent<UIpressF>().remove_image();
+        }
+    }
+
+    void Update()
+    {
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            RaycastHit hit;
+            Debug.DrawRay(transform.position, transform.forward * interactDiastance, Color.blue, interactDiastance);
+
+            //Physics.Raycast(원점, 방향, 충돌감지, 거리)
+            if (Physics.Raycast(transform.position, transform.forward, out hit, interactDiastance))
+            {
+                if (hit.collider.CompareTag("door"))
+                {
+                    Debug.Log("문 상호작용 ");
+                    hit.collider.GetComponent<Door>().ChangeDoorState();
+                }
+
+                if (hit.collider.CompareTag("betteryspawner"))
+                {
+                    Debug.Log("betterySpawner 와 상호작용");
+                    hit.collider.GetComponent<betteryspawner>().Spawn_bettery();
+                }
+
+
+                if (hit.collider.CompareTag("battery"))
+                {
+                    Debug.Log("bettery 와 상호작용");
+                    hit.collider.GetComponent<battery>().Destroy_battery();
+                }
+               
+            }
+
+        }
+    }
+}
+

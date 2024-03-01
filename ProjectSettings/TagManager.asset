@@ -4,16 +4,18 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Weapon
-  - Cloth
+  - door
+  - betteryspawner
+  - floor
+  - battery
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Interact
   - Water
   - UI
-  - Ground
+  - 
   - 
   - 
   - 

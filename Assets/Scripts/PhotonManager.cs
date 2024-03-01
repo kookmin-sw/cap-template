@@ -79,8 +79,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             Debug.Log($"{player.Value.NickName}, {player.Value.ActorNumber}");
         }
 
+        // 캐릭터 출현 정보 배열에 저장
+        Transform[] points = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
+        int idx = Random.Range(1, points.Length);
+
         // 캐릭터 생성
-        PhotonNetwork.Instantiate("Prefabs/Player", new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), 0);
+        PhotonNetwork.Instantiate("Prefabs/Player", points[idx].position, points[idx].rotation, 0);
     }
 
     // Start is called before the first frame update
