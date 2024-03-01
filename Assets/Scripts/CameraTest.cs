@@ -9,7 +9,7 @@ public class CameraTest : MonoBehaviour
 {
     public GameObject player;
 
-    public Vector3 offset;
+    //public Vector3 offset;
 
     Vector3 newPosition;
 
