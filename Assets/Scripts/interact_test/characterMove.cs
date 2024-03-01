@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class characterMove: MonoBehaviour
 {
@@ -12,6 +14,9 @@ public class characterMove: MonoBehaviour
     private CharacterController controller;
     private Vector3 mov;
 
+    private PhotonView pv;
+    private cameraTest_youjin camera;
+
 
     private float mouseX;
 
@@ -20,8 +25,16 @@ public class characterMove: MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        pv = GetComponent<PhotonView>();
         mov = Vector3.zero;
         gravity = 10f;
+
+        camera = GameObject.FindObjectOfType<cameraTest_youjin>();
+
+        if (pv.IsMine)
+        {
+            camera.player = this.gameObject;
+        }
     }
 
     // Update is called once per frame
