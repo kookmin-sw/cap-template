@@ -5,18 +5,26 @@ using UnityEngine;
 public class interact : MonoBehaviour
 {
     public float interactDiastance = 3f;
+    public GameObject image_F;
 
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("onTriggerEnter is activated");
         Debug.Log(other.name);
-        other.GetComponent<UIpressF>().show_image();
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Interact"))
+        {
+            image_F.GetComponent<UIpressF>().show_image();
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         Debug.Log("onTriggerExit is activated");
-        other.GetComponent<UIpressF>().remove_image();
+        if (other.gameObject.layer == LayerMask.NameToLayer("Interact"))
+        {
+            image_F.GetComponent<UIpressF>().remove_image();
+        }
     }
 
     void Update()
@@ -41,12 +49,17 @@ public class interact : MonoBehaviour
                     Debug.Log("betterySpawner 와 상호작용");
                     hit.collider.GetComponent<betteryspawner>().Spawn_bettery();
                 }
+
+
+                if (hit.collider.CompareTag("battery"))
+                {
+                    Debug.Log("bettery 와 상호작용");
+                    hit.collider.GetComponent<battery>().Destroy_battery();
+                }
+               
             }
 
-
         }
-
-
     }
 }
 

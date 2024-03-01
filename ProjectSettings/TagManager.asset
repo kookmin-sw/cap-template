@@ -6,6 +6,8 @@ TagManager:
   tags:
   - door
   - betteryspawner
+  - floor
+  - battery
   layers:
   - Default
   - TransparentFX

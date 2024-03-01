@@ -39,7 +39,7 @@ public class betteryspawner : MonoBehaviour
 
     }
 
-    //이건 그냥 가
+    //이건 그냥 가져옴..ㅋ 
     public Vector3 GetVelocity(Vector3 start_pos, Vector3 target_pos, float initialAngle)
     {
         float gravity = Physics.gravity.magnitude;

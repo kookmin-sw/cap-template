@@ -10,13 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 5991391873743446988}
   - component: {fileID: 5991391873742644204}
-  - component: {fileID: 5991391873741545772}
   - component: {fileID: 3848066192219598120}
+  - component: {fileID: 7018733029276691141}
+  - component: {fileID: 5991391873741545772}
   - component: {fileID: 4783097971538087233}
   - component: {fileID: 7443707397430888319}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: battery
-  m_TagString: Untagged
+  m_TagString: battery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,13 +30,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5991391873743486956}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.26850677, w: 0.9632778}
-  m_LocalPosition: {x: -29.547075, y: -0.32950866, z: -10.544}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.3, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -31.151}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5991391873742644204
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -44,6 +45,31 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5991391873743486956}
   m_Mesh: {fileID: 4300000, guid: 07a088acddb7c4b41babb46ac5503475, type: 3}
+--- !u!114 &3848066192219598120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5991391873743486956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5eabbde736124a09a45540e5ded17af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7018733029276691141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5991391873743486956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be476986d1b684e0dbdcf6760042c611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 60
 --- !u!23 &5991391873741545772
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -86,18 +112,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3848066192219598120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5991391873743486956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5eabbde736124a09a45540e5ded17af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &4783097971538087233
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -117,7 +131,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.47369996
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0.47369996, z: 0}
 --- !u!54 &7443707397430888319
 Rigidbody:
@@ -144,5 +158,5 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
