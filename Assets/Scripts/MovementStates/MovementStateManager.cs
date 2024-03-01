@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class MovementStateManager : MonoBehaviour
 {
-    [HideInInspector] public float xAxis;
-    [HideInInspector] public float zAxis;
+    [HideInInspector] public float xAxis; // ì¢Œ, ìš°
+    [HideInInspector] public float zAxis; // ì•ž, ë’¤
 
-    [HideInInspector] public Vector3 moveDir;
+    [HideInInspector] public Vector3 moveDir; 
     public float currentMoveSpeed;
-    public float walkSpeed = 3, walkBackSpeed = 2;
+    public float walkSpeed = 3, walkBackSpeed = 2; 
     public float runSpeed = 7, runBackSpeed = 5;
     public float crouchSpeed = 2, crouchBackSpeed = 1;
+    //public float jumpPower = 5;
     CharacterController controller;
 
     [SerializeField] float groundYOffset;
@@ -26,6 +27,7 @@ public class MovementStateManager : MonoBehaviour
     public WalkState Walk = new WalkState();
     public CrouchState Crouch = new CrouchState();
     public RunState Run = new RunState();
+    //public JumpState Jump = new JumpState();
 
     [HideInInspector] public Animator anim;
 
@@ -57,17 +59,17 @@ public class MovementStateManager : MonoBehaviour
 
     void GetDirectionAndMove()
     {
-        // wasdÅ°º¸µå·Î x/zÃà ÀÔ·Â¹Þ±â
+        // wasdÅ°ï¿½ï¿½ï¿½ï¿½ï¿½ x/zï¿½ï¿½ ï¿½Ô·Â¹Þ±ï¿½
         xAxis = Input.GetAxis("Horizontal");
         zAxis = Input.GetAxis("Vertical");
 
-        // ´ë°¢¼± ÀÌµ¿½Ã ÀÌµ¿°Å¸®°¡ ´Ã¾î³ª±â ¶§¹®¿¡ Á¤±ÔÈ­
+        // ï¿½ë°¢ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½Ã¾î³ªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­
         moveDir = (transform.forward * zAxis + transform.right * xAxis).normalized;
 
-        // ÇÃ·¹ÀÌ¾î ÀÌµ¿
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½
         controller.Move(moveDir * currentMoveSpeed * Time.deltaTime);
     }
-    // ÇÃ·¹ÀÌ¾î°¡ Áö¸é¿¡ ´ê¾Ò´ÂÁö È®ÀÎ
+    // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½é¿¡ ï¿½ï¿½Ò´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
     bool IsGrounded()
     {
         spherePos = new Vector3(transform.position.x, transform.position.y - groundYOffset, transform.position.z);
@@ -75,7 +77,7 @@ public class MovementStateManager : MonoBehaviour
         return false;
     }
 
-    // Áß·Â Àû¿ë
+    // ï¿½ß·ï¿½ ï¿½ï¿½ï¿½ï¿½
     void Gravity()
     {
         if (!IsGrounded()) velocity.y += gravity * Time.deltaTime;
