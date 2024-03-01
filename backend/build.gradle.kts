@@ -36,7 +36,10 @@ dependencies {
     implementation("aws.sdk.kotlin:ses:1.0.30")
     implementation("aws.sdk.kotlin:s3:1.0.30")
     implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.11")
-//    implementation("aws.smithy.kotlin:http-client-engine-okhttp:0.30.0")
+
+    compileOnly("io.jsonwebtoken:jjwt-api:0.11.2")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
 
     runtimeOnly("com.mysql:mysql-connector-j")
 
