@@ -36,11 +36,11 @@ class User(
         name: String,
         email: String,
         nickname: String,
-        password: Password,
+        password: String,
         university: University,
         id: Long = 0L
     ) : this(
-        UserInformation(name, email, nickname), password, university, id,
+        UserInformation(name, email, nickname), Password(password), university, id,
     )
 
     fun authenticate(password: Password) {
