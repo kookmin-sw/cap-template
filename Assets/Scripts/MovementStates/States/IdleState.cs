@@ -14,9 +14,13 @@ public class IdleState : MovementBaseState
         if(movement.moveDir.magnitude > 0.1f)
         {
             if (Input.GetKey(KeyCode.LeftShift)) movement.SwitchState(movement.Run);
-            //else if (Input.GetKeyDown(KeyCode.Space)) movement.SwitchState(movement.Jump);
             else movement.SwitchState(movement.Walk);
         }
         if (Input.GetKeyDown(KeyCode.C)) movement.SwitchState(movement.Crouch);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            movement.previousState = this;
+            movement.SwitchState(movement.Jump);
+        }
     }
 }

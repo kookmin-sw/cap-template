@@ -2423,7 +2423,7 @@ PrefabInstance:
     - target: {fileID: 6085910740844990784, guid: 644373047c457c74ea4c578b9896d404, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 741ac6ca129d66e47990ed6015917eab, type: 2}
+      objectReference: {fileID: 9100000, guid: 84a32b62a6920e243ab931df962f1940, type: 2}
     - target: {fileID: 6085910740844990784, guid: 644373047c457c74ea4c578b9896d404, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
@@ -2906,11 +2906,14 @@ MonoBehaviour:
   runBackSpeed: 5
   crouchSpeed: 2
   crouchBackSpeed: 1
+  jumpPower: 5
   groundYOffset: -0.43
   groundMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
+  jumpForce: 5
   gravity: -9.81
+  jumped: 0
   anim: {fileID: 0}
 --- !u!114 &1532297614
 MonoBehaviour:
