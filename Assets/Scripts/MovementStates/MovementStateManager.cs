@@ -27,6 +27,7 @@ public class MovementStateManager : MonoBehaviour
     public WalkState Walk = new WalkState();
     public CrouchState Crouch = new CrouchState();
     public RunState Run = new RunState();
+    public JumpState Jump = new JumpState();
     //public JumpState Jump = new JumpState();
 
     [HideInInspector] public Animator anim;
@@ -70,7 +71,7 @@ public class MovementStateManager : MonoBehaviour
         controller.Move(moveDir * currentMoveSpeed * Time.deltaTime);
     }
     // �÷��̾ ���鿡 ��Ҵ��� Ȯ��
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         spherePos = new Vector3(transform.position.x, transform.position.y - groundYOffset, transform.position.z);
         if (Physics.CheckSphere(spherePos, controller.radius - 0.05f, groundMask)) return true;
