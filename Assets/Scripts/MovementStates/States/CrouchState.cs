@@ -14,8 +14,7 @@ public class CrouchState : MovementBaseState
         if (Input.GetKey(KeyCode.LeftShift)) ExitState(movement, movement.Run);
         if(Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space))
         {
-            if (movement.moveDir.magnitude < 0.1f) ExitState(movement, movement.Idle);
-            else ExitState(movement, movement.Walk);
+            ExitState(movement, movement.Walk);
         }
 
         // z축이 음수이면 뒤로가는 거니 뒤로가는 스피드로 

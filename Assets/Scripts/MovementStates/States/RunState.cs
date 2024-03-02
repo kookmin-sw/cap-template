@@ -12,19 +12,16 @@ public class RunState : MovementBaseState
     public override void UpdateState(MovementStateManager movement)
     {
         if (Input.GetKeyUp(KeyCode.LeftShift)) ExitState(movement, movement.Walk);
-        else if (movement.moveDir.magnitude < 0.1f) ExitState(movement, movement.Idle);
+        //else if (movement.moveDir.magnitude < 0.1f) ExitState(movement, movement.Idle);
 
-        if (movement.zAxis < 0) movement.currentMoveSpeed = movement.runBackSpeed;
-        else movement.currentMoveSpeed = movement.runSpeed;if (Input.GetKeyDown(KeyCode.Space))
-        {
-            movement.previousState = this;
-            ExitState(movement, movement.Jump);
-        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             movement.previousState = this;
             ExitState(movement, movement.Jump);
         }
+
+        if (movement.zAxis < 0) movement.currentMoveSpeed = movement.runBackSpeed;
+        else movement.currentMoveSpeed = movement.runSpeed;
     }
 
     void ExitState(MovementStateManager movement, MovementBaseState state)
