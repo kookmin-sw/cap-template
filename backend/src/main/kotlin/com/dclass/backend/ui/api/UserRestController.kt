@@ -1,25 +1,22 @@
 package com.dclass.backend.ui.api
 
+import com.dclass.backend.application.BlacklistService
 import com.dclass.backend.application.UserAuthenticationService
 import com.dclass.backend.application.UserService
 import com.dclass.backend.application.dto.AuthenticateUserRequest
 import com.dclass.backend.application.dto.LoginUserResponse
 import com.dclass.backend.application.dto.RegisterUserRequest
 import com.dclass.backend.application.mail.MailService
-import com.dclass.backend.security.LoginUser
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/api/users")
 @RestController
 class UserRestController(
     private val userService: UserService,
     private val userAuthenticationService: UserAuthenticationService,
+    private val blacklistService: BlacklistService,
     private val mailService: MailService
 ) {
 
@@ -32,6 +29,12 @@ class UserRestController(
     @PostMapping("/login")
     fun generateToken(@RequestBody @Valid request: AuthenticateUserRequest): ResponseEntity<ApiResponse<LoginUserResponse>> {
         val token = userAuthenticationService.generateTokenByLogin(request)
+        return ResponseEntity.ok(ApiResponse.success(token))
+    }
+
+    @PostMapping("/reissue-token")
+    fun generateToken(@RequestParam refreshToken: String): ResponseEntity<ApiResponse<LoginUserResponse>> {
+        val token = blacklistService.reissueToken(refreshToken)
         return ResponseEntity.ok(ApiResponse.success(token))
     }
 
