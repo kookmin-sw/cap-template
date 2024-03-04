@@ -8,6 +8,7 @@ TagManager:
   - betteryspawner
   - floor
   - battery
+  - Selectable
   layers:
   - Default
   - TransparentFX
