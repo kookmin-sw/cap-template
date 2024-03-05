@@ -26,6 +26,7 @@ public class MovementStateManager : MonoBehaviour
 
     public MovementBaseState previousState;
     public MovementBaseState currentState;
+    public IdleState Idle = new IdleState();
     public WalkState Walk = new WalkState();
     public CrouchState Crouch = new CrouchState();
     public RunState Run = new RunState();
