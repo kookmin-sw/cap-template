@@ -8,14 +8,19 @@ public class cameraTest_youjin : MonoBehaviour
 
     public Vector3 offset = new Vector3(0,1.5f,0);
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
+    Vector3 newPosition;
+
     private void LateUpdate()
     {
-        Vector3 newPosition = player.gameObject.transform.position + offset;
-        //Vector3 newPosition = player.gameObject.transform.position;
+
+        if (player != null)
+        {
+            newPosition = player.gameObject.transform.position + offset;
+        }
+        else
+        {
+            newPosition = new Vector3(0f, 0.2f, 0f) + offset;
+        }
         this.gameObject.transform.position = newPosition;
     }
 }
