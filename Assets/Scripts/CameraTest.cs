@@ -23,11 +23,11 @@ public class CameraTest : MonoBehaviour
     {
         if (player != null)
         {
-            newPosition = player.gameObject.transform.position + offset;
+            newPosition = player.gameObject.transform.position;// + offset;
         }
         else
         {
-            newPosition = new Vector3(0f, 0.2f, 0f) + offset;
+            newPosition = new Vector3(0f, 0.2f, 0f);// + offset;
         }
         this.gameObject.transform.position = newPosition;
     }
