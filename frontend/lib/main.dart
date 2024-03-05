@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/common/view/root_tab.dart';
 
 void main() {
-  runApp(const Test());
+  runApp(const _App());
 }
 
-class Test extends StatelessWidget {
-  const Test({super.key});
+class _App extends StatelessWidget {
+  const _App({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Test'),
-        ),
+      theme: ThemeData(
+        fontFamily: 'NotoSans',
+        primarySwatch: Colors.purple,
       ),
+      home: RootTab(initialIndex: 0),
     );
   }
 }
