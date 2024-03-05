@@ -13,7 +13,6 @@
 
      public override void UpdateState(MovementStateManager movement)
      {
-        //¡°«¡«ﬂ¥Ÿ∞° ∂•ø° ¥Í¿∏∏È
         if(movement.jumped == true && movement.IsGrounded())
         {
             movement.jumped = false;
