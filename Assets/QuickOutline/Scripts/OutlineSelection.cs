@@ -18,6 +18,7 @@ public class OutlineSelection : MonoBehaviour
             highlight.gameObject.GetComponent<Outline>().enabled = false;
             highlight = null;
         }
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit))
         {
@@ -32,8 +33,8 @@ public class OutlineSelection : MonoBehaviour
                 {
                     Outline outline = highlight.gameObject.AddComponent<Outline>();
                     outline.enabled = true;
-                    highlight.gameObject.GetComponent<Outline>().OutlineColor = Color.green;
-                    highlight.gameObject.GetComponent<Outline>().OutlineWidth = 10.0f;
+                    highlight.gameObject.GetComponent<Outline>().OutlineColor = Color.white;
+                    highlight.gameObject.GetComponent<Outline>().OutlineWidth = 5.0f;
                 }
             }
             else
