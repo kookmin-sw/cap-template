@@ -7,23 +7,7 @@ public class outlineInteract : MonoBehaviour
 
     public GameObject image_F;
 
-    //for sigleton
-    //static outlineInteract instance = null;
     Transform selectedTarget;
-
-    //public static outlineInteract Instance
-    //{
-    //    get
-    //    {
-    //        if (instance == null) instance = FindObjectOfType<outlineInteract>(); //null 이면 outlineInteract 스크립트를 가지고 있는 오브젝트를 찾아서 instance로 반환 
-    //        return instance;
-    //    }
-    //}
-
-    //void Awake()
-    //{
-    //    if (instance == null) instance = this;
-    //}
 
     void clearTarget(Transform obj)
     {
@@ -47,12 +31,14 @@ public class outlineInteract : MonoBehaviour
 
     void addOutline(Transform obj)
     {
+        //Outline 컴포넌트가 있으면 그냥 활성화
         if (obj.gameObject.GetComponent<Outline>() != null)
         {
             obj.gameObject.GetComponent<Outline>().enabled = true;
         }
         else
         {
+            //없으면 찾아서 넣어줌
             Outline outline = obj.gameObject.AddComponent<Outline>();
             outline.enabled = true;
             obj.gameObject.GetComponent<Outline>().OutlineColor = Color.white;
@@ -74,6 +60,11 @@ public class outlineInteract : MonoBehaviour
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Interact"))
         {
+            if(selectedTarget != null)
+            {
+                clearTarget(selectedTarget);
+            }
+
             Debug.Log("onTriggerEnter is activated for " + other.name);
 
             Transform obj = other.transform;
@@ -83,8 +74,18 @@ public class outlineInteract : MonoBehaviour
         }
     }
 
+    
     private void OnTriggerStay(Collider other)
     {
+        //만약 셀렉된 타겟이 없으면 지금 충돌중인 오브젝트를 셀
+        if (selectedTarget == null && other.gameObject.layer == LayerMask.NameToLayer("Interact"))
+        {
+            Transform obj = other.transform;
+            selectTarget(obj);
+            image_F.GetComponent<UIpressF>().show_image();
+        }
+
+        //트리거 스테이 중에 F가 눌렸는데, 타겟이 있다면 상호작용 실행
         if (selectedTarget!=null && Input.GetKeyDown(KeyCode.F))
         {
             if (selectedTarget.CompareTag("door"))
