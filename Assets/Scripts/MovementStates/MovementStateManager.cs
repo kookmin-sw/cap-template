@@ -40,6 +40,7 @@ public class MovementStateManager : MonoBehaviour
 
     void Start()
     {
+        pv = GetComponent<PhotonView>();
         anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
         SwitchState(Walk);
