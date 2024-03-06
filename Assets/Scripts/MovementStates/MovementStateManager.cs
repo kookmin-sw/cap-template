@@ -11,7 +11,8 @@ public class MovementStateManager : MonoBehaviour
     public float currentMoveSpeed;
     public float walkSpeed = 3, walkBackSpeed = 2; 
     public float runSpeed = 7, runBackSpeed = 5;
-    public float crouchSpeed = 2, crouchBackSpeed = 1;
+    public float crouchSpeed = 1, crouchBackSpeed = 1;
+    public float crouchFastSpeed = 2, crouchFastBackSpeed = 2;
     public float jumpPower = 5;
     CharacterController controller;
 
