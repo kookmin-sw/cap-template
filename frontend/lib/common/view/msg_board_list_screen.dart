@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/common/const/msg_board_model.dart';
-import 'package:frontend/common/layout/board_list.dart';
+import 'package:frontend/common/layout/board_layout.dart';
 
 class MsgBoardListScreen extends StatefulWidget {
   final String category;
@@ -104,7 +104,7 @@ class _MsgBoardListScreenState extends State<MsgBoardListScreen> {
       body: ListView(
         children: [
           for (var board in msgboardlistinstance)
-            BoardList(
+            Board(
               board: board,
               canTap: true,
             )
