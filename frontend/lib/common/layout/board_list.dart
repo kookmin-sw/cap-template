@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/common/const/msg_board_list_model.dart';
+import 'package:frontend/common/const/msg_board_model.dart';
 import 'package:frontend/common/layout/text_with_icon.dart';
 
 class BoardList extends StatelessWidget {
-  final MsgBoardListModel board;
+  final MsgBoardModel board;
   const BoardList({super.key, required this.board});
 
   onButtonTap() {
@@ -23,7 +23,7 @@ class BoardList extends StatelessWidget {
             ),
           ),
         ),
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 10,
@@ -84,9 +84,17 @@ class BoardList extends StatelessWidget {
                     ),
                     Text(
                       board.preview,
+                      softWrap: false,
                       style: const TextStyle(
                         fontSize: 13,
                       ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "${board.date} | ${board.name}",
+                      style: const TextStyle(fontSize: 10),
                     ),
                   ],
                 ),
