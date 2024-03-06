@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/common/const/colors.dart';
 import 'package:frontend/common/const/msg_board_model.dart';
 import 'package:frontend/common/layout/text_with_icon.dart';
+import 'package:frontend/common/view/msg_board_screen.dart';
 
 class BoardList extends StatelessWidget {
   final MsgBoardModel board;
   const BoardList({super.key, required this.board});
 
-  onButtonTap() {
-    // TODO: make detail msgboard
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onButtonTap,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MsgBoardScreen(
+                    board: board,
+                  ),
+              fullscreenDialog: true),
+        );
+      },
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
-              color: Color.fromARGB(255, 213, 213, 213),
+              color: BODY_TEXT_COLOR.withOpacity(0.5),
               width: 1,
             ),
           ),
@@ -36,7 +43,7 @@ class BoardList extends StatelessWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                        color: const Color(0xFFBA84FF).withOpacity(0.1),
+                        color: PRIMARY_COLOR.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(50)),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
