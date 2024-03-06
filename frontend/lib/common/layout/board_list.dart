@@ -6,25 +6,28 @@ import 'package:frontend/common/view/msg_board_screen.dart';
 
 class BoardList extends StatelessWidget {
   final MsgBoardModel board;
-  const BoardList({super.key, required this.board});
+  final bool canTap;
+  const BoardList({super.key, required this.board, required this.canTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => MsgBoardScreen(
-                    board: board,
-                  ),
-              fullscreenDialog: true),
-        );
+        if (canTap) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MsgBoardScreen(
+                      board: board,
+                    ),
+                fullscreenDialog: true),
+          );
+        }
       },
       child: Container(
         decoration: BoxDecoration(
           border: Border(
-            top: BorderSide(
+            bottom: BorderSide(
               color: BODY_TEXT_COLOR.withOpacity(0.5),
               width: 1,
             ),

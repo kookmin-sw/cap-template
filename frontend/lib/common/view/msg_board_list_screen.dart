@@ -103,7 +103,11 @@ class _MsgBoardListScreenState extends State<MsgBoardListScreen> {
       ),
       body: ListView(
         children: [
-          for (var board in msgboardlistinstance) BoardList(board: board)
+          for (var board in msgboardlistinstance)
+            BoardList(
+              board: board,
+              canTap: true,
+            )
         ],
       ),
       // body: SingleChildScrollView(
