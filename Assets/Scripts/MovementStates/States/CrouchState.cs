@@ -24,7 +24,7 @@ public class CrouchState : MovementBaseState
 
         
         // shift를 누르면 속도 더 빠르게
-        if(Input.GetKey(KeyCode.LeftShift)) movement.currentMoveSpeed = movement.crouchFastBackSpeed;
+        if(Input.GetKey(KeyCode.LeftShift)) movement.currentMoveSpeed = movement.crouchFastSpeed;
         else movement.currentMoveSpeed = movement.crouchBackSpeed;
 
         // z축이 음수이면 뒤로가는 거니 뒤로가는 스피드로

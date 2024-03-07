@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class MovementStateManager : MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class MovementStateManager : MonoBehaviour
     public float walkSpeed = 3, walkBackSpeed = 2; 
     public float runSpeed = 7, runBackSpeed = 5;
     public float crouchSpeed = 1, crouchBackSpeed = 1;
-    public float crouchFastSpeed = 2, crouchFastBackSpeed = 2;
+    public float crouchFastSpeed = 2;
     public float jumpPower = 5;
     CharacterController controller;
 
@@ -35,8 +37,11 @@ public class MovementStateManager : MonoBehaviour
 
     [HideInInspector] public Animator anim;
 
+    private PhotonView pv;
+
     void Start()
     {
+        pv = GetComponent<PhotonView>();
         anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
         SwitchState(Walk);
@@ -44,13 +49,16 @@ public class MovementStateManager : MonoBehaviour
 
     void Update()
     {
-        GetDirectionAndMove();
-        Gravity();
+        if (pv.IsMine)
+        {
+            GetDirectionAndMove();
+            Gravity();
 
-        anim.SetFloat("xAxis", xAxis);
-        anim.SetFloat("zAxis", zAxis);
+            anim.SetFloat("xAxis", xAxis);
+            anim.SetFloat("zAxis", zAxis);
 
-        currentState.UpdateState(this);
+            currentState.UpdateState(this);
+        }
     }
 
     public void SwitchState(MovementBaseState state)

@@ -528,6 +528,7 @@ MonoBehaviour:
   runBackSpeed: 5
   crouchSpeed: 2
   crouchBackSpeed: 1
+  crouchFastSpeed: 2
   jumpPower: 100
   groundYOffset: -0.43
   groundMask:
