@@ -38,7 +38,7 @@ public class MovementStateManager : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
-        SwitchState(Walk);
+        SwitchState(Idle);
     }
 
     void Update()
