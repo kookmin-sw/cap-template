@@ -34,7 +34,7 @@
 
 ### 3. 팀 소개
 
-|이름|학번|프로필 사진|포지션|깃허브|
+|이름|학번|포지션|프로필 사진|깃허브|
 | - | - | - | - | - |
 | **이은선** | 20203118 | 백엔드 | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a47d70cf-02ad-409f-a320-057046f56578" width="100" height="100"/> | [https://github.com/Eun-sun-Lee](https://github.com/Eun-sun-Lee) | 
 | **곽희건** | 20181574 | 프론트엔드 | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/53166aa7-a504-4d5c-889f-545c99249710" width="100" height="100"/> | [https://github.com/VarGun](https://github.com/VarGun) |
