@@ -24,9 +24,9 @@ class _MsgBoardListScreenState extends State<MsgBoardListScreen> {
 
     msgboardlistinstance.add(MsgBoardModel(
       "1",
-      "인기글",
+      "인기게시판",
       "종강마렵다",
-      "ㅈㄱㄴssssssssssssssssssssssssssssssssssssssssssssssssssdddddddddddd",
+      "ㅈㄱㄴssssssssssssssssssssssssssssssssssssssssssssssssssddddddddddddpppppabcdefg",
       "20",
       "3",
       "0",
@@ -35,7 +35,7 @@ class _MsgBoardListScreenState extends State<MsgBoardListScreen> {
     ));
     msgboardlistinstance.add(MsgBoardModel(
       "2",
-      "인기글",
+      "인기게시판",
       "종강종강",
       "종강종강종강종강",
       "15",
@@ -46,7 +46,7 @@ class _MsgBoardListScreenState extends State<MsgBoardListScreen> {
     ));
     msgboardlistinstance.add(MsgBoardModel(
       "3",
-      "인기글",
+      "인기게시판",
       "토끼는 깡종강종강",
       "거북이도 종강종강",
       "10",
@@ -57,7 +57,7 @@ class _MsgBoardListScreenState extends State<MsgBoardListScreen> {
     ));
     msgboardlistinstance.add(MsgBoardModel(
       "4",
-      "인기글",
+      "인기게시판",
       "교수님 정강이 때릴 사람 구합니다.",
       "아이고 종강이야",
       "5",
@@ -68,7 +68,7 @@ class _MsgBoardListScreenState extends State<MsgBoardListScreen> {
     ));
     msgboardlistinstance.add(MsgBoardModel(
       "5",
-      "인기글",
+      "인기게시판",
       "슬슬 종강할 때 되지 않았나",
       "눈치껏 종강하자",
       "6",
@@ -79,7 +79,7 @@ class _MsgBoardListScreenState extends State<MsgBoardListScreen> {
     ));
     msgboardlistinstance.add(MsgBoardModel(
       "6",
-      "인기글",
+      "인기게시판",
       "그냥 종강좀 해라",
       "이만큼 했음 됬지 않늬",
       "3",
@@ -94,6 +94,8 @@ class _MsgBoardListScreenState extends State<MsgBoardListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shadowColor: Colors.black,
+        elevation: 3,
         title: Text(
           widget.category,
           style: const TextStyle(
@@ -103,10 +105,14 @@ class _MsgBoardListScreenState extends State<MsgBoardListScreen> {
       ),
       body: ListView(
         children: [
+          const SizedBox(
+            height: 10,
+          ),
           for (var board in msgboardlistinstance)
             Board(
               board: board,
               canTap: true,
+              titleSize: 11,
             )
         ],
       ),

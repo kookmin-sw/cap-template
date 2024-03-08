@@ -7,7 +7,13 @@ import 'package:frontend/common/view/msg_board_screen.dart';
 class Board extends StatelessWidget {
   final MsgBoardModel board;
   final bool canTap;
-  const Board({super.key, required this.board, required this.canTap});
+  final double titleSize;
+  const Board({
+    super.key,
+    required this.board,
+    required this.canTap,
+    required this.titleSize,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +39,14 @@ class Board extends StatelessWidget {
             ),
           ),
         ),
-        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        margin: const EdgeInsets.only(
+          top: 15,
+          left: 10,
+          right: 10,
+        ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 10,
+          padding: const EdgeInsets.only(
+            bottom: 10,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,26 +60,38 @@ class Board extends StatelessWidget {
                         borderRadius: BorderRadius.circular(50)),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      child: Text(board.category),
+                          horizontal: 15, vertical: 3),
+                      child: Text(
+                        board.category,
+                        style: const TextStyle(
+                          fontSize: 10,
+                        ),
+                      ),
                     ),
                   ),
                   Row(
                     children: [
                       TextWithIcon(
-                          icon: Icons.favorite_outline_rounded,
-                          text: board.heart),
+                        icon: Icons.favorite_outline_rounded,
+                        iconSize: 15,
+                        text: board.heart,
+                      ),
                       const SizedBox(
                         width: 13,
                       ),
                       TextWithIcon(
-                          icon: Icons.chat_outlined, text: board.comment),
+                        icon: Icons.chat_outlined,
+                        iconSize: 15,
+                        text: board.comment,
+                      ),
                       const SizedBox(
                         width: 13,
                       ),
                       TextWithIcon(
-                          icon: Icons.star_outline_rounded,
-                          text: board.favorite),
+                        icon: Icons.star_outline_rounded,
+                        iconSize: 18,
+                        text: board.favorite,
+                      ),
                       const SizedBox(
                         width: 13,
                       ),
@@ -87,8 +109,8 @@ class Board extends StatelessWidget {
                   children: [
                     Text(
                       board.title,
-                      style: const TextStyle(
-                        fontSize: 17,
+                      style: TextStyle(
+                        fontSize: titleSize,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -96,7 +118,7 @@ class Board extends StatelessWidget {
                       board.preview,
                       softWrap: false,
                       style: const TextStyle(
-                        fontSize: 13,
+                        fontSize: 10,
                       ),
                     ),
                     const SizedBox(
