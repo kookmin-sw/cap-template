@@ -3,13 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:jsx-ally/recommended",
-    "plugin:prettier/recommended",
-    "plugin:react-hooks/recommended",
-  ],
+  extends: ["eslint:recommended", "plugin:react/recommended"],
   overrides: [
     {
       env: {
@@ -26,5 +20,7 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react"],
-  rules: { "react/react-in-jsx-scope": "off" },
+  rules: {
+    "react/react-in-jsx-scope": "off",
+  },
 };
