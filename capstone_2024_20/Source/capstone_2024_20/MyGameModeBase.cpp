@@ -9,7 +9,7 @@
 AMyGameModeBase::AMyGameModeBase()
 {
 	//DefaultPawnClass = AMyCharacter::StaticClass();
-	static ConstructorHelpers::FClassFinder<AMyCharacter> pawn(TEXT("/Game/BP/BP_MyCharacter.BP_MyCharacter"));
+	static ConstructorHelpers::FClassFinder<AMyCharacter> pawn(TEXT("/Game/BP/BP_MyCharacter"));
 	DefaultPawnClass = pawn.Class;
 	
 	PlayerControllerClass = AMyPlayerController::StaticClass();
