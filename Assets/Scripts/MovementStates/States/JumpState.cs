@@ -7,7 +7,7 @@
      public override void EnterState(MovementStateManager movement)
      {
 
-       if (movement.previousState == movement.Run || movement.previousState == movement.Walk) movement.anim.SetTrigger("Jump");
+       if (movement.previousState == movement.Run || movement.previousState == movement.Walk || movement.previousState == movement.Idle) movement.anim.SetTrigger("Jump");
 
      }
 
@@ -17,7 +17,8 @@
         {
             movement.jumped = false;
             if (Input.GetKey(KeyCode.LeftShift)) movement.SwitchState(movement.Run);
-            else movement.SwitchState(movement.Walk);
+            else if(movement.moveDir.magnitude > 0.1f) movement.SwitchState(movement.Walk);
+            else movement.SwitchState(movement.Idle);
         }
      }
  }

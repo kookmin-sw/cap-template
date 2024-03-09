@@ -43,7 +43,7 @@ public class MovementStateManager : MonoBehaviour
         pv = GetComponent<PhotonView>();
         anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
-        SwitchState(Walk);
+        SwitchState(Idle);
     }
 
     void Update()

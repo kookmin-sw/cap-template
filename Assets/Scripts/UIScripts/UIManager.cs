@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     {
         combinationSlots.SetActive(false);
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -19,12 +20,14 @@ public class UIManager : MonoBehaviour
         {
             combinationSlots.SetActive(true);
             Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
 
         }
         if(Input.GetKeyUp(KeyCode.Tab))
         {
             combinationSlots.SetActive(false);
             Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 }
