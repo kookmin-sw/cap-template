@@ -1403,14 +1403,17 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: Attack
+  - Type: 4
+    SynchronizeType: 1
+    Name: Idle
   m_SynchronizeLayers:
-  - SynchronizeType: 2
+  - SynchronizeType: 1
     LayerIndex: 0
-  - SynchronizeType: 2
+  - SynchronizeType: 1
     LayerIndex: 1
-  - SynchronizeType: 2
+  - SynchronizeType: 1
     LayerIndex: 2
-  - SynchronizeType: 2
+  - SynchronizeType: 1
     LayerIndex: 3
 --- !u!1 &4407433462298312627
 GameObject:
