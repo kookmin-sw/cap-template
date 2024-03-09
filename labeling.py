@@ -52,11 +52,27 @@ for (i, rect) in enumerate(rects):
         dist = distance.get_distance( (pos[start][0], pos[start][1]), (pos[end][0], pos[end][1]))
         print("D{}".format(i + 1),"'s distance is {}".format(dist) )
         DISTANCE.append(dist)
-    
+
+    #검출한 거리 정규화    
     total_dist = sum(DISTANCE)
     DISTANCE = [i/total_dist for i in DISTANCE]
-    print(DISTANCE)
-    print("sum:" , sum(DISTANCE))
+
+    RATIO = []
+
+    #Ratio R(i)검출
+    RATIO.append(DISTANCE[1] / DISTANCE[0])
+    RATIO.append(DISTANCE[0] / DISTANCE[2])
+    RATIO.append(DISTANCE[1] / DISTANCE[2])
+    RATIO.append(DISTANCE[0] / DISTANCE[4])
+    RATIO.append(DISTANCE[5] / DISTANCE[4])
+    RATIO.append(DISTANCE[3] / DISTANCE[5])
+    RATIO.append(DISTANCE[5] / DISTANCE[0])
+    RATIO.append(DISTANCE[4] / DISTANCE[2])
+    RATIO.append(DISTANCE[3] / DISTANCE[4])
+    RATIO.append(DISTANCE[6] / DISTANCE[5])
+
+    print("RATIO", RATIO)
+
 
 cv2.imshow("Face Landmark", display_image)
 cv2.waitKey(0)
