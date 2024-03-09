@@ -2,6 +2,9 @@
 
 2024년 국민대학교 캡스톤 11조
 
+소개 페이지
+https://pastoral-scale-e1b.notion.site/Who-we-are-9fac95a353c74c81a0607c787640dfb9?pvs=4
+
 ## 팀소개 및 페이지를 꾸며주세요.
 
 - 프로젝트 소개
