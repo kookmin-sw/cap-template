@@ -1,6 +1,7 @@
 import cv2
 import dlib
 import numpy as np
+from utils import distance
 
 #랜드마크 번호에 따른 부위
 RIGHT_EYE = list(range(36, 42))
@@ -42,18 +43,20 @@ for (i, rect) in enumerate(rects):
     vertical = abs(pos[0][1] - pos[8][1])
 
     D_LIST = [(2,14),(76,79),(71,8),(8, 12),(4,12),(6,10),(7,9)] #선분을 만들 주요 점 관계
+    DISTANCE = []
     for i in range(7):
         start, end = D_LIST[i]
-        print("start", start, "end", end)
         cv2.line(display_image, (pos[start][0], pos[start][1]), (pos[end][0], pos[end][1]), (0, 0, 255))
         cv2.putText(display_image, "D{}".format(i + 1), (pos[start][0], pos[start][1] - 2), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255), 1)
+
+        dist = distance.get_distance( (pos[start][0], pos[start][1]), (pos[end][0], pos[end][1]))
+        print("D{}".format(i + 1),"'s distance is {}".format(dist) )
+        DISTANCE.append(dist)
     
-    # for i in range(8):
-    #     result.append(abs(pos[i][0] - pos[16-i][0]) / vertical)
-    #     cv2.line(gray, (pos[i][0], pos[i][1]), (pos[16-i][0], pos[i][1]), (0, 255, 255))
-
-    print(result)
-
+    total_dist = sum(DISTANCE)
+    DISTANCE = [i/total_dist for i in DISTANCE]
+    print(DISTANCE)
+    print("sum:" , sum(DISTANCE))
 
 cv2.imshow("Face Landmark", display_image)
 cv2.waitKey(0)
