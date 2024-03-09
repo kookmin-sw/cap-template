@@ -29,14 +29,14 @@
 
 ### 3. 팀 소개
 
-#### 정태성
-Github: https://github.com/Topadonijah
+### 정태성
+- github: https://github.com/Topadonijah
 
-#### 오홍석
+### 오홍석
 
-#### 전병우
+### 전병우
 
-#### 전기정
+### 전기정
 
 팀원정보 및 담당이나 사진 및 SNS를 이용하여 소개하세요.
 
