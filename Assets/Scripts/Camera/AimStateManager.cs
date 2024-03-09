@@ -9,10 +9,13 @@ public class AimStateManager : MonoBehaviourPun
     public Cinemachine.AxisState xAxis, yAxis;
     [SerializeField] Transform camFollowPos;
 
+    private PhotonView pv;
+
     // Start is called before the first frame update
     void Start()
     {
-        if(this.photonView.IsMine)
+        pv = GetComponent<PhotonView>();
+        if (pv.IsMine)
         {
             var followCam = FindObjectOfType<CinemachineVirtualCamera>();
             followCam.Follow = this.camFollowPos.transform;
@@ -23,8 +26,11 @@ public class AimStateManager : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        xAxis.Update(Time.deltaTime);
-        yAxis.Update(Time.deltaTime);
+        if (pv.IsMine)
+        {
+            xAxis.Update(Time.deltaTime);
+            yAxis.Update(Time.deltaTime);
+        }
     }
 
     private void LateUpdate()
