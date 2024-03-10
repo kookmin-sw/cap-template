@@ -51,4 +51,7 @@ for (i, rect) in enumerate(rects):
     print(result)
 
 cv2.imshow("Face Landmark", image)
-cv2.waitKey(0)
+key = cv2.waitKey(0)
+
+if key == ord('q'):
+    cv2.destroyAllWindows()
