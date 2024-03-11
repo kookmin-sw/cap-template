@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using System.Linq.Expressions;
 
 public class MovementStateManager : MonoBehaviour
 {
@@ -35,12 +34,8 @@ public class MovementStateManager : MonoBehaviour
     public CrouchState Crouch = new CrouchState();
     public RunState Run = new RunState();
     public JumpState Jump = new JumpState();
-    public UnArmedAttack Punch = new UnArmedAttack();
-    public NoneState None = new NoneState();
 
     [HideInInspector] public Animator anim;
-    [HideInInspector] public AnimatorStateInfo stateInfo;
-    public int tempLayer;
 
     private PhotonView pv;
 
@@ -49,9 +44,7 @@ public class MovementStateManager : MonoBehaviour
         pv = GetComponent<PhotonView>();
         anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
-        // anim.SetLayerWeight(tempLayer, 1);
-        // stateInfo = anim.GetCurrentAnimatorStateInfo(tempLayer);
-        SwitchState(Idle);
+        SwitchState(Walk);
     }
 
     void Update()
@@ -65,11 +58,6 @@ public class MovementStateManager : MonoBehaviour
             anim.SetFloat("zAxis", zAxis);
 
             currentState.UpdateState(this);
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                SwitchState(Punch);
-            }   
         }
     }
 
