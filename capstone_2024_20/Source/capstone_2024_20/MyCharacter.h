@@ -29,8 +29,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
 	
@@ -45,23 +43,11 @@ private:
 	UPROPERTY(Category=Character, VisibleAnywhere)
 	UStaticMeshComponent* M_MeshComponent;
 
-	UPROPERTY(Category=Input, VisibleAnywhere)
-	UInputMappingContext* DefaultMappingContext;
-
-	UPROPERTY(Category=Input, VisibleAnywhere)
-	UInputAction* MoveAction;
-
-	UPROPERTY(Category=Input, VisibleAnywhere)
-	UInputAction* InteractionAction;
-
 
 public:
 	UPROPERTY(Category=UI, VisibleAnywhere)
 	class UWidgetComponent* TextWidget;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	APawn* Ship;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUserWidget> ClearPopUpWidgetClass;
 
@@ -69,22 +55,7 @@ public:
 	TSubclassOf<UUserWidget> GameOverPopUpWidgetClass;
 
 protected:
-
 	
-	
-	void Move(const FInputActionInstance& Instance);
-	void Interaction(const FInputActionInstance& Instance);
-
-	enum class ControlMode
-	{
-		CHARACTER,
-		SHIP,
-		CANNON
-	};
-	
-	void SetControlMode(ControlMode NewControlMode);
-	ControlMode CurrentControlMode=ControlMode::CHARACTER;
-	void ViewChange();
 
 	bool bIsChanging=false;
 	float TargetArmLength;
@@ -103,5 +74,17 @@ protected:
 		UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex);
 	
+public:
 	
+	UFUNCTION()
+	bool GetIsOverLap();
+
+	UFUNCTION()
+	void SetTextWidgetVisible(bool b);
+
+	UFUNCTION()
+	bool GetTextWidgetVisible();
+
+	UFUNCTION()
+	void SetIsChanging(float length, FRotator rot, bool b);
 };
