@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 
 predictor_file = './shape_predictor_68_face_landmarks.dat' 
-image_file = './test/seulgi.jpeg' 
+image_file = './test/kimmingyu.jpeg' 
 
 ALL = list(range(0, 68))
 
