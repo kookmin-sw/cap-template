@@ -54,7 +54,7 @@ AMyCharacter::AMyCharacter()
 		M_MeshComponent->SetRelativeLocation(FVector(0.0f, 0.0f, -88.0f));
 	}
 
-	
+	// TEST 222
 	
 }
 

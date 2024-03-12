@@ -19,6 +19,7 @@ AMyPlayerController::AMyPlayerController()
 	DefaultMappingContext = IMC_Mapping.Object;
 
 	// test 
+
 	
 }
 
