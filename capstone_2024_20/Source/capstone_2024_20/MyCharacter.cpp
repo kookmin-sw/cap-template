@@ -85,8 +85,8 @@ void AMyCharacter::Tick(float DeltaTime)
 		M_SpringArmComponent->SetRelativeRotation(newRotation);
 		
 
-		if(FMath::IsNearlyEqual(M_SpringArmComponent->TargetArmLength, TargetArmLength, 0.01f
-			&& M_SpringArmComponent->GetComponentRotation().Equals(TargetRotation, 0.01f)))
+		if(FMath::IsNearlyEqual(M_SpringArmComponent->TargetArmLength, TargetArmLength, 0.01f)
+			&& M_SpringArmComponent->GetComponentRotation().Equals(TargetRotation, 0.01f))
 			bIsChanging = false;
 		
 	}
