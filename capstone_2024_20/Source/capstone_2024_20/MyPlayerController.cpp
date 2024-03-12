@@ -17,6 +17,9 @@ AMyPlayerController::AMyPlayerController()
 	MoveAction = AC_Move.Object;
 	InteractionAction = AC_Interaction.Object;
 	DefaultMappingContext = IMC_Mapping.Object;
+
+	// test 
+	
 }
 
 
