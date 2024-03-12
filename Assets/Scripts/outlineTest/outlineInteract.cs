@@ -6,6 +6,8 @@ public class outlineInteract : MonoBehaviour
 {
 
     public GameObject image_F;
+    public Inventory quicSlot;
+    public Item battery_item;
 
     Transform selectedTarget;
 
@@ -104,6 +106,8 @@ public class outlineInteract : MonoBehaviour
             {
                 Debug.Log("bettery 와 상호작용");
                 selectedTarget.GetComponent<battery>().Destroy_battery();
+                //Item battery_ = Instantiate("Assets/Scripts/interact_test/UIInteract/battery");
+                quicSlot.AddItem(battery_item);
             }
         }
     }
