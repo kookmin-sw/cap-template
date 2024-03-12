@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 
-img_path = "./test/kimmingyu.jpeg"
+img_path = "./test/black_girl.jpeg"
 
 img = cv2.imread(img_path)
 
@@ -19,8 +19,6 @@ mask_YCrCb = cv2.morphologyEx(mask_YCrCb, cv2.MORPH_OPEN, np.ones((3, 3), np.uin
 mask = cv2.bitwise_and(mask_YCrCb, mask_hsv)
 mask = cv2.medianBlur(mask, 3)
 mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones((4, 4), np.uint8))
-
-cv2.imshow("res", mask)
 
 res = cv2.bitwise_and(img, img, mask=mask)
 
