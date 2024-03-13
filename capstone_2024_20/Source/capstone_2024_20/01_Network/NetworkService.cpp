@@ -88,12 +88,26 @@ void ANetworkService::JoinGameSession()
 void ANetworkService::JoinRoomGameSession(FOnlineSessionSearchResult& Result) const
 {
 	FString ResultRoomCode;
-	Result.Session.SessionSettings.Get(FName("RoomCode"), ResultRoomCode);
+	Result.Session.SessionSettings.Get(RoomTEXT::NAME, ResultRoomCode);
 	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red,
 	                                 FString::Printf(TEXT("룸 입장 버튼 클릭 클릭 클릭! %s"), *ResultRoomCode));
 
 	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
 	OnlineSessionInterface->JoinSession(*LocalPlayer->GetPreferredUniqueNetId(), NAME_GameSession, Result);
+}
+
+FName ANetworkService::GetJoiningSessionSetting(FName SettingName)
+{
+	FNamedOnlineSession* CurrentSession = OnlineSessionInterface->GetNamedSession(NAME_GameSession);
+	if(CurrentSession)
+	{
+		FString SettingValue;
+		CurrentSession->SessionSettings.Get(SettingName, SettingValue);
+		return FName(SettingValue);
+	}
+
+	UE_LOG(LogTemp, Error, TEXT("Error: 세션 정보가 확인되지 않음 %s"), SettingName)
+	return TEXT("Error");
 }
 
 void ANetworkService::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful) const

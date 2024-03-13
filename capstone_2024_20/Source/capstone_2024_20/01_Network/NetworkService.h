@@ -34,6 +34,9 @@ public:
 	void JoinGameSession();
 	void JoinRoomGameSession(FOnlineSessionSearchResult& Result) const;
 
+	UFUNCTION()
+	FName GetJoiningSessionSetting(FName SettingName);
+	
 	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful) const;
 	void OnFindSessionComplete(bool bWasSuccessful) const;
 	void OnJoinSessionComplate(FName SessionName, EOnJoinSessionCompleteResult::Type Result) const;

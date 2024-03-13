@@ -13,5 +13,12 @@ UCLASS()
 class CAPSTONE_2024_20_API AInGameModeBaseTest : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+	AInGameModeBaseTest();
+
+public:
+	virtual void BeginPlay() override;
+
+	UFUNCTION()
+	void PrintRoomCode();
 };

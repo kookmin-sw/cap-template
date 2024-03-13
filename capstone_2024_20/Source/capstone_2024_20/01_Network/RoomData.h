@@ -3,6 +3,12 @@
 #include "CoreMinimal.h"
 #include "RoomData.generated.h"
 
+namespace RoomTEXT
+{
+	const static FName NAME = TEXT("RoomName");
+	const static FName CODE = TEXT("RoomCode");
+}
+
 USTRUCT(BlueprintType)
 struct FRoomData
 {
@@ -13,7 +19,4 @@ struct FRoomData
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString Code;
-
-	const static FName NAME_TEXT = TEXT("RoomName");
-	const static FName CODE_TEXT = TEXT("RoomCode");
 };
