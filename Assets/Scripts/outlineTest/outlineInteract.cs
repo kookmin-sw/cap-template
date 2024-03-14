@@ -6,6 +6,9 @@ public class outlineInteract : MonoBehaviour
 {
     public GameObject image_F;
 
+    public Inventory quicSlot;
+    public Item battery_item;
+
 
     RaycastHit hit;
     float interactDiastance = 2.0f;
@@ -45,7 +48,12 @@ public class outlineInteract : MonoBehaviour
                 if (selectedTarget.CompareTag("battery"))
                 {
                     Debug.Log("bettery 와 상호작용");
-                    selectedTarget.GetComponent<battery>().Destroy_battery();
+                    //Item battery_ = Instantiate("Assets/Scripts/interact_test/UIInteract/battery");
+                    if (quicSlot.AddItem(battery_item) == 1)
+                    {
+                        //아이템 넣기에 성공할때만 디스트로이
+                        selectedTarget.GetComponent<battery>().Destroy_battery();
+                    }
                 }
             }
         }
