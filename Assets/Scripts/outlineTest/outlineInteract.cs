@@ -4,10 +4,64 @@ using UnityEngine;
 
 public class outlineInteract : MonoBehaviour
 {
-
     public GameObject image_F;
 
+
+    RaycastHit hit;
+    float interactDiastance = 2.0f;
     Transform selectedTarget;
+
+    void Update()
+    {
+        Debug.DrawRay(transform.position, transform.forward * interactDiastance, Color.blue, interactDiastance);
+
+        //LayerMask.GetMask("Interact") : raycast가 Interact 레이어와만 상호작용 
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, interactDiastance,LayerMask.GetMask("Interact")))
+        {
+            //셀렉된 타겟이 없거나 새로운 오브젝트라면 새로 셀렉 
+            if (selectedTarget==null || selectedTarget != hit.transform)
+            {
+                Transform obj = hit.transform;
+                selectTarget(obj);
+                addOutline(obj);
+                image_F.GetComponent<UIpressF>().show_image();
+            }
+
+            //F를 누르면 상호작용 
+            if (selectedTarget != null && Input.GetKeyDown(KeyCode.F))
+            {
+                if (selectedTarget.CompareTag("door"))
+                {
+                    Debug.Log("문 상호작용 ");
+                    selectedTarget.GetComponent<Door>().ChangeDoorState();
+                }
+
+                if (selectedTarget.CompareTag("betteryspawner"))
+                {
+                    Debug.Log("betterySpawner 와 상호작용");
+                    selectedTarget.GetComponent<betteryspawner>().Spawn_bettery();
+                }
+
+                if (selectedTarget.CompareTag("battery"))
+                {
+                    Debug.Log("bettery 와 상호작용");
+                    selectedTarget.GetComponent<battery>().Destroy_battery();
+                }
+            }
+        }
+        else
+        {
+            //레이캐스트가 Interactable 오브젝트와 충돌하지 않았다면 실행됨
+            if (selectedTarget)
+            {
+                removeOutline(selectedTarget);
+                clearTarget(selectedTarget);
+                image_F.GetComponent<UIpressF>().remove_image();
+
+            }
+        }
+    }
+
 
     void clearTarget(Transform obj)
     {
@@ -28,6 +82,7 @@ public class outlineInteract : MonoBehaviour
         Debug.Log("selectTarget is " + obj.name);
         addOutline(obj);
     }
+
 
     void addOutline(Transform obj)
     {
@@ -55,73 +110,4 @@ public class outlineInteract : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-
-        if (other.gameObject.layer == LayerMask.NameToLayer("Interact"))
-        {
-            if(selectedTarget != null)
-            {
-                clearTarget(selectedTarget);
-            }
-
-            Debug.Log("onTriggerEnter is activated for " + other.name);
-
-            Transform obj = other.transform;
-            selectTarget(obj);
-
-            image_F.GetComponent<UIpressF>().show_image();
-        }
-    }
-
-    
-    private void OnTriggerStay(Collider other)
-    {
-        //만약 셀렉된 타겟이 없으면 지금 충돌중인 오브젝트를 셀
-        if (selectedTarget == null && other.gameObject.layer == LayerMask.NameToLayer("Interact"))
-        {
-            Transform obj = other.transform;
-            selectTarget(obj);
-            image_F.GetComponent<UIpressF>().show_image();
-        }
-
-        //트리거 스테이 중에 F가 눌렸는데, 타겟이 있다면 상호작용 실행
-        if (selectedTarget!=null && Input.GetKeyDown(KeyCode.F))
-        {
-            if (selectedTarget.CompareTag("door"))
-            {
-                Debug.Log("문 상호작용 ");
-                selectedTarget.GetComponent<Door>().ChangeDoorState();
-            }
-
-            if (selectedTarget.CompareTag("betteryspawner"))
-            {
-                Debug.Log("betterySpawner 와 상호작용");
-                selectedTarget.GetComponent<betteryspawner>().Spawn_bettery();
-            }
-
-            if (selectedTarget.CompareTag("battery"))
-            {
-                Debug.Log("bettery 와 상호작용");
-                selectedTarget.GetComponent<battery>().Destroy_battery();
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Interact"))
-        {
-            Debug.Log("onTriggerExit is activated for " + other.name);
-            image_F.GetComponent<UIpressF>().remove_image();
-
-            clearTarget(selectedTarget);
-        }
-
-
-    }
-
-    void Update()
-    {
-    }
 }
