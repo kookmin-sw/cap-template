@@ -70,6 +70,7 @@
 */Intermediate/*
 */Plugins/*/Intermediate/*
 */Plugins/**/Intermediate/*
+*/Plugins/Developer/RiderLink/Binaries/**/UnrealEditor.modules
 
 # Cache files for the editor to use
 */DerivedDataCache/*
