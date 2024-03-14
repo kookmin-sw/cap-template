@@ -44,17 +44,19 @@ public class Inventory : MonoBehaviour
         FreshSlot();
     }
 
-    //아이템을 획득할 경우 AddItem을 불러와 넣어 주면 됨 
-    public void AddItem(Item _item)
+    //아이템을 획득할 경우 AddItem을 불러와 넣어 주면 됨  성공하면 1 실패하면 0반환 
+    public int AddItem(Item _item)
     {
         if (items.Count < slots.Length)
         {
             items.Add(_item);
             FreshSlot();
+            return 1;
         }
         else
         {
             print("슬롯이 가득 차 있습니다.");
+            return 0;
         }
     }
 }
