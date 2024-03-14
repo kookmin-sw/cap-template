@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "IControlStrategy.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "MyCannon.h"
 #include "MyCharacter.h"
 #include "MyPlayerController.generated.h"
 
@@ -31,25 +33,35 @@ public:
 private:
 	UPROPERTY(Category=Input, VisibleAnywhere)
 	UInputMappingContext* DefaultMappingContext;
+	
+	UPROPERTY(Category=Input, VisibleAnywhere)
+	UInputMappingContext* CannonMappingContext;
 
 	UPROPERTY(Category=Input, VisibleAnywhere)
 	UInputAction* MoveAction;
 
 	UPROPERTY(Category=Input, VisibleAnywhere)
 	UInputAction* InteractionAction;
-
+	
+	UPROPERTY(Category=Input, VisibleAnywhere)
+	UInputAction* ShootAction;
 public:
 	UPROPERTY(Category=UI, VisibleAnywhere)
 	class UWidgetComponent* TextWidget;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+private:
+	AActor* ControlledActor;
+	IControlStrategy* CurrentStrategy;
 	APawn* Ship;
-
 	AMyCharacter* Player;
-
+	AMyCannon* Cannon;
+	UEnhancedInputLocalPlayerSubsystem* Subsystem;
+	UInputMappingContext* LastMappingContext;
+	
 protected:
 	void Move(const FInputActionInstance& Instance);
 	void Interaction(const FInputActionInstance& Instance);
+	void Shoot(const FInputActionInstance& Instance);
 
 	enum class ControlMode
 	{

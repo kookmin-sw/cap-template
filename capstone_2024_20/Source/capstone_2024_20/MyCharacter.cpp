@@ -98,9 +98,12 @@ void AMyCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
     bIsOverlap = true;
 	
 	if(OtherComp->ComponentTags.Contains(TEXT("Cannon")))
-		CurrentHitObject = TEXT("Cannon");
+		CurrentHitObjectName = TEXT("Cannon");
 	else if(OtherComp->ComponentTags.Contains(TEXT("SteelWheel")))
-		CurrentHitObject = TEXT("SteelWheel");
+		CurrentHitObjectName = TEXT("SteelWheel");
+
+	CurrentHitObject = OtherActor;
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, CurrentHitObject->GetName());
 		
 
 }
@@ -137,9 +140,15 @@ void AMyCharacter::SetIsChanging(float length, FRotator rot, bool b)
 	bIsChanging = b;
 }
 
-FString AMyCharacter::GetCurrentHitObject()
+AActor* AMyCharacter::GetCurrentHitObject()
 {
 	return CurrentHitObject;
+}
+
+
+FString AMyCharacter::GetCurrentHitObjectName()
+{
+	return CurrentHitObjectName;
 }
 
 
