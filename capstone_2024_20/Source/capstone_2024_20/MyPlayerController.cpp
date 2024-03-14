@@ -159,9 +159,22 @@ void AMyPlayerController::ViewChange()
 	switch (CurrentControlMode)
 	{
 	case ControlMode::CHARACTER:
-		SetControlMode(ControlMode::SHIP);
+		// 플레이어가 현재 선택/접근한 오브젝트의 이름을 비교
+			if(Player->GetCurrentHitObject().Equals(TEXT("SteelWheel")))
+			{
+				// 현재 접근한 오브젝트가 "SteelWheel"이면, 컨트롤 모드를 SHIP으로 변경
+				SetControlMode(ControlMode::SHIP);
+			}
+			else if(Player->GetCurrentHitObject().Equals(TEXT("Cannon")))
+			{
+				// 현재 접근한 오브젝트가 "Cannon"이면, 컨트롤 모드를 CANNON으로 변경
+				SetControlMode(ControlMode::CANNON);
+			}
 		break;
+    
 	case ControlMode::SHIP:
+	case ControlMode::CANNON:
+		// 현재 컨트롤 모드가 SHIP 또는 CANNON일 경우, 무조건 CHARACTER 모드로 전환
 		SetControlMode(ControlMode::CHARACTER);
 		break;
 	}

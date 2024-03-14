@@ -1,6 +1,5 @@
 #include "MyCharacter.h"
 
-#include "MyPlayerController.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -54,7 +53,6 @@ AMyCharacter::AMyCharacter()
 		M_MeshComponent->SetRelativeLocation(FVector(0.0f, 0.0f, -88.0f));
 	}
 
-	// TEST 222
 	
 }
 
@@ -96,15 +94,25 @@ void AMyCharacter::Tick(float DeltaTime)
 void AMyCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Hit"));
-	TextWidget->SetVisibility(true);
-	bIsOverlap = true;
+    TextWidget->SetVisibility(true);
+    bIsOverlap = true;
+	
+	if(OtherComp->ComponentTags.Contains(TEXT("Cannon")))
+		CurrentHitObject = TEXT("Cannon");
+	else if(OtherComp->ComponentTags.Contains(TEXT("SteelWheel")))
+		CurrentHitObject = TEXT("SteelWheel");
+		
+
 }
 
 void AMyCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Hit Out"));
-	TextWidget->SetVisibility(false);
-	bIsOverlap = false;
+	if(OtherComp->ComponentTags.Contains(TEXT("Object")))
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Hit Out"));
+		TextWidget->SetVisibility(false);
+		bIsOverlap = false;
+	}
 }
 
 bool AMyCharacter::GetIsOverLap()
@@ -127,6 +135,11 @@ void AMyCharacter::SetIsChanging(float length, FRotator rot, bool b)
 	TargetArmLength = length;
 	TargetRotation = rot;
 	bIsChanging = b;
+}
+
+FString AMyCharacter::GetCurrentHitObject()
+{
+	return CurrentHitObject;
 }
 
 
