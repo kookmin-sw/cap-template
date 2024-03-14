@@ -19,6 +19,12 @@ class CAPSTONE_2024_20_API AInGameModeBaseTest : public AGameModeBase
 public:
 	virtual void BeginPlay() override;
 
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite)
+	class UInGameRoomInfoWidget* RoomInfoWidget;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UInGameRoomInfoWidget> RoomInfoWidgetFactory;
+
 	UFUNCTION()
 	void PrintRoomCode();
 };

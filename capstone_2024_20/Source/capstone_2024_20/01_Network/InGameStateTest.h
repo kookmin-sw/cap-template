@@ -19,4 +19,7 @@ public:
 
 	UFUNCTION()
 	FName GetRoomCode() const;
+
+	UFUNCTION()
+	FName GetRoomName() const;
 };

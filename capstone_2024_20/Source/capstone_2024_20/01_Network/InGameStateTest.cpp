@@ -10,18 +10,14 @@
 void AInGameStateTest::BeginPlay()
 {
 	Super::BeginPlay();
-
-	UWorld* World = GetWorld();
-	
-	TArray<AActor*> FoundActors;
-	UGameplayStatics::GetAllActorsOfClass(World, ANetworkService::StaticClass(), FoundActors);
-	if (FoundActors.Num() > 0)
-	{
-		NetworkService = Cast<ANetworkService>(FoundActors[0]);
-	}
 }
 
 FName AInGameStateTest::GetRoomCode() const
 {
 	return NetworkService->GetJoiningSessionSetting(RoomTEXT::CODE);
+}
+
+FName AInGameStateTest::GetRoomName() const
+{
+	return NetworkService->GetJoiningSessionSetting(RoomTEXT::NAME);
 }
