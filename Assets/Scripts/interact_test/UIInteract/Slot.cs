@@ -23,7 +23,7 @@ public class Slot : MonoBehaviour
                 image.sprite = item.itemImage;
                 image.color = new Color(1, 1, 1, 1);
             }
-            else 
+            else
             {
                 //만약 item이 null 이면(빈슬롯 이면) Image의 알파 값 0을 주어 화면에 표시하지 않음 
                 image.color = new Color(1, 1, 1, 0);

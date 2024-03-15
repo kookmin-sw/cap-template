@@ -40,18 +40,20 @@ public class UIManager : MonoBehaviour
     }
     void ManageSetting()
     {
-        if (systemEnvironment.activeSelf == false && Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            systemEnvironment.SetActive(true);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
-
-        }
-        if (systemEnvironment.activeSelf == true && Input.GetKeyDown(KeyCode.Escape))
-        {
-            systemEnvironment.SetActive(false);
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            if (!systemEnvironment.activeSelf)
+            {
+                systemEnvironment.SetActive(true);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;
+            }
+            else
+            {
+                systemEnvironment.SetActive(false);
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
     }
 }
