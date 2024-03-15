@@ -3,12 +3,13 @@ import botocore
 import gzip
 import pandas as pd
 import math
+import os
 
 from io import BytesIO
 from itertools import chain
 
-aws_access_key_id = "AKIAUVKNRRIU7PBW2JQU"
-aws_secret_access_key = "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"
+aws_access_key_id = os.getenv('AWS_ACCESS_KEY')
+aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
 
 session = boto3.session.Session(
     aws_access_key_id=aws_access_key_id,
