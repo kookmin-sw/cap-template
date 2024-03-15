@@ -6,9 +6,12 @@ public class betteryspawner : MonoBehaviour
 {
     //배터리 스포너 오브젝트 근처로 포물선 운동을 하며 스폰됨
 
-    public GameObject batterytPrefab; //생성할 배터리의 원본 프리팹
-    public float maxDistance = 1f; // 아이템이 스폰될 최대 반경
+    //[SerializeField] private GameObject batterytPrefab; //생성할 배터리의 원본 프리팹
+    [SerializeField] private List<Item> Items;
+    [SerializeField] private GameObject ItemPrefab;
 
+
+    public float maxDistance = 1f; // 아이템이 스폰될 최대 반경
     Vector3 offset_ = new Vector3(0, 1f, 0);
 
     //스폰 확률 
@@ -17,27 +20,49 @@ public class betteryspawner : MonoBehaviour
 
     //포물선 운동을 위한 변수들
     public float m_InitialAngle = 70f; // 처음 날라가는 각도
-    private Rigidbody battery_Rigidbody;
+    private Rigidbody itemRigidbody;
 
     //interact 스크립트에서 호출됨
-    public void Spawn_bettery()
+    public void SpawnItem()
     {
-        //if (Random.Range(spawnRateMin, spawnRateMax) == 2)
-        //{
+        int randomItemNumber = Random.Range(0, Items.Count);
+        Debug.Log("randomItemNumber : " + randomItemNumber);
+        ItemPrefab = Items[randomItemNumber].itemPrefab;
 
-            // 스포너 근처의랜덤 위치를 가져옵니다.
-            Vector3 spawnPosition = transform.position + (Random.insideUnitSphere * maxDistance); //현재 위치에서 maxDistance 반경 랜덤으로 원형자리에 Vector3를 구함
+        // 스포너 근처의랜덤 위치를 가져옵니다.
+        Vector3 spawnPosition = transform.position + (Random.insideUnitSphere * maxDistance); //현재 위치에서 maxDistance 반경 랜덤으로 원형자리에 Vector3를 구함
 
-            //Instantiate(원본,위치,회전); 
-            GameObject battery = Instantiate(batterytPrefab, transform.position+offset_, transform.rotation); //battery 복제본 생성
-            battery_Rigidbody = battery.GetComponent<Rigidbody>();    
-            Vector3 velocity = GetVelocity(transform.position, spawnPosition, m_InitialAngle);
-            battery_Rigidbody.velocity = velocity;
+        GameObject item = Instantiate(ItemPrefab, transform.position + offset_, transform.rotation); //item 복제본 생성
 
-            Debug.Log("bettery is spawned");
-        //}
+        itemRigidbody = item.GetComponent<Rigidbody>();
+        Vector3 velocity = GetVelocity(transform.position, spawnPosition, m_InitialAngle);
+        itemRigidbody.velocity = velocity;
+
+        Debug.Log("item is spawned");
 
     }
+
+
+    ////interact 스크립트에서 호출됨
+    //public void Spawn_bettery()
+    //{
+    //    //if (Random.Range(spawnRateMin, spawnRateMax) == 2)
+    //    //{
+
+    //        // 스포너 근처의랜덤 위치를 가져옵니다.
+    //        Vector3 spawnPosition = transform.position + (Random.insideUnitSphere * maxDistance); //현재 위치에서 maxDistance 반경 랜덤으로 원형자리에 Vector3를 구함
+
+    //        //Instantiate(원본,위치,회전); 
+    //        GameObject battery = Instantiate(batterytPrefab, transform.position+offset_, transform.rotation); //battery 복제본 생성
+    //        battery_Rigidbody = battery.GetComponent<Rigidbody>();    
+    //        Vector3 velocity = GetVelocity(transform.position, spawnPosition, m_InitialAngle);
+    //        battery_Rigidbody.velocity = velocity;
+
+    //        Debug.Log("bettery is spawned");
+    //    //}
+
+    //}
+
 
     //이건 그냥 가져옴..ㅋ 
     public Vector3 GetVelocity(Vector3 start_pos, Vector3 target_pos, float initialAngle)

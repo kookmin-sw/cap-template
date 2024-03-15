@@ -44,17 +44,20 @@ public class InteractWithUI : MonoBehaviour
                 if (selectedTarget.CompareTag("betteryspawner"))
                 {
                     Debug.Log("betterySpawner 와 상호작용");
-                    selectedTarget.GetComponent<betteryspawner>().Spawn_bettery();
+                    selectedTarget.GetComponent<betteryspawner>().SpawnItem();
                 }
 
-                if (selectedTarget.CompareTag("battery"))
+                if (selectedTarget.CompareTag("Item"))
                 {
-                    Debug.Log("bettery 와 상호작용");
+                    Debug.Log(hit.collider.gameObject.name + " item과 상호작용");
+                    ItemData itemdata = hit.collider.gameObject.GetComponent<ItemData>();
+                    Item item = itemdata.itemData;
                     //Item battery_ = Instantiate("Assets/Scripts/interact_test/UIInteract/battery");
-                    if (quicSlot.AddItem(battery_item)==1)
+                    if (quicSlot.AddItem(item)==1)
                     {
                         //아이템 넣기에 성공할때만 디스트로이
-                        selectedTarget.GetComponent<battery>().Destroy_battery();
+                        //selectedTarget.GetComponent<battery>().Destroy_battery();
+                        Destroy(hit.collider.gameObject);
                     }
                 }
             }
