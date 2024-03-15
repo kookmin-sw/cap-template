@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Data.SqlTypes;
+using ExitGames.Client.Photon;
 
 public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPointerExitHandler
 {
@@ -14,13 +16,10 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
     {
         slotImage = GetComponent<Image>();
         slotRect = GetComponent<RectTransform>();
-
         preColor = slotImage.color;
     }
 
-
-
-    //¸¶¿ì½º Æ÷ÀÎÅÍ°¡ ÇöÀç ¾ÆÀÌÅÛ ½½·Ô ¿µ¿ª ³»ºÎ·Î µé¾î°¥ ¶§ 1È¸ È£Ãâ
+    //ë§ˆìš°ìŠ¤ í¬ì¸í„°ê°€ í˜„ì¬ ì•„ì´í…œ ìŠ¬ë¡¯ ì˜ì—­ ë‚´ë¶€ë¡œ ë“¤ì–´ê°ˆ ë•Œ 1íšŒ í˜¸ì¶œ
     public void OnPointerEnter(PointerEventData eventData)
     {
         hoverColor = Color.white;
@@ -28,18 +27,26 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
         slotImage.color = hoverColor;
     }
 
-    //¸¶¿ì½º Æ÷ÀÎÅÍ°¡ ÇöÀç ¾ÆÀÌÅÛ ½½·Ô ¿µ¿ªÀ» ºüÁ®³ª°¥ ¶§ 1È¸ È£Ãâ
+    //ë§ˆìš°ìŠ¤ í¬ì¸í„°ê°€ í˜„ì¬ ì•„ì´í…œ ìŠ¬ë¡¯ ì˜ì—­ì„ ë¹ ì ¸ë‚˜ê°ˆ ë•Œ 1íšŒ í˜¸ì¶œ
     public void OnPointerExit(PointerEventData eventData)
     {
         slotImage.color = preColor;
     }
 
-    // ÇöÀç ¾ÆÀÌÅÛ ½½·Ô ¿µ¿ª ³»ºÎ¿¡¼­ µå·ÓÀ» ÇßÀ» ¶§ 1È¸ È£Ãâ
+    // í˜„ì¬ ì•„ì´í…œ ìŠ¬ë¡¯ ì˜ì—­ ë‚´ë¶€ì—ì„œ ë“œë¡­ì„ í–ˆì„ ë•Œ 1íšŒ í˜¸ì¶œ
     public void OnDrop(PointerEventData eventData)
     {
-        // pointerDrag = µå·¡±×ÁßÀÎ ¾ÆÀÌÄÜ / µå·¡±×ÇÏ°íÀÖ´Â ¾ÆÀÌÄÜÀÌ ÀÖÀ¸¸é
+        // pointerDrag = ë“œë˜ê·¸ì¤‘ì¸ ì•„ì´ì½˜ / ë“œë˜ê·¸í•˜ê³ ìˆëŠ” ì•„ì´ì½˜ì´ ìˆìœ¼ë©´
         if(eventData.pointerDrag != null)
         {
+            // ìŠ¬ë¡¯ì— ì•„ì´ì½˜ì´ ìˆìœ¼ë©´ ì•„ì´ì½˜ êµì²´
+            DraggableUI draggedUI = eventData.pointerDrag.GetComponent<DraggableUI>();
+            if (transform.childCount > 0)
+            {
+                Transform existingIcon = transform.GetChild(0);
+                existingIcon.position = draggedUI.preSlot.position;
+                existingIcon.SetParent(draggedUI.preSlot);
+            }
             eventData.pointerDrag.transform.SetParent(transform);
             eventData.pointerDrag.GetComponent<RectTransform>().position = slotRect.position;
         }

@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 
 public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    private Transform canvas; //UI°¡ ¼ÓÇÑ ÃÖ»ó´ÜÀÇ canvas Transform
-    private Transform preSlot; //ÇØ´ç ¿ÀºêÁ§Æ®°¡ Á÷Àü¿¡ ¼Ò¼ÓµÇ¾î ÀÖ¾ú´ø slot Transform
+    private Transform canvas; //UIê°€ ì†í•œ ìµœìƒë‹¨ì˜ canvas Transform
+    public Transform preSlot; //í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ê°€ ì§ì „ì— ì†Œì†ë˜ì–´ ìˆì—ˆë˜ slot Transform
     private RectTransform itemIconRect;
     private CanvasGroup itemIcon;
     void Awake()
@@ -20,40 +20,40 @@ public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         
     }
-    // ÇöÀç ¿ÀºêÁ§Æ® µå·¡±× ½ÃÀÛ ½Ã 1È¸ È£Ãâ
+    // í˜„ì¬ ì˜¤ë¸Œì íŠ¸ ë“œë˜ê·¸ ì‹œì‘ ì‹œ 1íšŒ í˜¸ì¶œ
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //µå·¡±× Á÷Àü¿¡ ¼Ò¼ÓµÇ¾î ÀÖ´ø ºÎ¸ğSlot Transform Á¤º¸ ÀúÀå
+        //ë“œë˜ê·¸ ì§ì „ì— ì†Œì†ë˜ì–´ ìˆë˜ ë¶€ëª¨Slot Transform ì •ë³´ ì €ì¥
         preSlot = transform.parent;
 
-        //ÇöÀç µå·¡±× ÁßÀÎ ¾ÆÀÌÄÜÀÌ È­¸éÀÇ ÃÖ»ó´Ü¿¡ Ãâ·ÂµÇµµ·Ï
-        transform.SetParent(canvas); //ºÎ¸ğ ¿ÀºêÁ§Æ®¸¦ canvas·Î ¼³Á¤
-        transform.SetAsLastSibling(); // ¾ÆÀÌÄÜÀ» °¡Àå ¾Õ¿¡ º¸ÀÌµµ·Ï ¸¶Áö¸· ÀÚ½ÄÀ¸·Î ¼³Á¤
+        //í˜„ì¬ ë“œë˜ê·¸ ì¤‘ì¸ ì•„ì´ì½˜ì´ í™”ë©´ì˜ ìµœìƒë‹¨ì— ì¶œë ¥ë˜ë„ë¡
+        transform.SetParent(canvas); //ë¶€ëª¨ ì˜¤ë¸Œì íŠ¸ë¥¼ canvasë¡œ ì„¤ì •
+        transform.SetAsLastSibling(); // ì•„ì´ì½˜ì„ ê°€ì¥ ì•ì— ë³´ì´ë„ë¡ ë§ˆì§€ë§‰ ìì‹ìœ¼ë¡œ ì„¤ì •
 
-        //µå·¡±×ÇÑ ¿ÀºêÁ§Æ® Åõ¸íµµ Á¶Àı / ±¤¼± Ãæµ¹Ã³¸® ºí¶ô(slot ¿Ü¿¡ »óÈ£ÀÛ¿ëÇÏ¸é ¾ÈµÇ±â ¶§¹®¿¡)
-        itemIcon.alpha = 0.7f;
+        //ë“œë˜ê·¸í•œ ì˜¤ë¸Œì íŠ¸ íˆ¬ëª…ë„ ì¡°ì ˆ / ê´‘ì„  ì¶©ëŒì²˜ë¦¬ ë¸”ë½(slot ì™¸ì— ìƒí˜¸ì‘ìš©í•˜ë©´ ì•ˆë˜ê¸° ë•Œë¬¸ì—)
+        //itemIcon.alpha = 0.7f;
         itemIcon.blocksRaycasts = false;
     }
      
-    // µå·¡±× ÁßÀÏ ¶§ ¸Å ÇÁ·¹ÀÓ È£Ãâ
+    // ë“œë˜ê·¸ ì¤‘ì¼ ë•Œ ë§¤ í”„ë ˆì„ í˜¸ì¶œ
     public void OnDrag(PointerEventData eventData)
     {
-        // µå·¡±× ÁßÀÎ ¾ÆÀÌÄÜ À§Ä¡¸¦ ¸¶¿ì½º À§Ä¡·Î ¼³Á¤
+        // ë“œë˜ê·¸ ì¤‘ì¸ ì•„ì´ì½˜ ìœ„ì¹˜ë¥¼ ë§ˆìš°ìŠ¤ ìœ„ì¹˜ë¡œ ì„¤ì •
         itemIconRect.position = eventData.position;
     }
 
-    //ÇöÀç ¿ÀºêÁ§Æ®ÀÇ µå·¡±×¸¦ Á¾·áÇÒ ¶§ 1È¸ È£Ãâ
+    //í˜„ì¬ ì˜¤ë¸Œì íŠ¸ì˜ ë“œë˜ê·¸ë¥¼ ì¢…ë£Œí•  ë•Œ 1íšŒ í˜¸ì¶œ
     public void OnEndDrag(PointerEventData eventData)
     {
-        // µå·¡±× Á¾·á½Ã¿¡µµ ºÎ¸ğ°¡ canvasÀÌ¸é slotÃ¢ ¿Ü¿¡ µå·ÓµÈ °ÍÀÌ¾î¼­ ¿ø·¡ÀÚ¸®·Î
+        // ë“œë˜ê·¸ ì¢…ë£Œì‹œì—ë„ ë¶€ëª¨ê°€ canvasì´ë©´ slotì°½ ì™¸ì— ë“œë¡­ëœ ê²ƒì´ì–´ì„œ ì›ë˜ìë¦¬ë¡œ
         if(transform.parent == canvas)
         {
-            // ¸¶Áö¸·¿¡ ¼Ò¼ÓµÇ¾îÀÖ´ø slotÀÇ ÀÚ½ÄÀ¸·Î ¼³Á¤, ¾ÆÀÌÄÜÀÇ À§Ä¡¸¦ ¿ø·¡ÀÚ¸®·Î
+            // ë§ˆì§€ë§‰ì— ì†Œì†ë˜ì–´ìˆë˜ slotì˜ ìì‹ìœ¼ë¡œ ì„¤ì •, ì•„ì´ì½˜ì˜ ìœ„ì¹˜ë¥¼ ì›ë˜ìë¦¬ë¡œ
             transform.SetParent(preSlot);
             itemIconRect.position = preSlot.GetComponent<RectTransform>().position;
         }
 
-        // µå·¡±×°¡ ³¡³ª¸é ¾ËÆÄ°ª/ ±¤¼± Ãæµ¹Ã³¸® ¿ø·¡´ë·Î
+        // ë“œë˜ê·¸ê°€ ëë‚˜ë©´ ì•ŒíŒŒê°’/ ê´‘ì„  ì¶©ëŒì²˜ë¦¬ ì›ë˜ëŒ€ë¡œ
         itemIcon.alpha = 1.0f;
         itemIcon.blocksRaycasts = true;
     }
