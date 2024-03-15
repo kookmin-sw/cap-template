@@ -62,6 +62,7 @@ public class MovementStateManager : MonoBehaviour
         currentState.UpdateState(this);
 
         Attack();
+        }
     }
 
     public void SwitchState(MovementBaseState state)
@@ -79,6 +80,7 @@ public class MovementStateManager : MonoBehaviour
 
         controller.Move(moveDir * currentMoveSpeed * Time.deltaTime);
     }
+
     public bool IsGrounded()
     {
         spherePos = new Vector3(transform.position.x, transform.position.y - groundYOffset, transform.position.z);
