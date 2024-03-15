@@ -6,84 +6,84 @@ using Photon.Realtime;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
-    // ¹öÀü
+    // ë²„ì „
     private readonly string version = "1.0f";
-    // »ç¿ëÀÚ ¾ÆÀÌµğ
+    // ì‚¬ìš©ì ì•„ì´ë””
     public string userID = "inputYourName";
 
     void Awake()
     {
-        // °°Àº ·ëÀÇ À¯Àúµé¿¡°Ô ÀÚµ¿À¸·Î ¾À ·Îµù
+        // ê°™ì€ ë£¸ì˜ ìœ ì €ë“¤ì—ê²Œ ìë™ìœ¼ë¡œ ì”¬ ë¡œë”©
         PhotonNetwork.AutomaticallySyncScene = true;
-        // °°Àº ¹öÀüÀÇ À¯Àú³¢¸® Á¢¼Ó Çã¿ë
+        // ê°™ì€ ë²„ì „ì˜ ìœ ì €ë¼ë¦¬ ì ‘ì† í—ˆìš©
         PhotonNetwork.GameVersion = version;
-        // À¯Àú ¾ÆÀÌµğ ÇÒ´ç
+        // ìœ ì € ì•„ì´ë”” í• ë‹¹
         PhotonNetwork.NickName = userID;
-        // Æ÷Åæ ¼­¹ö¿Í Åë½Å È½¼ö È®ÀÎ. ÃÊ´ç 30È¸
+        // í¬í†¤ ì„œë²„ì™€ í†µì‹  íšŸìˆ˜ í™•ì¸. ì´ˆë‹¹ 30íšŒ
         Debug.Log(PhotonNetwork.SendRate);
-        // ¼­¹ö Á¢¼Ó
+        // ì„œë²„ ì ‘ì†
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    // Æ÷Åæ ¼­¹ö¿¡ Á¢¼Ó ÈÄ È£ÃâµÇ´Â Äİ¹é ÇÔ¼ö
+    // í¬í†¤ ì„œë²„ì— ì ‘ì† í›„ í˜¸ì¶œë˜ëŠ” ì½œë°± í•¨ìˆ˜
     public override void OnConnectedToMaster()
     {
-        // Àß ¿¬°áµÆ´ÂÁö È®ÀÎ
-        Debug.Log("¼­¹ö¿Í ¿¬°á ¼º°ø");
-        // ·Îºñ ÀÔÀåÇß´ÂÁö È®ÀÎ, False
-        Debug.Log($"·Îºñ ÀÔÀå ¿©ºÎ = {PhotonNetwork.InLobby}");
-        // ·Îºñ ÀÔÀå
+        // ì˜ ì—°ê²°ëëŠ”ì§€ í™•ì¸
+        Debug.Log("ì„œë²„ì™€ ì—°ê²° ì„±ê³µ");
+        // ë¡œë¹„ ì…ì¥í–ˆëŠ”ì§€ í™•ì¸, False
+        Debug.Log($"ë¡œë¹„ ì…ì¥ ì—¬ë¶€ = {PhotonNetwork.InLobby}");
+        // ë¡œë¹„ ì…ì¥
         PhotonNetwork.JoinLobby();
     }
 
-    // ·Îºñ¿¡ Á¢¼Ó ÈÄ È£ÃâµÇ´Â Äİ¹é ÇÔ¼ö
+    // ë¡œë¹„ì— ì ‘ì† í›„ í˜¸ì¶œë˜ëŠ” ì½œë°± í•¨ìˆ˜
     public override void OnJoinedLobby()
     {
-        // ·Îºñ ÀÔÀåÇß´ÂÁö È®ÀÎ, True
-        Debug.Log($"·Îºñ ÀÔÀå ¿©ºÎ = {PhotonNetwork.InLobby}");
-        // »ı¼ºµÇ¾î ÀÖ´Â ·ë Áß¿¡¼­ ·£´ıÇÏ°Ô ÀÔÀå
+        // ë¡œë¹„ ì…ì¥í–ˆëŠ”ì§€ í™•ì¸, True
+        Debug.Log($"ë¡œë¹„ ì…ì¥ ì—¬ë¶€ = {PhotonNetwork.InLobby}");
+        // ìƒì„±ë˜ì–´ ìˆëŠ” ë£¸ ì¤‘ì—ì„œ ëœë¤í•˜ê²Œ ì…ì¥
         PhotonNetwork.JoinRandomRoom();
     }
 
-    // ·£´ı ·ë ÀÔÀå¿¡ ½ÇÆĞÇßÀ» ‹š È£ÃâµÇ´Â Äİ¹é ÇÔ¼ö
+    // ëœë¤ ë£¸ ì…ì¥ì— ì‹¤íŒ¨í–ˆì„ ë–„ í˜¸ì¶œë˜ëŠ” ì½œë°± í•¨ìˆ˜
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        // ¿¡·¯ ¸Ş¼¼Áö Ãâ·Â
-        Debug.Log($"·£´ı ·ë ÀÔÀå ½ÇÆĞ {returnCode}:{message}");
+        // ì—ëŸ¬ ë©”ì„¸ì§€ ì¶œë ¥
+        Debug.Log($"ëœë¤ ë£¸ ì…ì¥ ì‹¤íŒ¨ {returnCode}:{message}");
 
-        // ·ë ¼Ó¼º Á¤ÀÇ
+        // ë£¸ ì†ì„± ì •ì˜
         RoomOptions ro = new RoomOptions();
-        ro.MaxPlayers = 20;      // ÃÖ´ë µ¿Á¢ÀÚ ¼ö: 20¸í
-        ro.IsOpen = true;        // ·ëÀÇ ¿ÀÇÂ ¿©ºÎ
-        ro.IsVisible = true;     // ·Îºñ¿¡¼­ ·ë ¸ñ·Ï ³ëÃâ ¿©ºÎ
+        ro.MaxPlayers = 20;      // ìµœëŒ€ ë™ì ‘ì ìˆ˜: 20ëª…
+        ro.IsOpen = true;        // ë£¸ì˜ ì˜¤í”ˆ ì—¬ë¶€
+        ro.IsVisible = true;     // ë¡œë¹„ì—ì„œ ë£¸ ëª©ë¡ ë…¸ì¶œ ì—¬ë¶€
 
-        // ·ë »ı¼º
+        // ë£¸ ìƒì„±
         PhotonNetwork.CreateRoom("My Room", ro);
     }
 
-    // ·ë »ı¼ºÀÌ ¿Ï·áµÈ ÈÄ È£ÃâµÇ´Â Äİ¹é ÇÔ¼ö
+    // ë£¸ ìƒì„±ì´ ì™„ë£Œëœ í›„ í˜¸ì¶œë˜ëŠ” ì½œë°± í•¨ìˆ˜
     public override void OnCreatedRoom()
     {
-        Debug.Log("·ë »ı¼º");
-        Debug.Log($"·ë ÀÌ¸§ = {PhotonNetwork.CurrentRoom.Name}");
+        Debug.Log("ë£¸ ìƒì„±");
+        Debug.Log($"ë£¸ ì´ë¦„ = {PhotonNetwork.CurrentRoom.Name}");
     }
 
-    // ·ë¿¡ ÀÔÀåÇÑ ÈÄ È£ÃâµÇ´Â Äİ¹é ÇÔ¼ö
+    // ë£¸ì— ì…ì¥í•œ í›„ í˜¸ì¶œë˜ëŠ” ì½œë°± í•¨ìˆ˜
     public override void OnJoinedRoom()
     {
-        Debug.Log($"·ë ÀÔÀå ¿©ºÎ = {PhotonNetwork.InRoom}");
-        Debug.Log($"ÇöÀç ·ëÀÇ ÀÎ¿ø¼ö = {PhotonNetwork.CurrentRoom.PlayerCount}");
+        Debug.Log($"ë£¸ ì…ì¥ ì—¬ë¶€ = {PhotonNetwork.InRoom}");
+        Debug.Log($"í˜„ì¬ ë£¸ì˜ ì¸ì›ìˆ˜ = {PhotonNetwork.CurrentRoom.PlayerCount}");
 
         foreach (var player in PhotonNetwork.CurrentRoom.Players)
         {
             Debug.Log($"{player.Value.NickName}, {player.Value.ActorNumber}");
         }
 
-        // Ä³¸¯ÅÍ ÃâÇö Á¤º¸ ¹è¿­¿¡ ÀúÀå
+        // ìºë¦­í„° ì¶œí˜„ ì •ë³´ ë°°ì—´ì— ì €ì¥
         Transform[] points = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
         int idx = Random.Range(1, points.Length);
 
-        // Ä³¸¯ÅÍ »ı¼º
+        // ìºë¦­í„° ìƒì„±
         PhotonNetwork.Instantiate("Prefabs/Player", points[idx].position, points[idx].rotation, 0);
     }
 
