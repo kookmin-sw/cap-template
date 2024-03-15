@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using System.Linq.Expressions;
 
 public class MovementStateManager : MonoBehaviour
 {
@@ -40,22 +39,25 @@ public class MovementStateManager : MonoBehaviour
     [HideInInspector] public AnimatorStateInfo stateInfo;
     public int tempLayer;
 
+    private PhotonView pv;
+
     void Start()
     {
+        pv = GetComponent<PhotonView>();
         anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
-        // anim.SetLayerWeight(tempLayer, 1);
-        // stateInfo = anim.GetCurrentAnimatorStateInfo(tempLayer);
         SwitchState(Idle);
     }
 
     void Update()
     {
-        GetDirectionAndMove();
-        Gravity();
+        if (pv.IsMine)
+        {
+            GetDirectionAndMove();
+            Gravity();
 
-        anim.SetFloat("xAxis", xAxis);
-        anim.SetFloat("zAxis", zAxis);
+            anim.SetFloat("xAxis", xAxis);
+            anim.SetFloat("zAxis", zAxis);
 
         currentState.UpdateState(this);
 
