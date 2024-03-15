@@ -36,8 +36,6 @@ public class MovementStateManager : MonoBehaviour
     public JumpState Jump = new JumpState();
 
     [HideInInspector] public Animator anim;
-    [HideInInspector] public AnimatorStateInfo stateInfo;
-    public int tempLayer;
 
     private PhotonView pv;
 

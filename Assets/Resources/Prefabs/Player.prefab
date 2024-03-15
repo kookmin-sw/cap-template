@@ -1300,7 +1300,6 @@ MonoBehaviour:
   gravity: -9.81
   jumped: 0
   anim: {fileID: 0}
-  tempLayer: 0
 --- !u!143 &8536026664842187324
 CharacterController:
   m_ObjectHideFlags: 0
