@@ -13,7 +13,8 @@ public class MovementStateManager : MonoBehaviour
     public float currentMoveSpeed;
     public float walkSpeed = 3, walkBackSpeed = 2; 
     public float runSpeed = 7, runBackSpeed = 5;
-    public float crouchSpeed = 2, crouchBackSpeed = 1;
+    public float crouchSpeed = 1, crouchBackSpeed = 1;
+    public float crouchFastSpeed = 2, crouchFastBackSpeed = 2;
     public float jumpPower = 5;
     CharacterController controller;
 
@@ -35,6 +36,8 @@ public class MovementStateManager : MonoBehaviour
     public JumpState Jump = new JumpState();
 
     [HideInInspector] public Animator anim;
+    [HideInInspector] public AnimatorStateInfo stateInfo;
+    public int tempLayer;
 
     private PhotonView pv;
 
@@ -56,8 +59,9 @@ public class MovementStateManager : MonoBehaviour
             anim.SetFloat("xAxis", xAxis);
             anim.SetFloat("zAxis", zAxis);
 
-            currentState.UpdateState(this);
-        }
+        currentState.UpdateState(this);
+
+        Attack();
     }
 
     public void SwitchState(MovementBaseState state)
@@ -94,6 +98,13 @@ public class MovementStateManager : MonoBehaviour
 
     public void Jumped() => jumped = true;
 
+    public void Attack(){
+        if (Input.GetMouseButton(0))
+            {
+                anim.SetBool("Attack", true);
+            }
+        else anim.SetBool("Attack", false);
+    }
 
     /*
     private void OnDrawGizmos()
@@ -102,5 +113,4 @@ public class MovementStateManager : MonoBehaviour
         Gizmos.DrawWireSphere(spherePos, controller.radius - 0.05f);
     }
     */
-
 }
