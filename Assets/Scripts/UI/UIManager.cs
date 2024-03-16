@@ -56,4 +56,28 @@ public class UIManager : MonoBehaviour
             }
         }
     }
+
+    void SelectQuickSlot()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+
+        }
+    }
 }
