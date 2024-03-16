@@ -12,6 +12,7 @@ TagManager:
   - Cloth
   - Bullet
   - Item
+  - ItemSpawner
   layers:
   - Default
   - TransparentFX
