@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart'; //권한 설정
 import 'package:geolocator/geolocator.dart'; // 위치 패키지
 import 'ObjectRecognitionMode.dart'; // 새로 만든 파일 import
-import 'location_permission.dart'; //위치 파일 import
-import 'package:speech_to_text/speech_recognition_result.dart';
-import 'package:speech_to_text/speech_to_text.dart';
+import 'location_permission.dart'; // 위치 파일 import
+import 'sever.dart'; // 서버 연동 파일 import
+import 'package:http/http.dart' as http; // http 사용 패키지
+import 'dart:convert'; //json 변환 패키지
+import 'dart:async'; //탭 시간차 패키지
+import 'package:speech_to_text/speech_recognition_result.dart'; // 음성 인식 패키지
+import 'package:speech_to_text/speech_to_text.dart'; // stt -> tts 패키지
 
 void main() {
   runApp(
@@ -31,27 +35,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _tapCount = 0;
 
+  //sever.dart 에서의 Sever 클래스 상속
+  Sever sever = Sever();
+
+  //앱 실행시 백그라운드 실행
+  @override
+  void initState() {
+    super.initState();
+    sever.getData();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _tapCount++;
-          if (_tapCount == 1) {
-            showDialog(
-                context: context,
-                builder: (context) => SttTab()
-            );
-            /*(Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ObjectRecognitionMode()),
-            );*/
-          }
-          _tapCount = 0;
-        });
+        // _tapCount 변수를 사용하지 않고 바로 Navigator.push를 사용하여
+        // 싱글 탭 이벤트 처리 시 SttTab() 호출
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SttTab()),
+        );
+      },
+      onDoubleTap: () {
+        // 더블 탭 이벤트 처리 시 ObjectRecognitionMode() 호출
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ObjectRecognitionMode()),
+        );
       },
       child: Scaffold(
         appBar: AppBar(
@@ -145,7 +156,7 @@ class _SttTabState extends State<SttTab> {
                           _startListening();
                         }
                       }, icon: Icon(Icons.mic,size:50),style: IconButton.styleFrom(
-                        fixedSize: Size(200,70)
+                          fixedSize: Size(200,70)
                       ),),
                     ],
 
