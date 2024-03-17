@@ -51,4 +51,6 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
             eventData.pointerDrag.GetComponent<RectTransform>().position = slotRect.position;
         }
     }
+
+
 }
