@@ -8,6 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "MyCannon.h"
+#include "CannonBall.h"
 #include "MyCharacter.h"
 #include "MyPlayerController.generated.h"
 
@@ -62,7 +63,8 @@ protected:
 	void Move(const FInputActionInstance& Instance);
 	void Interaction(const FInputActionInstance& Instance);
 	void Shoot(const FInputActionInstance& Instance);
-
+	
+	
 	enum class ControlMode
 	{
 		CHARACTER,

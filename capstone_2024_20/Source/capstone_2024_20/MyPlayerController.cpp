@@ -28,8 +28,7 @@ AMyPlayerController::AMyPlayerController()
 	// test
 
 	CurrentStrategy = new CharacterControlStrategy();
-	
-	
+
 }
 
 
@@ -156,6 +155,7 @@ void AMyPlayerController::ViewChange()
 				LastMappingContext = CannonMappingContext;
 				CurrentStrategy = new CannonControlStrategy();
 				ControlledActor = Player->GetCurrentHitObject();
+				Cannon = Cast<AMyCannon>(Player->GetCurrentHitObject());
 			}
 		break;
     
@@ -174,5 +174,9 @@ void AMyPlayerController::ViewChange()
 
 void AMyPlayerController::Shoot(const FInputActionInstance& Instance)
 {
+	Cannon->FireCannon();
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("Shooting!"));
+
+
+	
 }

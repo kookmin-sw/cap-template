@@ -95,4 +95,6 @@ public:
 
 	UFUNCTION()
 	FString GetCurrentHitObjectName();
+
+	
 };
