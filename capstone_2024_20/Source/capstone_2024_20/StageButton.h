@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "StageSelectController.h"
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "StageButton.generated.h"
@@ -11,6 +12,7 @@
  * 
  */
 UCLASS()
+
 class CAPSTONE_2024_20_API UStageButton : public UButton
 {
 	GENERATED_BODY()
@@ -26,6 +28,8 @@ protected:
 
 	
 public:
+	FMulticastRPC_ClickStageDelegate OnCLickButton;
+	
 	UFUNCTION()
 	void SettingStagePopUpWidget();
 	
@@ -42,4 +46,9 @@ public:
 	UFUNCTION()
 	void Stage_Start();
 
+	UFUNCTION()
+	UUserWidget* CreatePopup();
+
+	UFUNCTION()
+	UButton* GetStartButton();
 };

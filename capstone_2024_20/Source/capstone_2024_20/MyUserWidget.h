@@ -25,10 +25,14 @@ class CAPSTONE_2024_20_API UMyUserWidget : public UUserWidget
 	TArray<UStageButton*> Buttons;
 	
 public:
+	void InitRPC(FMulticastRPC_ClickStageDelegate& ClickDelegate);
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUserWidget> StagePopUpWidgetClass;
 
 	UPROPERTY(EditAnywhere)
 	UUserWidget* CurrentWidget;
-	
+
+	void RegisterButtonClickHandler(FMulticastRPC_ClickStageDelegate& ClickStageDelegate);
+
+	UStageButton* GetStageButton(int buttonNumber);
 };
