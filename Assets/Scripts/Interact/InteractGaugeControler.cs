@@ -11,10 +11,6 @@ public class InteractGaugeControler : MonoBehaviour
     private float GaugeTimer;
     [SerializeField] private float interactGaugeFillSpeed = 4.0f;
 
-    [SerializeField] private bool interactGaugeStatus = false;
-
-
-
     private void Awake()
     {
         InteractGuageImage = GetComponentInChildren<Image>();
@@ -22,21 +18,6 @@ public class InteractGaugeControler : MonoBehaviour
         
     }
 
-
-    void Update()
-    {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    SetInteractGaugeStatustoTrue();
-        //    InteractGuageImage.gameObject.SetActive(true);
-        //}
-
-        //if (interactGaugeStatus)
-        //{
-        //    LoadingProgressCircleFunc();
-        //}
-
-    }
 
 
 
