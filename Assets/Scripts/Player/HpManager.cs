@@ -25,6 +25,8 @@ public class HpManager : MonoBehaviour
     // 데미지 처리하는 함수
     public void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
+        Debug.Log("데미지 입음");
+        Debug.Log("남은 hp: " + hp);
         hp -= damage;
 
         // 체력이 0 이하이고 살아있으면 사망
@@ -32,6 +34,11 @@ public class HpManager : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public void OnDamage()
+    {
+        OnDamage(10f, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
     }
 
     // 체력 회복 함수
@@ -51,6 +58,7 @@ public class HpManager : MonoBehaviour
     // 사망 함수
     public void Die()
     {
+        Debug.Log("사망");
         // 사망 이벤트 있으면 실행
         if (onDeath != null)
         {
