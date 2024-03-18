@@ -56,12 +56,14 @@ public:
 
 protected:
 	
-
 	bool bIsChanging=false;
 	float TargetArmLength;
 	FRotator TargetRotation;
 	float ChangeSpeed = 5.0f;
 	bool bIsOverlap = false;
+
+	AActor* CurrentHitObject;
+	FString CurrentHitObjectName;
 
 	UFUNCTION()
 	virtual void BeginOverlap(UPrimitiveComponent* OverlappedComponent,
@@ -87,4 +89,12 @@ public:
 
 	UFUNCTION()
 	void SetIsChanging(float length, FRotator rot, bool b);
+
+	UFUNCTION()
+	AActor* GetCurrentHitObject();
+
+	UFUNCTION()
+	FString GetCurrentHitObjectName();
+
+	
 };

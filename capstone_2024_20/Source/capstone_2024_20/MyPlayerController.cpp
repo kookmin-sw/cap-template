@@ -3,7 +3,10 @@
 
 #include "MyPlayerController.h"
 
+#include "CannonControlStrategy.h"
+#include "CharacterControlStrategy.h"
 #include "MyShip.h"
+#include "ShipControlStrategy.h"
 #include "Kismet/GameplayStatics.h"
 
 AMyPlayerController::AMyPlayerController()
@@ -12,91 +15,67 @@ AMyPlayerController::AMyPlayerController()
 
 	static ConstructorHelpers::FObjectFinder<UInputAction> AC_Move(TEXT("/Script/EnhancedInput.InputAction'/Game/Inputs/Actions/Move.Move'"));
 	static ConstructorHelpers::FObjectFinder<UInputAction> AC_Interaction(TEXT("/Script/EnhancedInput.InputAction'/Game/Inputs/Actions/Interaction.Interaction'"));
-	static ConstructorHelpers::FObjectFinder<UInputMappingContext> IMC_Mapping(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Inputs/Mappings/IMC_test.IMC_test'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction> AC_Shoot(TEXT("/Script/EnhancedInput.InputAction'/Game/Inputs/Actions/Shoot.Shoot'"));
+	static ConstructorHelpers::FObjectFinder<UInputMappingContext> IMC_Default_Mapping(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Inputs/Mappings/IMC_test.IMC_test'"));
+	static ConstructorHelpers::FObjectFinder<UInputMappingContext> IMC_Shoot_Mapping(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Inputs/Mappings/IMC_Cannon.IMC_Cannon'"));
 	
 	MoveAction = AC_Move.Object;
 	InteractionAction = AC_Interaction.Object;
-	DefaultMappingContext = IMC_Mapping.Object;
+	ShootAction = AC_Shoot.Object;
+	DefaultMappingContext = IMC_Default_Mapping.Object;
+	CannonMappingContext = IMC_Shoot_Mapping.Object;
+
+	// test
+
+	CurrentStrategy = new CharacterControlStrategy();
+
 }
 
 
 void AMyPlayerController::BeginPlay()
 {
+	//플레이어 할당
 	Player = Cast<AMyCharacter>(GetCharacter());
+
+	//배 할당
 	TArray<AActor*> FoundShips;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMyShip::StaticClass(), FoundShips);
-
 	if (FoundShips.Num() > 0)
 	{
 		Ship = Cast<APawn>(FoundShips[0]);
 	}
 
-	if(Ship != nullptr)
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("shipship"));
-	
-	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
+	// 매핑 컨텐스트 할당
+	Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
 	if(Subsystem != nullptr)
 	{
 		Subsystem->AddMappingContext(DefaultMappingContext,0);
 	}
 	SetupPlayerInputComponent(Player->InputComponent);
 
+
+	ControlledActor = Player;
+	
 }
 
 void AMyPlayerController::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("afdsafdsfdas"));
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 
 	if(Input != nullptr)
 	{
 		Input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMyPlayerController::Move);
 		Input->BindAction(InteractionAction, ETriggerEvent::Started, this, &AMyPlayerController::Interaction);
+		Input->BindAction(ShootAction, ETriggerEvent::Started, this, &AMyPlayerController::Shoot);
 	}
 }
 
 void AMyPlayerController::Move(const FInputActionInstance& Instance)
 {
-	FVector2D MoveVec = Instance.GetValue().Get<FVector2D>();
-
-		const FRotator Rotation = this->GetControlRotation();
-     	const FRotator YawRotation(0,Rotation.Yaw,0);
-     	const FVector ForwardDir = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-     	const FVector RightDir = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-
-		if(CurrentControlMode == ControlMode::CHARACTER)
-		{
-			Player->AddMovementInput(ForwardDir, MoveVec.Y);
-			Player->AddMovementInput(RightDir, MoveVec.X);
-		}
-		else if(CurrentControlMode == ControlMode::SHIP)
-		{
-			float MoveSpeed = 600.0f; // 선박의 전진 속도
-			float RotationSpeed = 10.0f; // 회전 속도 (도/초)
-			float DeltaTime = GetWorld()->GetDeltaSeconds();
-
-			// 전진 처리: 앞 방향키 입력에 따라
-			if(MoveVec.Y > 0)
-			{
-				FVector ForwardDirection = Ship->GetActorForwardVector();
-				Ship->AddActorWorldOffset(-ForwardDirection * MoveVec.Y * MoveSpeed * DeltaTime, true);
-			
-
-				// 회전 처리: 좌우 방향키 입력에 따라
-				if(MoveVec.X != 0)
-				{
-					FRotator CurrentRotation = Ship->GetActorRotation();
-					// 목표 회전 각도를 계산합니다 (현재 Yaw 값 + 입력에 따른 변화량).
-					float TargetYaw = CurrentRotation.Yaw + MoveVec.X * RotationSpeed * DeltaTime;
-					// 회전 각도를 -30도에서 30도 사이로 제한합니다.
-					TargetYaw = FMath::Clamp(TargetYaw, -360.0f, 360.0f);
-
-					// 실제 회전 적용
-					Ship->SetActorRotation(FRotator(0.0f, TargetYaw, 0.0f));
-				}
-			}
-		}
+	if(CurrentStrategy != nullptr)
+	{
+		CurrentStrategy->Move(Instance, ControlledActor, GetWorld()->GetDeltaSeconds());
+	}
 }
 
 
@@ -109,6 +88,7 @@ void AMyPlayerController::Interaction(const FInputActionInstance& Instance)
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("Interaction"));
 		Player->SetTextWidgetVisible(!Player->GetTextWidgetVisible());
 		ViewChange();
+		
 
 		//스테이지 클리어 팝업 띄우기
 		// UUserWidget* PopUpWidget = CreateWidget<UUserWidget>(GetWorld(), ClearPopUpWidgetClass);
@@ -155,10 +135,48 @@ void AMyPlayerController::ViewChange()
 	switch (CurrentControlMode)
 	{
 	case ControlMode::CHARACTER:
-		SetControlMode(ControlMode::SHIP);
+		// 플레이어가 현재 선택/접근한 오브젝트의 이름을 비교
+			if(Player->GetCurrentHitObjectName().Equals(TEXT("SteelWheel")))
+			{
+				// 현재 접근한 오브젝트가 "SteelWheel"이면, 컨트롤 모드를 SHIP으로 변경
+				SetControlMode(ControlMode::SHIP);
+				LastMappingContext = DefaultMappingContext;
+				CurrentStrategy = new ShipControlStrategy();
+				ControlledActor = Ship;
+				
+			}
+			else if(Player->GetCurrentHitObjectName().Equals(TEXT("Cannon")))
+			{
+				// 현재 접근한 오브젝트가 "Cannon"이면, 컨트롤 모드를 CANNON으로 변경
+				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("ChangeMapping"));
+				SetControlMode(ControlMode::CANNON);
+				Subsystem->RemoveMappingContext(DefaultMappingContext);
+				Subsystem->AddMappingContext(CannonMappingContext,0);
+				LastMappingContext = CannonMappingContext;
+				CurrentStrategy = new CannonControlStrategy();
+				ControlledActor = Player->GetCurrentHitObject();
+				Cannon = Cast<AMyCannon>(Player->GetCurrentHitObject());
+			}
 		break;
+    
 	case ControlMode::SHIP:
+	case ControlMode::CANNON:
+		// 현재 컨트롤 모드가 SHIP 또는 CANNON일 경우, 무조건 CHARACTER 모드로 전환
 		SetControlMode(ControlMode::CHARACTER);
+		Subsystem->RemoveMappingContext(LastMappingContext);
+		Subsystem->AddMappingContext(DefaultMappingContext,0);
+		LastMappingContext = DefaultMappingContext;
+		CurrentStrategy = new CharacterControlStrategy();
+		ControlledActor = Player;
 		break;
 	}
+}
+
+void AMyPlayerController::Shoot(const FInputActionInstance& Instance)
+{
+	Cannon->FireCannon();
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("Shooting!"));
+
+
+	
 }
