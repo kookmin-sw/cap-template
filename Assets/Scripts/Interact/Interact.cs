@@ -9,7 +9,6 @@ public class Interact : MonoBehaviour
     public GameObject circleGauge;
     public Inventory quicSlot;
 
-
     public bool isInvetigating = false; //수색중인가?
 
 
@@ -17,12 +16,16 @@ public class Interact : MonoBehaviour
     float interactDiastance = 2.0f;
     Transform selectedTarget;
 
+    // 레이케스트 시작점을 얼마나 변경할지 결정하는 벡터
+    private Vector3 raycastOffset = new Vector3(0f, -0.5f, -1f);
+
     void Update()
     {
         Debug.DrawRay(transform.position, transform.forward * interactDiastance, Color.blue, interactDiastance);
 
         //LayerMask.GetMask("Interact") : raycast가 Interact 레이어와만 상호작용 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, interactDiastance, LayerMask.GetMask("Interact")))
+        Vector3 raycastStartingPoint = transform.position + transform.TransformDirection(raycastOffset);
+        if (Physics.Raycast(raycastStartingPoint, transform.TransformDirection(Vector3.forward), out hit, interactDiastance, LayerMask.GetMask("Interact")))
         {
             //셀렉된 타겟이 없거나 새로운 오브젝트라면 새로 셀렉 
             if (selectedTarget == null || selectedTarget != hit.transform)
