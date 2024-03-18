@@ -35,7 +35,7 @@ AMyPlayerController::AMyPlayerController()
 void AMyPlayerController::BeginPlay()
 {
 	//플레이어 할당
-	Player = Cast<AMyCharacter>(GetCharacter());
+	
 
 	//배 할당
 	TArray<AActor*> FoundShips;
@@ -51,15 +51,56 @@ void AMyPlayerController::BeginPlay()
 	{
 		Subsystem->AddMappingContext(DefaultMappingContext,0);
 	}
-	SetupPlayerInputComponent(Player->InputComponent);
 
-
-	ControlledActor = Player;
+	Player = Cast<AMyCharacter>(GetPawn());
+	if(Player)
+	{
+		ControlledActor = Player;
+		if(Player->InputComponent)
+			SetupInputComponent(Player->InputComponent);
 	
+		// else
+		// {
+		// 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("InputComponent NULL"));
+		// }
+	}
+	else
+	{
+		
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Player NULL"));
+	}
+
 }
 
-void AMyPlayerController::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AMyPlayerController::Tick(float DeltaSeconds)
 {
+	Super::Tick(DeltaSeconds);
+	if(!HasAuthority())
+	{
+		if(!Player || flag)
+		{
+			Player = Cast<AMyCharacter>(GetPawn());
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Player NULL"));
+
+			if(Player)
+			{
+				ControlledActor = Player;
+				if(Player->InputComponent)
+				{
+					SetupInputComponent(Player->InputComponent);
+					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Player Component NOT NULL"));
+					flag = false;
+				}
+			}
+		}
+	}
+}
+
+
+void AMyPlayerController::SetupInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupInputComponent();
+		
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 
 	if(Input != nullptr)
@@ -111,7 +152,7 @@ void AMyPlayerController::SetControlMode(ControlMode NewControlMode)
 	{
 	case ControlMode::SHIP:
 		Player->bUseControllerRotationYaw = false;
-		TargetArmLength = 3000.0f;
+		TargetArmLength = 6000.0f;
 		TargetRotation = FRotator(-70.0f, 0.0f, 0.0f);
 		Player->SetIsChanging(TargetArmLength, TargetRotation, true);
 		break;

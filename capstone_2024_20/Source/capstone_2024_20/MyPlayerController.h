@@ -27,9 +27,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	virtual void Tick(float DeltaSeconds) override;
+	
 public:	
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent);
+	virtual void SetupInputComponent(class UInputComponent* PlayerInputComponent);
 
 private:
 	UPROPERTY(Category=Input, VisibleAnywhere)
@@ -58,12 +60,13 @@ private:
 	AMyCannon* Cannon;
 	UEnhancedInputLocalPlayerSubsystem* Subsystem;
 	UInputMappingContext* LastMappingContext;
-	
-protected:
+
+public:
 	void Move(const FInputActionInstance& Instance);
-	void Interaction(const FInputActionInstance& Instance);
-	void Shoot(const FInputActionInstance& Instance);
-	
+    void Interaction(const FInputActionInstance& Instance);
+    void Shoot(const FInputActionInstance& Instance);
+
+protected:
 	
 	enum class ControlMode
 	{
@@ -80,6 +83,7 @@ protected:
 	FRotator TargetRotation;
 	float ChangeSpeed = 5.0f;
 
+	bool flag = true;
 	
 	
 };

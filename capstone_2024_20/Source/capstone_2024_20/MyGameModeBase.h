@@ -15,6 +15,5 @@ class CAPSTONE_2024_20_API AMyGameModeBase : public AGameModeBase
 	GENERATED_BODY()
 
 	virtual void StartPlay() override;
-
 	AMyGameModeBase();
 };

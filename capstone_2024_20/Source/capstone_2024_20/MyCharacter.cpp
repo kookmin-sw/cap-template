@@ -1,5 +1,6 @@
 #include "MyCharacter.h"
 
+#include "MyPlayerController.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -53,7 +54,6 @@ AMyCharacter::AMyCharacter()
 		M_MeshComponent->SetRelativeLocation(FVector(0.0f, 0.0f, -88.0f));
 	}
 
-	
 }
 
 // Called when the game starts or when spawned
@@ -68,6 +68,8 @@ void AMyCharacter::BeginPlay()
 	GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &AMyCharacter::EndOverlap);
 	
 }
+
+
 
 // Called every frame
 void AMyCharacter::Tick(float DeltaTime)

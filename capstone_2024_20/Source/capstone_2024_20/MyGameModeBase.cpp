@@ -15,7 +15,6 @@ AMyGameModeBase::AMyGameModeBase()
 	PlayerControllerClass = AMyPlayerController::StaticClass();
 }
 
-
 void AMyGameModeBase::StartPlay()
 {
 	Super::StartPlay();
