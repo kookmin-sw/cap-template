@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractWithUI : MonoBehaviour
+public class Interact : MonoBehaviour
 {
 
     public GameObject image_F;
-
+    public GameObject circleGauge;
     public Inventory quicSlot;
-    public Item battery_item;
+
+
+    public bool isInvetigating = false; //수색중인가?
 
 
     RaycastHit hit;
     float interactDiastance = 2.0f;
     Transform selectedTarget;
-
 
     void Update()
     {
@@ -44,7 +45,10 @@ public class InteractWithUI : MonoBehaviour
                 if (selectedTarget.CompareTag("ItemSpawner"))
                 {
                     Debug.Log("betterySpawner 와 상호작용");
-                    selectedTarget.GetComponent<ItemSpawner>().SpawnItem();
+
+                    circleGauge.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화하고
+                    circleGauge.GetComponent<InteractGaugeControler>().AbleInvestinGaugeUI(); //게이지UI켜고 
+                    isInvetigating = true;//수색시작
                 }
 
                 if (selectedTarget.CompareTag("Item"))
@@ -60,10 +64,12 @@ public class InteractWithUI : MonoBehaviour
                     }
                 }
             }
+
         }
         else
         {
-            //레이캐스트가 Interactable 오브젝트와 충돌하지 않았다면 실행됨
+            //레이캐스트가 Interactable 오브젝트와 충돌하지 않고 있다면
+
 
             //셀렉된 타겟이 있다면
             if (selectedTarget)
@@ -73,6 +79,25 @@ public class InteractWithUI : MonoBehaviour
                 image_F.GetComponent<UIpressF>().remove_image();
             }
         }
+
+
+
+
+
+        //수색여부(isInvetigating)에 따라 실행됨. 수색중이면 게이지 증g
+        if (isInvetigating)
+        {
+            if (circleGauge.GetComponent<InteractGaugeControler>().FillCircle())
+            {
+                //수색을 성공적으로 마쳤다면 아이템 스폰 
+                selectedTarget.GetComponent<ItemSpawner>().SpawnItem();
+
+                //수색종료
+                isInvetigating = false; 
+                circleGauge.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI();
+            }
+        }
+
     }
 
 
@@ -84,6 +109,10 @@ public class InteractWithUI : MonoBehaviour
         Debug.Log(obj.name + " is unselected");
         removeOutline(obj);
         selectedTarget = null;
+
+        isInvetigating = false; //수색중이라면 취소하고
+        circleGauge.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI(); //게이지UI끄기 
+
     }
 
     void selectTarget(Transform obj)
