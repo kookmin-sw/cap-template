@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameOverBoard;
 
     private int selectSlot = 0;
+    bool isGameOver = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -21,15 +23,22 @@ public class UIManager : MonoBehaviour
         ChangeSlot(0);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+         
     }
 
     // Update is called once per frame
     void Update()
     {
-        ManageCombinationSlot();
-        ManageSetting();
-        SelectQuickSlot();
-        ManageGameOverBoard();
+        if(isGameOver == false)
+        {
+            ManageCombinationSlot();
+            ManageSetting();
+            SelectQuickSlot();
+        }
+        else
+        {
+            ManageGameOverBoard();
+        }
     }
 
     void ManageCombinationSlot()
@@ -73,7 +82,7 @@ public class UIManager : MonoBehaviour
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
-            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKey(KeyCode.Tab)) return;
+            isGameOver = true;
         }
     }
 
@@ -93,5 +102,6 @@ public class UIManager : MonoBehaviour
         slots[pressValue].Selected();
         selectSlot = pressValue;
     }
+
 
 }

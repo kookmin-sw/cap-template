@@ -12,6 +12,12 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
     private Color preColor;
     private Color hoverColor;
     private RectTransform slotRect;
+
+    [SerializeField] private RectTransform firstComSlotRect;
+    [SerializeField] private RectTransform secondComSlotRect;
+    [SerializeField] private Slot firstComSlot;
+    [SerializeField] private Slot secondComSlot;
+    [SerializeField] private CraftSlot craftSlot;
     void Awake()
     {
         slotImage = GetComponent<Image>();
@@ -49,6 +55,15 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
             }
             eventData.pointerDrag.transform.SetParent(transform);
             eventData.pointerDrag.GetComponent<RectTransform>().position = slotRect.position;
+            if(eventData.pointerDrag.GetComponent<RectTransform>().position == firstComSlotRect.position)
+            {
+                craftSlot.AddItem(firstComSlot.item);
+            }
+            else if(eventData.pointerDrag.GetComponent<RectTransform>().position == secondComSlotRect.position)
+            {
+                craftSlot.AddItem(secondComSlot.item);
+            }
+            
         }
     }
 
