@@ -1,8 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using Photon.Pun.UtilityScripts;
 
 public class MovementStateManager : MonoBehaviour
 {
@@ -27,11 +27,10 @@ public class MovementStateManager : MonoBehaviour
     [HideInInspector] public bool jumped;
     Vector3 velocity;
 
-    public Item[] weapons;
+    public GameObject[] weapons;
     public bool[] hasWeapons;
     public Inventory quickSlot;
-    public Item item;
-    Item equipWeapon;
+    GameObject equipWeapon;
     int equipWeaponIndex = -1;
     bool isSwap;
 
@@ -52,6 +51,7 @@ public class MovementStateManager : MonoBehaviour
         pv = GetComponent<PhotonView>();
         anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
+        quickSlot = GameObject.Find("ItemQuickSlots").GetComponent<Inventory>();
         SwitchState(Idle);
     }
 
@@ -116,11 +116,21 @@ public class MovementStateManager : MonoBehaviour
     }
 
     void weapswap()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+    {   
+        //Item item = quickSlot.items[0];
+        if (Input.GetButtonDown("Swap1"))
         {
-            Debug.Log("adasda");
-            //SwapWeapon(0);
+            if(quickSlot.items[0].ItemType < 10){
+                for(int i = 0 ; i< weapons.Length; i++){
+                    if(quickSlot.items[0].ItemType == weapons[i].GetComponent<ItemData>().itemData.ItemType){
+                        SwapWeapon(i);
+                        //weapons[i].SetActive(true);
+                        break;
+                    } //Debug.Log(weapons[i].gameObject.GetComponent<ItemData>().itemData.ItemType);
+                        
+                }
+            }
+                //Debug.Log("adasda");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -136,31 +146,31 @@ public class MovementStateManager : MonoBehaviour
     void SwapWeapon(int slotIndex)
     {
         // 퀵 슬롯에서 해당 인덱스의 아이템을 가져옴
-        Item item = quickSlot.items[slotIndex];
+        equipWeapon = weapons[slotIndex];
 
         // 퀵 슬롯에 아이템이 존재하고, 그 아이템이 무기인 경우에만 스왑 진행
-        if (item != null && item.ItemType < 10)
-        {
+        //if (item != null && equipWeapon.gameObject.GetComponent<ItemData>().itemData.ItemType < 10)
+        //{
             // 현재 장착된 무기가 있다면 비활성화
-            if (equipWeapon != null)
-            {
-                equipWeapon.itemPrefab.SetActive(false);
-            }
+            // if (equipWeapon != null)
+            // {
+            //     equipWeapon.gameObject.SetActive(false);
+            // }
 
             // 퀵 슬롯의 아이템을 장착하고 활성화
-            equipWeapon = weapons[slotIndex];
-            equipWeapon.itemPrefab.SetActive(true);
-            equipWeaponIndex = slotIndex;
+            //equipWeapon = weapons[slotIndex];
+            equipWeapon.gameObject.SetActive(true);
+            //equipWeaponIndex = slotIndex;
 
             // 장착한 무기에 따라 애니메이션 등 추가 처리 가능
 
-            Debug.Log("Weapon swapped to: " + item.name);
-        }
-        else
-        {
-            // 해당 슬롯에 아이템이 없거나, 아이템이 무기가 아닌 경우에는 스왑하지 않음
-            Debug.Log("No weapon found in slot " + (slotIndex + 1));
-        }
+            //Debug.Log("Weapon swapped to: " + item.name);
+        // }
+        // else
+        // {
+        //     // 해당 슬롯에 아이템이 없거나, 아이템이 무기가 아닌 경우에는 스왑하지 않음
+        //     Debug.Log("No weapon found in slot " + (slotIndex + 1));
+        // }
     }
    /// <summary>
    /// ///////////////////////////////////////////

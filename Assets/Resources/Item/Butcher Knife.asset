@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83ac938562ef34587829eaa1eb44f09f, type: 3}
-  m_Name: BaseballBat
+  m_Name: Butcher Knife
   m_EditorClassIdentifier: 
-  itemName: BaseballBat
-  itemImage: {fileID: 21300000, guid: 51f175d61fdaebb46813033b8c9fbf7d, type: 3}
-  itemPrefab: {fileID: 1521815488188378, guid: 4a9e365793edb9141a158ba5ce14f83f, type: 3}
-  ItemType: 1
+  itemName: Butcher Knife
+  itemImage: {fileID: 21300000, guid: 3f5539b522fb8584688e5a9cb80d5154, type: 3}
+  itemPrefab: {fileID: 1977814841911302, guid: 2bbbc97c6b78927468644531e25dc913, type: 3}
+  ItemType: 2
   ItemDamage: 0
   ItemRange: 0

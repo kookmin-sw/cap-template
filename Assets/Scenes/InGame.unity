@@ -12144,6 +12144,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1b586aa55524247c1924e8c0c949f9e9, type: 2}
   - {fileID: 11400000, guid: da1e7137fe9214535abac10ade8bc32b, type: 2}
   - {fileID: 11400000, guid: 053dc8dd1cd3645e19ffb3db5751ef78, type: 2}
+  - {fileID: 11400000, guid: 6001ab8e5e1e36841b91cedee76e9e9e, type: 2}
+  - {fileID: 11400000, guid: 5da90f1ee532cde4bbcca4fe0ac27cae, type: 2}
+  - {fileID: 11400000, guid: 1534c28a6a75f33419a1bebcb4ba1353, type: 2}
+  - {fileID: 11400000, guid: 84cd9df79eb99a143b3818adb292c184, type: 2}
+  - {fileID: 11400000, guid: d95d2d437833d764380ed31749533c32, type: 2}
+  - {fileID: 11400000, guid: 128baf0668fce66449d78b3363df22ee, type: 2}
   ItemPrefab: {fileID: 0}
   maxDistance: 1
   m_InitialAngle: 70
