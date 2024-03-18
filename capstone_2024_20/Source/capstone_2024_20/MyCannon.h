@@ -33,6 +33,10 @@ public:
 	// 발사체의 클래스를 설정하기 위한 프로퍼티
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
 	TSubclassOf<class ACannonBall> ProjectileClass;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Effects")
+	UParticleSystem* FireEffect;
+
 	
 	UFUNCTION()
 	FVector GetCannonSpawnLocation();

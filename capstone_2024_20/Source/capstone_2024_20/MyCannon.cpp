@@ -49,6 +49,10 @@ void AMyCannon::FireCannon()
 		// 발사체 생성
 		GetWorld()->SpawnActor<ACannonBall>(ProjectileClass, GetCannonSpawnLocation(), GetCannonSpawnRotation());
 	
+		if (FireEffect)
+		{
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), FireEffect, GetCannonSpawnLocation(), GetCannonSpawnRotation());
+		}
 		// 발사체에 추가적인 로직이 필요하면 여기에 작성
 	
 }

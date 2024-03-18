@@ -31,7 +31,8 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UProjectileMovementComponent* ProjectileMovement;
 	
-
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Effects")
+	UParticleSystem* WaterSplashEffect;
 
 
 	
