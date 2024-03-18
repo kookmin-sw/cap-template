@@ -59,4 +59,8 @@ public class Inventory : MonoBehaviour
             return 0;
         }
     }
+
+    public int getItemType(Item item){
+        return item.ItemType;
+    }
 }

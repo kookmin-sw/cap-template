@@ -1308,8 +1308,10 @@ MonoBehaviour:
   jumpForce: 5
   gravity: -9.81
   jumped: 0
-  weapons: []
-  hasWeapons: 
+  weapons:
+  - {fileID: 11400000, guid: 1b586aa55524247c1924e8c0c949f9e9, type: 2}
+  - {fileID: 11400000, guid: da1e7137fe9214535abac10ade8bc32b, type: 2}
+  hasWeapons: 0000
   quickSlot: {fileID: 0}
   item: {fileID: 0}
   anim: {fileID: 0}
@@ -1439,6 +1441,8 @@ MonoBehaviour:
     LayerIndex: 2
   - SynchronizeType: 1
     LayerIndex: 3
+  - SynchronizeType: 0
+    LayerIndex: 4
 --- !u!1 &4407433462298312627
 GameObject:
   m_ObjectHideFlags: 0

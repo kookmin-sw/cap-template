@@ -27,11 +27,11 @@ public class MovementStateManager : MonoBehaviour
     [HideInInspector] public bool jumped;
     Vector3 velocity;
 
-    public ItemData[] weapons;
+    public Item[] weapons;
     public bool[] hasWeapons;
     public Inventory quickSlot;
     public Item item;
-    GameObject equipWeapon;
+    Item equipWeapon;
     int equipWeaponIndex = -1;
     bool isSwap;
 
@@ -65,9 +65,10 @@ public class MovementStateManager : MonoBehaviour
             anim.SetFloat("xAxis", xAxis);
             anim.SetFloat("zAxis", zAxis);
 
-        currentState.UpdateState(this);
+            currentState.UpdateState(this);
 
-        Attack();
+            Attack();   
+            weapswap();
         }
     }
 
@@ -114,44 +115,91 @@ public class MovementStateManager : MonoBehaviour
         else anim.SetBool("Attack", false);
     }
 
+    void weapswap()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Debug.Log("adasda");
+            //SwapWeapon(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SwapWeapon(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SwapWeapon(2);
+        }
+        // 이하 번호 키에 따른 스왑 처리를 추가할 수 있습니다.
+    }
+
+    void SwapWeapon(int slotIndex)
+    {
+        // 퀵 슬롯에서 해당 인덱스의 아이템을 가져옴
+        Item item = quickSlot.items[slotIndex];
+
+        // 퀵 슬롯에 아이템이 존재하고, 그 아이템이 무기인 경우에만 스왑 진행
+        if (item != null && item.ItemType < 10)
+        {
+            // 현재 장착된 무기가 있다면 비활성화
+            if (equipWeapon != null)
+            {
+                equipWeapon.itemPrefab.SetActive(false);
+            }
+
+            // 퀵 슬롯의 아이템을 장착하고 활성화
+            equipWeapon = weapons[slotIndex];
+            equipWeapon.itemPrefab.SetActive(true);
+            equipWeaponIndex = slotIndex;
+
+            // 장착한 무기에 따라 애니메이션 등 추가 처리 가능
+
+            Debug.Log("Weapon swapped to: " + item.name);
+        }
+        else
+        {
+            // 해당 슬롯에 아이템이 없거나, 아이템이 무기가 아닌 경우에는 스왑하지 않음
+            Debug.Log("No weapon found in slot " + (slotIndex + 1));
+        }
+    }
    /// <summary>
    /// ///////////////////////////////////////////
    /// 
    /// </summary>
    /// 
-    // void SwapOut(){
-    //     isSwap = false;
-    // }
-    // void Swap(){
-    //     if(sDown1 && (!hasWeapons[0] || equipWeaponIndex == 0))
-    //         return;
-    //     if(sDown2 && (!hasWeapons[1] || equipWeaponIndex == 1))
-    //         return;
-    //     if(sDown3 && (!hasWeapons[2] || equipWeaponIndex == 2))
-    //         return;
+//     void SwapOut(){
+//         isSwap = false;
+//     }
+//     void Swap(){
+//         if(sDown1 && (!hasWeapons[0] || equipWeaponIndex == 0))
+//             return;
+//         if(sDown2 && (!hasWeapons[1] || equipWeaponIndex == 1))
+//             return;
+//         if(sDown3 && (!hasWeapons[2] || equipWeaponIndex == 2))
+//             return;
 
-    //     int weaponIndex = -1;
-    //     if(sDown1) weaponIndex = 0;
-    //     if(sDown2) weaponIndex = 1;
-    //     if(sDown3) weaponIndex = 2;
+//         int weaponIndex = -1;
+//         if(sDown1) weaponIndex = 0;
+//         if(sDown2) weaponIndex = 1;
+//         if(sDown3) weaponIndex = 2;
 
-    //     if((sDown1 || sDown2 || sDown3)){
-    //         if(equipWeapon != null)
-    //             equipWeapon.SetActive(false);
+//         if((sDown1 || sDown2 || sDown3)){
+//             if(equipWeapon != null)
+//                 equipWeapon.SetActive(false);
 
-    //         equipWeaponIndex = weaponIndex;
-    //         equipWeapon = weapons[weaponIndex];
-    //         equipWeapon.SetActive(true);
+//             equipWeaponIndex = weaponIndex;
+//             equipWeapon = weapons[weaponIndex];
+//             equipWeapon.SetActive(true);
 
-    //         anim.Settrigger("doSwap");
+//             anim.Settrigger("doSwap");
             
-    //         isSwap = true;
+//             isSwap = true;
 
-    //         Invoke("SwapOut", 0.4f);
-    //     }
+//             Invoke("SwapOut", 0.4f);
+//         }
 
-    // }
-    // 버튼에 따른 아이템 슬롯 선택
+//     }
+//     //버튼에 따른 아이템 슬롯 선택
 //    public void ChangeInventory()
 //     {
 //         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -183,7 +231,7 @@ public class MovementStateManager : MonoBehaviour
 //         // 해당 슬롯에 아이템이 존재하는지 확인
 //         if (slot != null && slot.item != null)
 //         {
-//             Item item = slot.item;
+//             Item item = quickSlot.items[slotIndex];
 
 //             EquipItem(item); // 장비(무기) 아이템일 경우 장착
 
@@ -201,6 +249,7 @@ public class MovementStateManager : MonoBehaviour
 //         {
 //             case 0:
 //                 // 무기를 장착하는 코드 작성
+                    
 //                 break;
 //             case 2:
 //                 // 갑옷을 장착하는 코드 작성
