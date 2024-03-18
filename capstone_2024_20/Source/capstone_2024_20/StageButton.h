@@ -29,6 +29,7 @@ protected:
 	
 public:
 	FMulticastRPC_ClickStageDelegate OnCLickButton;
+	FMulticastRPC_HideStagePopupWidget OnClickHideButton;
 	
 	UFUNCTION()
 	void SettingStagePopUpWidget();

@@ -24,6 +24,7 @@ void UStageButton::SettingStagePopUpWidget()
 
 void UStageButton::OnClickButton()
 {
+	OnClickHideButton.Broadcast();
 	OnCLickButton.Broadcast(StageNum);
 }
 
@@ -44,6 +45,8 @@ void UStageButton::Stage_Start()
 
 UUserWidget* UStageButton::CreatePopup()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Yellow,
+									 FString::Printf(TEXT("create button")));
 	//팝업 위젯 생성
 	UUserWidget* PopUpWidget = CreateWidget<UUserWidget>(GetWorld(), StagePopUpWidgetClass);
 	if(PopUpWidget != nullptr)

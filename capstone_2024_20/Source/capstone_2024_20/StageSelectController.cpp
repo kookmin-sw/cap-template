@@ -22,14 +22,15 @@ void AStageSelectController::BeginPlay()
 {
 	Super::BeginPlay();
 	ClickStageDelegate.AddDynamic(this, &AStageSelectController::MulticastRPC_ClickStage);
-
+	ClickHideStageDelegate.AddDynamic(this, &AStageSelectController::MulticastRPC_HideStagePopupWidget);
+	
 	StageWidget = CreateWidget<UMyUserWidget>(GetWorld(), StageWidgetFactory);
 	if (StageWidget)
 	{
 		StageWidget->AddToViewport();
 		if (HasAuthority())
 		{
-			StageWidget->InitRPC(ClickStageDelegate);
+			StageWidget->InitRPC(ClickStageDelegate, ClickHideStageDelegate);
 		}
 	}
 }
@@ -38,6 +39,11 @@ void AStageSelectController::BeginPlay()
 void AStageSelectController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AStageSelectController::MulticastRPC_HideStagePopupWidget_Implementation()
+{
+	StageWidget->MyButtonClicked();
 }
 
 void AStageSelectController::ServerTravel()
