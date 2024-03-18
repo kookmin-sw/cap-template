@@ -263,9 +263,10 @@ GameObject:
   - component: {fileID: 7196614481014964999}
   - component: {fileID: 7974207237494967628}
   - component: {fileID: -3427551210456821067}
-  m_Layer: 0
+  - component: {fileID: 5096224471667028135}
+  m_Layer: 3
   m_Name: Shovel 02
-  m_TagString: Weapon
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -400,3 +401,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: d2a7847373b4819409abaf7951cbc305, type: 3}
+--- !u!114 &5096224471667028135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667978150123294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17f19215456674531b35b269e48192d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: d95d2d437833d764380ed31749533c32, type: 2}

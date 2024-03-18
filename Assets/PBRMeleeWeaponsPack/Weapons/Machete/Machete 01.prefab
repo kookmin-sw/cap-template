@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 114631373019417750}
   - component: {fileID: 3877046268988288380}
   - component: {fileID: 4790333536156718118}
-  m_Layer: 0
+  - component: {fileID: 5212654323783496490}
+  m_Layer: 3
   m_Name: Machete 01
-  m_TagString: Weapon
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,6 +150,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5212654323783496490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006283188490644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17f19215456674531b35b269e48192d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 84cd9df79eb99a143b3818adb292c184, type: 2}
 --- !u!1 &1042574327785432
 GameObject:
   m_ObjectHideFlags: 0

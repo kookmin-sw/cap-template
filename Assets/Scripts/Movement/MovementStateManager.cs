@@ -121,6 +121,15 @@ public class MovementStateManager : MonoBehaviour
         if (Input.GetButtonDown("Swap1"))
         {
             if(quickSlot.items[0].ItemType < 10){
+
+                Debug.Log("slot itemtype: " +quickSlot.items[0].ItemType);
+
+                //for(int i = 0; i < weapons.Length; i++) {
+                    Debug.Log(weapons[1].GetComponent<ItemData>().itemData.ItemType);
+                //}
+
+
+
                 for(int i = 0 ; i< weapons.Length; i++){
                     if(quickSlot.items[0].ItemType == weapons[i].GetComponent<ItemData>().itemData.ItemType){
                         SwapWeapon(i);
