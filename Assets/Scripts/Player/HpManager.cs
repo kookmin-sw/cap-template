@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Photon.Pun;
+
 
 public class HpManager : MonoBehaviour
 {
@@ -14,6 +16,13 @@ public class HpManager : MonoBehaviour
     // 함수 이름에 () 안붙여야함
     public event Action onDeath;
 
+    private PhotonView pv;
+
+    void Start()
+    {
+        pv = GetComponent<PhotonView>();
+    }
+
     // 캐릭터 생성, 부활 등등 활성화 될 때 실행되는 코드
     void OnEnable()
     {
@@ -22,17 +31,32 @@ public class HpManager : MonoBehaviour
         isDead = false;
     }
 
+    [PunRPC]
+    public void ApplyUadatedHp(float newHp, bool newIsDead)
+    {
+        hp = newHp;
+        isDead = newIsDead;
+    }
+
     // 데미지 처리하는 함수
+    [PunRPC]
     public void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
-        Debug.Log("데미지 입음");
-        Debug.Log("남은 hp: " + hp);
-        hp -= damage;
-
-        // 체력이 0 이하이고 살아있으면 사망
-        if (hp <= 0 && !isDead)
+        if (PhotonNetwork.IsMasterClient)
         {
-            Die();
+            Debug.Log("데미지 입음");
+            Debug.Log("남은 hp: " + hp);
+            hp -= damage;
+
+            pv.RPC("ApplyUpdatedHp", RpcTarget.Others, hp, isDead);
+
+            pv.RPC("OnDamage", RpcTarget.Others, hitPoint, hitNormal);
+
+            // 체력이 0 이하이고 살아있으면 사망
+            if (hp <= 0 && !isDead)
+            {
+                Die();
+            }
         }
     }
 
