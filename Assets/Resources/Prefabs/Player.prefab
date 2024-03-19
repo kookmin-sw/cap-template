@@ -1318,7 +1318,6 @@ MonoBehaviour:
   - {fileID: 8658774479365967626}
   - {fileID: 6412265311490471875}
   - {fileID: 4179278121092346930}
-  hasWeapons: 0000
   quickSlot: {fileID: 0}
   anim: {fileID: 0}
 --- !u!143 &8536026664842187324

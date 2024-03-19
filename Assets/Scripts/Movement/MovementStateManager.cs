@@ -28,7 +28,6 @@ public class MovementStateManager : MonoBehaviour
     Vector3 velocity;
 
     public GameObject[] weapons;
-    public bool[] hasWeapons;
     public Inventory quickSlot;
     GameObject equipWeapon;
     int equipWeaponIndex = -1;
@@ -68,7 +67,7 @@ public class MovementStateManager : MonoBehaviour
             currentState.UpdateState(this);
 
             Attack();   
-            weapswap();
+            Swap();
         }
     }
 
@@ -117,19 +116,9 @@ public class MovementStateManager : MonoBehaviour
 
     void weapswap()
     {   
-        //Item item = quickSlot.items[0];
         if (Input.GetButtonDown("Swap1"))
         {
             if(quickSlot.items[0].ItemType < 10){
-
-                Debug.Log("slot itemtype: " +quickSlot.items[0].ItemType);
-
-                //for(int i = 0; i < weapons.Length; i++) {
-                    Debug.Log(weapons[1].GetComponent<ItemData>().itemData.ItemType);
-                //}
-
-
-
                 for(int i = 0 ; i< weapons.Length; i++){
                     if(quickSlot.items[0].ItemType == weapons[i].GetComponent<ItemData>().itemData.ItemType){
                         SwapWeapon(i);
@@ -139,7 +128,6 @@ public class MovementStateManager : MonoBehaviour
                         
                 }
             }
-                //Debug.Log("adasda");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -186,102 +174,111 @@ public class MovementStateManager : MonoBehaviour
    /// 
    /// </summary>
    /// 
-//     void SwapOut(){
-//         isSwap = false;
-//     }
-//     void Swap(){
-//         if(sDown1 && (!hasWeapons[0] || equipWeaponIndex == 0))
-//             return;
-//         if(sDown2 && (!hasWeapons[1] || equipWeaponIndex == 1))
-//             return;
-//         if(sDown3 && (!hasWeapons[2] || equipWeaponIndex == 2))
-//             return;
+    void SwapOut(){
+        isSwap = false;
+    }
+    void Swap(){
+        // if(sDown1 && (!hasWeapons[0] || equipWeaponIndex == 0))
+        //     return;
+        // if(sDown2 && (!hasWeapons[1] || equipWeaponIndex == 1))
+        //     return;
+        // if(sDown3 && (!hasWeapons[2] || equipWeaponIndex == 2))
+        //     return;
 
-//         int weaponIndex = -1;
-//         if(sDown1) weaponIndex = 0;
-//         if(sDown2) weaponIndex = 1;
-//         if(sDown3) weaponIndex = 2;
+        int weaponIndex = -1;
+        if(Input.GetButtonDown("Swap1")) weaponIndex = 0;
+        if(Input.GetButtonDown("Swap2")) weaponIndex = 1;
+        if(Input.GetButtonDown("Swap3")) weaponIndex = 2;
+        if(Input.GetButtonDown("Swap4")) weaponIndex = 3;
+        if(Input.GetButtonDown("Swap5")) weaponIndex = 4;
 
-//         if((sDown1 || sDown2 || sDown3)){
-//             if(equipWeapon != null)
-//                 equipWeapon.SetActive(false);
+        if((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2") || Input.GetButtonDown("Swap3")
+            || Input.GetButtonDown("Swap4") || Input.GetButtonDown("Swap5"))){
+            if(equipWeapon != null)
+                equipWeapon.SetActive(false);
 
-//             equipWeaponIndex = weaponIndex;
-//             equipWeapon = weapons[weaponIndex];
-//             equipWeapon.SetActive(true);
+            for(int i = 0 ; i< weapons.Length; i++){
+                    if(quickSlot.items[weaponIndex].ItemType == weapons[i].GetComponent<ItemData>().itemData.ItemType){
+                        equipWeaponIndex= i;        
+                        break;
+                    }   
+                }
+            equipWeapon = weapons[equipWeaponIndex];
+            equipWeapon.SetActive(true);
 
-//             anim.Settrigger("doSwap");
+            //anim.Settrigger("doSwap");
             
-//             isSwap = true;
+            isSwap = true;
 
-//             Invoke("SwapOut", 0.4f);
-//         }
+            //Invoke("SwapOut", 0.4f);
+        }
 
-//     }
-//     //버튼에 따른 아이템 슬롯 선택
-//    public void ChangeInventory()
-//     {
-//         if (Input.GetKeyDown(KeyCode.Alpha1))
-//         {
-//             UseItemFromSlot(0);
-//         }
-//         else if (Input.GetKeyDown(KeyCode.Alpha2))
-//         {
-//             UseItemFromSlot(1);
-//         }
-//         else if (Input.GetKeyDown(KeyCode.Alpha3))
-//         {
-//             UseItemFromSlot(2);
-//         }
-//         else if (Input.GetKeyDown(KeyCode.Alpha4))
-//         {
-//             UseItemFromSlot(3);
-//         }
-//         else if (Input.GetKeyDown(KeyCode.Alpha5))
-//         {
-//             UseItemFromSlot(4);
-//         }
-//     }
+    }
+    //버튼에 따른 아이템 슬롯 선택
+   public void ChangeInventory()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            UseItemFromSlot(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            UseItemFromSlot(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            UseItemFromSlot(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            UseItemFromSlot(3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            UseItemFromSlot(4);
+        }
+    }
     
-//     private void UseItemFromSlot(int slotIndex)
-//     {
-//         Slot slot = quickSlot.GetSlot(slotIndex);
+    private void UseItemFromSlot(int slotIndex)
+    {
+        List<Item> slots = quickSlot.items;
+        Item selectSlot = slots[slotIndex];
 
-//         // 해당 슬롯에 아이템이 존재하는지 확인
-//         if (slot != null && slot.item != null)
-//         {
-//             Item item = quickSlot.items[slotIndex];
+        // 해당 슬롯에 아이템이 존재하는지 확인
+        if (slots != null && selectSlot != null)
+        {
+            Item item = quickSlot.items[slotIndex];
 
-//             EquipItem(item); // 장비(무기) 아이템일 경우 장착
+            EquipItem(item); // 장비(무기) 아이템일 경우 장착
 
-//             // 아이템 사용 코드 작성 (예: 아이템 사용, 장착 등)
-//             // 아이템 사용에 따른 추가 동작을 수행할 수 있음
+            // 아이템 사용 코드 작성 (예: 아이템 사용, 장착 등)
+            // 아이템 사용에 따른 추가 동작을 수행할 수 있음
 
-//             // 아이템 사용 후에는 인벤토리 UI 갱신 등이 필요할 수 있음
-//         }
-//     }   
+            // 아이템 사용 후에는 인벤토리 UI 갱신 등이 필요할 수 있음
+        }
+    }   
 
-//     private void EquipItem(Item item)
-//     {
-//         // 아이템의 타입을 확인하여 해당하는 처리를 수행
-//         switch (item.ItemType)
-//         {
-//             case 0:
-//                 // 무기를 장착하는 코드 작성
+    private void EquipItem(Item item)
+    {
+        // 아이템의 타입을 확인하여 해당하는 처리를 수행
+        switch (item.ItemType)
+        {
+            case 0:
+                // 무기를 장착하는 코드 작성
                     
-//                 break;
-//             case 2:
-//                 // 갑옷을 장착하는 코드 작성
-//                 break;
-//             // 필요에 따라 다른 아이템 타입에 대한 처리 추가
-//             default:
-//                 // 아이템 타입이 지원되지 않을 때의 처리 작성
-//                 break;
-//         }
+                break;
+            case 2:
+                // 갑옷을 장착하는 코드 작성
+                break;
+            // 필요에 따라 다른 아이템 타입에 대한 처리 추가
+            default:
+                // 아이템 타입이 지원되지 않을 때의 처리 작성
+                break;
+        }
 
-//         // 장착된 아이템에 대한 가시화나 다른 UI 업데이트 작업 수행
-//         // 예를 들어, 가리고 있던 UI를 다시 표시하는 등의 작업을 수행할 수 있음
-//     }
+        // 장착된 아이템에 대한 가시화나 다른 UI 업데이트 작업 수행
+        // 예를 들어, 가리고 있던 UI를 다시 표시하는 등의 작업을 수행할 수 있음
+    }
 
     /*
     private void OnDrawGizmos()
