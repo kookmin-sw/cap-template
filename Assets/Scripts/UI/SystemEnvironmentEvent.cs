@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SystemEnvironmentEvent : MonoBehaviour
 {
     [SerializeField] private GameObject systemEnvironment;
+    [SerializeField] private UIManager uiManager;
 
     //시스템 환경 버튼
     [SerializeField] private Button settingButton;
@@ -38,6 +39,7 @@ public class SystemEnvironmentEvent : MonoBehaviour
         systemEnvironment.SetActive(false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        uiManager.isUIActivate = false;
     }
 
 }

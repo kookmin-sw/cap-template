@@ -12,7 +12,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameOverBoard;
 
     private int selectSlot = 0;
-    bool isGameOver = false;
+    [HideInInspector] public bool isGameOver;
+    [HideInInspector] public bool isUIActivate;
 
     // Start is called before the first frame update
     void Awake()
@@ -20,6 +21,8 @@ public class UIManager : MonoBehaviour
         combinationSlots.SetActive(false);
         systemEnvironment.SetActive(false);
         gameOverBoard.SetActive(false);
+        isGameOver = false;
+        isUIActivate = false;
         ChangeSlot(0);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -48,6 +51,7 @@ public class UIManager : MonoBehaviour
             combinationSlots.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
+            isUIActivate = true;
 
         }
         if (Input.GetKeyUp(KeyCode.Tab))
@@ -55,6 +59,7 @@ public class UIManager : MonoBehaviour
             combinationSlots.SetActive(false);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            isUIActivate = false;
         }
     }
     void ManageSetting()
@@ -66,23 +71,26 @@ public class UIManager : MonoBehaviour
                 systemEnvironment.SetActive(true);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.Confined;
+                isUIActivate = true;
             }
             else
             {
                 systemEnvironment.SetActive(false);
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
+                isUIActivate = false;
+
             }
         }
     }
 
     void ManageGameOverBoard()
     {
-        if(gameOverBoard.activeSelf)
+        if(isGameOver)
         {
+            gameOverBoard.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
-            isGameOver = true;
         }
     }
 

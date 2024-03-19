@@ -7,7 +7,7 @@ using Photon.Pun;
 
 public class PlayerStatePanel : MonoBehaviour
 {
-    [SerializeField] private GameObject gameOverBoard;
+    [SerializeField] private UIManager uiManager;
     [SerializeField] private Slider staminaBar;
     [SerializeField] private Slider healthPointBar;
     [SerializeField] private TextMeshProUGUI healthPointCount;
@@ -48,7 +48,6 @@ public class PlayerStatePanel : MonoBehaviour
         }
     }
 
-
     void ManageHealthPointBar()
     {
         if (Input.GetKeyDown(KeyCode.H))
@@ -57,7 +56,8 @@ public class PlayerStatePanel : MonoBehaviour
             healthPointCount.text = healthPointBar.value.ToString();
             if(healthPointBar.value == 0)
             {
-                gameOverBoard.SetActive(true);
+                uiManager.isGameOver = true;
+                uiManager.isUIActivate = true;
             }
         }
     }

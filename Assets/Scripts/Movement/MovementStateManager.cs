@@ -39,6 +39,8 @@ public class MovementStateManager : MonoBehaviour
 
     private PhotonView pv;
 
+    [SerializeField] private UIManager uiManager;
+
     void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -57,9 +59,12 @@ public class MovementStateManager : MonoBehaviour
             anim.SetFloat("xAxis", xAxis);
             anim.SetFloat("zAxis", zAxis);
 
-        currentState.UpdateState(this);
+            currentState.UpdateState(this);
 
-        Attack();
+            if(uiManager.isUIActivate == false)
+            {
+                Attack();
+            }
         }
     }
 
