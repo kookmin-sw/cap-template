@@ -57,13 +57,6 @@ class _MyHomePageState extends State<MyHomePage> {
           MaterialPageRoute(builder: (context) => SttTab()),
         );
       },
-      onDoubleTap: () {
-        // 더블 탭 이벤트 처리 시 ObjectRecognitionMode() 호출
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ObjectRecognitionMode()),
-        );
-      },
       child: Scaffold(
         appBar: AppBar(
           title: Text('메인 화면'),
