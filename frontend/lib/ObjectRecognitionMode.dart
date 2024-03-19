@@ -26,9 +26,15 @@ class _ObjectRecognitionModeState extends State<ObjectRecognitionMode> {
   /// 위치 권한 설정
   MyLocation myLocation = MyLocation();
 
+  // 위치 추적 상태를 관리하는 새로운 변수
+  bool isTrackingLocation = true;
+
+  // UI 업데이트를 위한 콜백 함수
+  Function? onUpdate;
+
   /// 카메라 권한 설정
   camera_Permission() async {
-    var status = await Permission.contacts.status;
+    var status = await Permission.camera.status;
 
     if (status.isGranted) {
       print('허락됨');
@@ -39,11 +45,26 @@ class _ObjectRecognitionModeState extends State<ObjectRecognitionMode> {
     }
   }
 
+  // 위치 추적 상태를 변경하는 메소드
+  void toggleLocationTracking() {
+    isTrackingLocation = !isTrackingLocation;
+    if (isTrackingLocation) {
+      myLocation.getMyCurrentLocation();
+    } else {
+      print('위치 추적 종료');
+      // 추가적으로 위치 추적을 종료하는 로직을 구현하세요.
+    }
+    // UI 업데이트를 위한 콜백 함수 호출
+    onUpdate?.call();
+  }
+
   @override
   void initState() {
     super.initState();
-    myLocation.getMyCurrentLocation();
-    // camera_Permission();
+    if (isTrackingLocation) {
+      myLocation.getMyCurrentLocation();
+    }
+    camera_Permission();
   }
 
   @override
@@ -51,14 +72,15 @@ class _ObjectRecognitionModeState extends State<ObjectRecognitionMode> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: const Text(
-          '객체 인식 모드',
-          style: TextStyle(
-              fontWeight: FontWeight.w600, color: Colors.white, fontSize: 15),
-        ),
+          backgroundColor: Colors.black,
+          title: const Text(
+            '객체 인식 모드',
+            style: TextStyle(
+                fontWeight: FontWeight.w600, color: Colors.white, fontSize: 15),
+          ),
           actions : [
-            IconButton(onPressed: (){ camera_Permission(); }, icon : Icon(Icons.contacts))
+            IconButton(onPressed: (){ toggleLocationTracking; }, icon : Icon(Icons.location_on)),
+            IconButton(onPressed: (){ camera_Permission(); }, icon : Icon(Icons.photo_camera)),
           ]
       ),
       body: Stack(
