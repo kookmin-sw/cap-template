@@ -10,6 +10,9 @@ TagManager:
   - battery
   - Weapon
   - Cloth
+  - Bullet
+  - Item
+  - ItemSpawner
   layers:
   - Default
   - TransparentFX

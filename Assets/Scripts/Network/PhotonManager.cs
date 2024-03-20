@@ -8,17 +8,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 {
     // 버전
     private readonly string version = "1.0f";
-    // 사용자 아이디
-    public string userID = "inputYourName";
 
     void Awake()
     {
+        Debug.Log("userID: " + GameManager.Instance.UserId);
         // 같은 룸의 유저들에게 자동으로 씬 로딩
         PhotonNetwork.AutomaticallySyncScene = true;
         // 같은 버전의 유저끼리 접속 허용
         PhotonNetwork.GameVersion = version;
         // 유저 아이디 할당
-        PhotonNetwork.NickName = userID;
+        PhotonNetwork.NickName = GameManager.Instance.UserId;
         // 포톤 서버와 통신 횟수 확인. 초당 30회
         Debug.Log(PhotonNetwork.SendRate);
         // 서버 접속
