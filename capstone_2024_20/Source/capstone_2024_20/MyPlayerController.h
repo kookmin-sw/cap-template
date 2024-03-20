@@ -65,7 +65,10 @@ public:
 	void Move(const FInputActionInstance& Instance);
     void Interaction(const FInputActionInstance& Instance);
     void Shoot(const FInputActionInstance& Instance);
-
+	
+	UFUNCTION(Server, Reliable)
+	void ServerRPC_Shoot(AMyCannon* CannonActor);
+	
 protected:
 	
 	enum class ControlMode

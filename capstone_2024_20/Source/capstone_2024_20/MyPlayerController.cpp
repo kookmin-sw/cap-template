@@ -12,13 +12,19 @@
 AMyPlayerController::AMyPlayerController()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	bReplicates = true;
 
-	static ConstructorHelpers::FObjectFinder<UInputAction> AC_Move(TEXT("/Script/EnhancedInput.InputAction'/Game/Inputs/Actions/Move.Move'"));
-	static ConstructorHelpers::FObjectFinder<UInputAction> AC_Interaction(TEXT("/Script/EnhancedInput.InputAction'/Game/Inputs/Actions/Interaction.Interaction'"));
-	static ConstructorHelpers::FObjectFinder<UInputAction> AC_Shoot(TEXT("/Script/EnhancedInput.InputAction'/Game/Inputs/Actions/Shoot.Shoot'"));
-	static ConstructorHelpers::FObjectFinder<UInputMappingContext> IMC_Default_Mapping(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Inputs/Mappings/IMC_test.IMC_test'"));
-	static ConstructorHelpers::FObjectFinder<UInputMappingContext> IMC_Shoot_Mapping(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Inputs/Mappings/IMC_Cannon.IMC_Cannon'"));
-	
+	static ConstructorHelpers::FObjectFinder<UInputAction> AC_Move(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Inputs/Actions/Move.Move'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction> AC_Interaction(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Inputs/Actions/Interaction.Interaction'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction> AC_Shoot(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Inputs/Actions/Shoot.Shoot'"));
+	static ConstructorHelpers::FObjectFinder<UInputMappingContext> IMC_Default_Mapping(
+		TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Inputs/Mappings/IMC_test.IMC_test'"));
+	static ConstructorHelpers::FObjectFinder<UInputMappingContext> IMC_Shoot_Mapping(
+		TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Inputs/Mappings/IMC_Cannon.IMC_Cannon'"));
+
 	MoveAction = AC_Move.Object;
 	InteractionAction = AC_Interaction.Object;
 	ShootAction = AC_Shoot.Object;
@@ -28,14 +34,17 @@ AMyPlayerController::AMyPlayerController()
 	// test
 
 	CurrentStrategy = new CharacterControlStrategy();
-
 }
 
 
 void AMyPlayerController::BeginPlay()
 {
 	//플레이어 할당
-	
+	if (HasAuthority())
+	{
+		GEngine->AddOnScreenDebugMessage(
+			-1, 60.0f, FColor::Emerald, TEXT("HasAutority"));
+	}
 
 	//배 할당
 	TArray<AActor*> FoundShips;
@@ -47,18 +56,18 @@ void AMyPlayerController::BeginPlay()
 
 	// 매핑 컨텐스트 할당
 	Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	if(Subsystem != nullptr)
+	if (Subsystem != nullptr)
 	{
-		Subsystem->AddMappingContext(DefaultMappingContext,0);
+		Subsystem->AddMappingContext(DefaultMappingContext, 0);
 	}
 
 	Player = Cast<AMyCharacter>(GetPawn());
-	if(Player)
+	if (Player)
 	{
 		ControlledActor = Player;
-		if(Player->InputComponent)
+		if (Player->InputComponent)
 			SetupInputComponent(Player->InputComponent);
-	
+
 		// else
 		// {
 		// 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("InputComponent NULL"));
@@ -66,26 +75,24 @@ void AMyPlayerController::BeginPlay()
 	}
 	else
 	{
-		
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Player NULL"));
 	}
-
 }
 
 void AMyPlayerController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	if(!HasAuthority())
+	if (!HasAuthority())
 	{
-		if(!Player || flag)
+		if (!Player || flag)
 		{
 			Player = Cast<AMyCharacter>(GetPawn());
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Player NULL"));
 
-			if(Player)
+			if (Player)
 			{
 				ControlledActor = Player;
-				if(Player->InputComponent)
+				if (Player->InputComponent)
 				{
 					SetupInputComponent(Player->InputComponent);
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Player Component NOT NULL"));
@@ -100,10 +107,10 @@ void AMyPlayerController::Tick(float DeltaSeconds)
 void AMyPlayerController::SetupInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupInputComponent();
-		
+
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 
-	if(Input != nullptr)
+	if (Input != nullptr)
 	{
 		Input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMyPlayerController::Move);
 		Input->BindAction(InteractionAction, ETriggerEvent::Started, this, &AMyPlayerController::Interaction);
@@ -113,7 +120,7 @@ void AMyPlayerController::SetupInputComponent(UInputComponent* PlayerInputCompon
 
 void AMyPlayerController::Move(const FInputActionInstance& Instance)
 {
-	if(CurrentStrategy != nullptr)
+	if (CurrentStrategy != nullptr)
 	{
 		CurrentStrategy->Move(Instance, ControlledActor, GetWorld()->GetDeltaSeconds());
 	}
@@ -123,13 +130,13 @@ void AMyPlayerController::Move(const FInputActionInstance& Instance)
 //상호 작용 & (스테이지 클리어)
 void AMyPlayerController::Interaction(const FInputActionInstance& Instance)
 {
-	if(Player->GetIsOverLap())
+	if (Player->GetIsOverLap())
 	{
-		UE_LOG(LogTemp,Log,TEXT("interaction"));
+		UE_LOG(LogTemp, Log, TEXT("interaction"));
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("Interaction"));
 		Player->SetTextWidgetVisible(!Player->GetTextWidgetVisible());
 		ViewChange();
-		
+
 
 		//스테이지 클리어 팝업 띄우기
 		// UUserWidget* PopUpWidget = CreateWidget<UUserWidget>(GetWorld(), ClearPopUpWidgetClass);
@@ -177,35 +184,34 @@ void AMyPlayerController::ViewChange()
 	{
 	case ControlMode::CHARACTER:
 		// 플레이어가 현재 선택/접근한 오브젝트의 이름을 비교
-			if(Player->GetCurrentHitObjectName().Equals(TEXT("SteelWheel")))
-			{
-				// 현재 접근한 오브젝트가 "SteelWheel"이면, 컨트롤 모드를 SHIP으로 변경
-				SetControlMode(ControlMode::SHIP);
-				LastMappingContext = DefaultMappingContext;
-				CurrentStrategy = new ShipControlStrategy();
-				ControlledActor = Ship;
-				
-			}
-			else if(Player->GetCurrentHitObjectName().Equals(TEXT("Cannon")))
-			{
-				// 현재 접근한 오브젝트가 "Cannon"이면, 컨트롤 모드를 CANNON으로 변경
-				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("ChangeMapping"));
-				SetControlMode(ControlMode::CANNON);
-				Subsystem->RemoveMappingContext(DefaultMappingContext);
-				Subsystem->AddMappingContext(CannonMappingContext,0);
-				LastMappingContext = CannonMappingContext;
-				CurrentStrategy = new CannonControlStrategy();
-				ControlledActor = Player->GetCurrentHitObject();
-				Cannon = Cast<AMyCannon>(Player->GetCurrentHitObject());
-			}
+		if (Player->GetCurrentHitObjectName().Equals(TEXT("SteelWheel")))
+		{
+			// 현재 접근한 오브젝트가 "SteelWheel"이면, 컨트롤 모드를 SHIP으로 변경
+			SetControlMode(ControlMode::SHIP);
+			LastMappingContext = DefaultMappingContext;
+			CurrentStrategy = new ShipControlStrategy();
+			ControlledActor = Ship;
+		}
+		else if (Player->GetCurrentHitObjectName().Equals(TEXT("Cannon")))
+		{
+			// 현재 접근한 오브젝트가 "Cannon"이면, 컨트롤 모드를 CANNON으로 변경
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("ChangeMapping"));
+			SetControlMode(ControlMode::CANNON);
+			Subsystem->RemoveMappingContext(DefaultMappingContext);
+			Subsystem->AddMappingContext(CannonMappingContext, 0);
+			LastMappingContext = CannonMappingContext;
+			CurrentStrategy = new CannonControlStrategy();
+			ControlledActor = Player->GetCurrentHitObject();
+			Cannon = Cast<AMyCannon>(Player->GetCurrentHitObject());
+		}
 		break;
-    
+
 	case ControlMode::SHIP:
 	case ControlMode::CANNON:
 		// 현재 컨트롤 모드가 SHIP 또는 CANNON일 경우, 무조건 CHARACTER 모드로 전환
 		SetControlMode(ControlMode::CHARACTER);
 		Subsystem->RemoveMappingContext(LastMappingContext);
-		Subsystem->AddMappingContext(DefaultMappingContext,0);
+		Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		LastMappingContext = DefaultMappingContext;
 		CurrentStrategy = new CharacterControlStrategy();
 		ControlledActor = Player;
@@ -215,9 +221,17 @@ void AMyPlayerController::ViewChange()
 
 void AMyPlayerController::Shoot(const FInputActionInstance& Instance)
 {
-	Cannon->FireCannon();
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("Shooting!"));
+	if (IsLocalController())
+	{
+		ServerRPC_Shoot(Cannon);
+	}
+}
 
-
-	
+void AMyPlayerController::ServerRPC_Shoot_Implementation(AMyCannon* CannonActor)
+{
+	if (HasAuthority())
+	{
+		CannonActor->FireCannon();
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("Shooting!"));
+	}
 }

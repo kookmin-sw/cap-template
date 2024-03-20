@@ -45,4 +45,7 @@ public:
 
 	UFUNCTION()
 	void FireCannon();
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MultiCastRPC_FireCannon();
 };
