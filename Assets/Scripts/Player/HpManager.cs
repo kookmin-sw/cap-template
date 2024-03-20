@@ -59,7 +59,7 @@ public class HpManager : MonoBehaviour
             }
         }
     }
-
+    [PunRPC]
     public void OnDamage()
     {
         OnDamage(10f, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
