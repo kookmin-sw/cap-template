@@ -6,8 +6,8 @@ import json
 #     'body' : {
 #         'region' : string,
 #         'trainedInstance' : string (Optional),
-#         'minCPUMem' : int (Optional),
-#         'minGPUMem' : int (Optional)
+#         'minCPUMemGiB' : int (Optional),
+#         'minGPUMemGiB' : int (Optional)
 #     }
 # }
 def lambda_handler(event, context):
@@ -22,8 +22,8 @@ def lambda_handler(event, context):
     
     region_name = json_body['region']
     trained_instance = json_body.get('trainedInstance')
-    min_cpu_mem = json_body['minCPUMem'] if 'minCPUMem' in json_body else 0
-    min_gpu_mem = json_body['minGPUMem'] if 'minGPUMem' in json_body else 0
+    min_cpu_mem = json_body['minCPUMemGiB'] if 'minCPUMemGiB' in json_body else 0
+    min_gpu_mem = json_body['minGPUMemGiB'] if 'minGPUMemGiB' in json_body else 0
 
     try:
         recommend_set = get_recommend_inference(region_name, trained_instance, min_cpu_mem, min_gpu_mem)
