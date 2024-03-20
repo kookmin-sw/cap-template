@@ -50,7 +50,7 @@ public class HpManager : MonoBehaviour
 
             pv.RPC("ApplyUpdatedHp", RpcTarget.Others, hp, isDead);
 
-            pv.RPC("OnDamage", RpcTarget.Others, hitPoint, hitNormal);
+            pv.RPC("OnDamage", RpcTarget.Others, damage, hitPoint, hitNormal);
 
             // 체력이 0 이하이고 살아있으면 사망
             if (hp <= 0 && !isDead)
