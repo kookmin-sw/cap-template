@@ -32,7 +32,7 @@ public class HpManager : MonoBehaviour
     }
 
     [PunRPC]
-    public void ApplyUadatedHp(float newHp, bool newIsDead)
+    public void ApplyUpdatedHp(float newHp, bool newIsDead)
     {
         hp = newHp;
         isDead = newIsDead;
