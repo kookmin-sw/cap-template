@@ -9,6 +9,9 @@ public class Door : MonoBehaviour
     public float doorCloseAngle = 0f;
     public float smoot = 2f;
 
+    public Vector3 doorOpenVector = new Vector3(0, 90f, 0);
+    public Vector3 doorCloseVector = new Vector3(0f, 0f,0f);
+
     public void ChangeDoorState()
     {
         open = !open;
@@ -18,15 +21,22 @@ public class Door : MonoBehaviour
 
     void Update()
     {
+        Quaternion current_angle = Quaternion.Euler(transform.eulerAngles);
+        Vector3 current_vector = transform.eulerAngles;
+
         if (open)
         {
-            Quaternion targetRotation = Quaternion.Euler(0, doorOpenAngle, 0);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, smoot * Time.deltaTime);
+            Quaternion targetRotation = Quaternion.Euler(current_vector+doorOpenAngle);
+            transform.localRotation = Quaternion.Slerp(transform.rotation, targetRotation, smoot * Time.deltaTime);
+
+            //transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(current + doorOpenAngle), smoot * Time.deltaTime);
         }
         else
         {
-            Quaternion targetRotation2 = Quaternion.Euler(0, doorCloseAngle, 0);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation2, smoot * Time.deltaTime);
+            Quaternion targetRotation2 = Quaternion.Euler(doorCloseAngle);
+            transform.localRotation = Quaternion.Slerp(current_angle, targetRotation2, smoot * Time.deltaTime);
+
+            //transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(current + doorCloseAngle), smoot * Time.deltaTime);
         }
     }
 }
