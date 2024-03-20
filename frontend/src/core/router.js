@@ -1,6 +1,13 @@
-import { Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Nav from "../components/common/Nav";
 
 function Router() {
-  return <Routes></Routes>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Nav />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 export default Router;
