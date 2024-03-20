@@ -12,7 +12,7 @@ body:
       label: "Describe"
       description: A brief and clear description of the features you are proposing.
     validations:
-    required: true
+      required: true
 
   - type: textarea
     id: how-to
@@ -20,7 +20,7 @@ body:
       label: "How to Implement Features"
       description: Describe how to implement the function.
     validations:
-    required: false
+      required: false
 
   - type: textarea
     id: additional
@@ -28,7 +28,7 @@ body:
       label: "Additional Explanation"
       description: Fill out additional parts or reference links that you need to know.
     validations:
-    required: false
+      required: false
 
   - type: checkboxes
     id: connection
