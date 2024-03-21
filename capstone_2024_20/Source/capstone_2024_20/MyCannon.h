@@ -15,7 +15,6 @@ class CAPSTONE_2024_20_API AMyCannon : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AMyCannon();
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -48,4 +47,12 @@ public:
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MultiCastRPC_FireCannon();
+
+	UFUNCTION()
+	void MoveCannon(FRotator newRot);
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MultiCastRPC_MoveCannon(FRotator newRot);
+
+	
 };

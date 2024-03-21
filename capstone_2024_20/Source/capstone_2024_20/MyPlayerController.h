@@ -68,6 +68,9 @@ public:
 	
 	UFUNCTION(Server, Reliable)
 	void ServerRPC_Shoot(AMyCannon* CannonActor);
+
+	UFUNCTION(Server, Reliable)
+	void ServerRPC_MoveCannon(AMyCannon* CannonActor, FRotator newRot);
 	
 protected:
 	

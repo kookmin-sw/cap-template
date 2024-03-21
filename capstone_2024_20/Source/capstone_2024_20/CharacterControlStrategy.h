@@ -11,5 +11,5 @@
 class CAPSTONE_2024_20_API CharacterControlStrategy : public IControlStrategy
 {
 public:
-	virtual void Move(const FInputActionInstance& Instance, AActor* Actor, float DeltaTime) override;
+	virtual void Move(const FInputActionInstance& Instance, AActor* Actor, APlayerController* PlayerController, float DeltaTime) override;
 };

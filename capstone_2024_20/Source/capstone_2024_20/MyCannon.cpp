@@ -5,6 +5,7 @@
 
 #include "CannonBall.h"
 #include "Kismet/GameplayStatics.h"
+#include "Net/UnrealNetwork.h"
 #include "Settings/LevelEditorPlayNetworkEmulationSettings.h"
 
 // Sets default values
@@ -13,8 +14,10 @@ AMyCannon::AMyCannon()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	bReplicates = true;
+
 	// Arrow 컴포넌트 생성 및 설정
 }
+
 
 // Called when the game starts or when spawned
 void AMyCannon::BeginPlay()
@@ -26,6 +29,7 @@ void AMyCannon::BeginPlay()
 void AMyCannon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 }
 
 FVector AMyCannon::GetCannonSpawnLocation()
@@ -59,4 +63,14 @@ void AMyCannon::MultiCastRPC_FireCannon_Implementation()
 												 GetCannonSpawnRotation());
 	}
 	// 발사체에 추가적인 로직이 필요하면 여기에 작성
+}
+
+void AMyCannon::MoveCannon(FRotator newRot)
+{
+	MultiCastRPC_MoveCannon(newRot);
+}
+
+void AMyCannon::MultiCastRPC_MoveCannon_Implementation(FRotator newRot)
+{
+	M_ShooterMesh->SetRelativeRotation(newRot);
 }

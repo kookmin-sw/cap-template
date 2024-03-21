@@ -5,7 +5,7 @@
 
 #include "MyCharacter.h"
 
-void CharacterControlStrategy::Move(const FInputActionInstance& Instance, AActor* Actor, float DeltaTime)
+void CharacterControlStrategy::Move(const FInputActionInstance& Instance, AActor* Actor,APlayerController* PlayerController, float DeltaTime)
 {
 	AMyCharacter* Character = Cast<AMyCharacter>(Actor);
 	if (Character)

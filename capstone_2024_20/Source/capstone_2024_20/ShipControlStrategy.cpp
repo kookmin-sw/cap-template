@@ -5,7 +5,7 @@
 
 #include "MyShip.h"
 
-void ShipControlStrategy::Move(const FInputActionInstance& Instance, AActor* Actor, float DeltaTime)
+void ShipControlStrategy::Move(const FInputActionInstance& Instance, AActor* Actor,APlayerController* PlayerController, float DeltaTime)
 {
 	AMyShip* Ship = Cast<AMyShip>(Actor);
 	if (Ship)

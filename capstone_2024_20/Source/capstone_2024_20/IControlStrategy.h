@@ -11,6 +11,6 @@
 class CAPSTONE_2024_20_API IControlStrategy
 {
 public:
-	virtual void Move(const FInputActionInstance& Instance, AActor* Actor, float DeltaTime) = 0;
+	virtual void Move(const FInputActionInstance& Instance, AActor* Actor, APlayerController* PlayerController, float DeltaTime) = 0;
 	
 };

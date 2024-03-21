@@ -122,7 +122,7 @@ void AMyPlayerController::Move(const FInputActionInstance& Instance)
 {
 	if (CurrentStrategy != nullptr)
 	{
-		CurrentStrategy->Move(Instance, ControlledActor, GetWorld()->GetDeltaSeconds());
+		CurrentStrategy->Move(Instance, ControlledActor,this, GetWorld()->GetDeltaSeconds());
 	}
 }
 
@@ -233,5 +233,13 @@ void AMyPlayerController::ServerRPC_Shoot_Implementation(AMyCannon* CannonActor)
 	{
 		CannonActor->FireCannon();
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("Shooting!"));
+	}
+}
+
+void AMyPlayerController::ServerRPC_MoveCannon_Implementation(AMyCannon* CannonActor, FRotator newRot)
+{
+	if(HasAuthority())
+	{
+		CannonActor->MultiCastRPC_MoveCannon(newRot);
 	}
 }
