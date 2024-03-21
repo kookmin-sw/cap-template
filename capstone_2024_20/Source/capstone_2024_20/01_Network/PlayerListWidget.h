@@ -20,7 +20,7 @@ public:
 	TArray<UPlayerListElementWidget*> PlayerElements;
 
 	void Add(FString& NewName);
-	
+	void Remove(int32 Index);
 private:
 	int32 length = 0;
 };

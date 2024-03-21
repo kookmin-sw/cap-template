@@ -10,3 +10,15 @@ void UPlayerListElementWidget::SetInfo(const FString& NewNumber, const FString& 
 	Number->SetText(FText::FromString(NewNumber));
 	Name->SetText(FText::FromString(NewName));
 }
+
+void UPlayerListElementWidget::Clear()
+{
+	Number->SetText(FText::FromString(""));
+	Name->SetText(FText::FromString(""));
+}
+
+FString& UPlayerListElementWidget::GetName()
+{
+	FString ReturnName = Name->GetText().ToString();
+	return ReturnName;
+}
