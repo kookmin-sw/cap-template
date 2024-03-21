@@ -20,9 +20,15 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+private:
+	float destroyDelayTime = 2.0f;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
+	void DestroyDelay();
 
 	// 발사체의 컴포넌트들을 선언합니다.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
