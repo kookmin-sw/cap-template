@@ -32,6 +32,13 @@ public class MovementStateManager : MonoBehaviour
     GameObject equipWeapon;
     int equipWeaponIndex = -1;
     bool isSwap;
+    public bool isAttack;
+    public Transform RightHand;
+
+    MeshCollider colliderWeapon;
+    SphereCollider colliderHand;
+    public GameObject objWeapon;
+    public string Armed;
 
     public MovementBaseState previousState;
     public MovementBaseState currentState;
@@ -52,6 +59,11 @@ public class MovementStateManager : MonoBehaviour
         controller = GetComponent<CharacterController>();
         quickSlot = GameObject.Find("ItemQuickSlots").GetComponent<Inventory>();
         SwitchState(Idle);
+        // obj를 받아와야하는데
+
+        objWeapon = RightHand.GetChild(1).gameObject;
+        colliderHand = objWeapon.GetComponent<SphereCollider>();
+        colliderHand.enabled = false;
     }
 
     void Update()
@@ -106,16 +118,57 @@ public class MovementStateManager : MonoBehaviour
 
     public void Jumped() => jumped = true;
 
-    public void Attack(){ // 추후에 스크립트 따로
+    public void Attack(){ // 추후에 스크립트 따로 무기 별 
         if (Input.GetMouseButton(0))
             {
+                Debug.Log("aTtatack");
                 anim.SetBool("Attack", true);
             }
         else anim.SetBool("Attack", false);
     }
+
+    public void AttackStart(){
+        Debug.Log("Collider On");
+        if(Armed != "") {
+            Debug.Log("Weaponcoll On");
+            colliderWeapon.enabled = true;
+        }
+        else {
+            Debug.Log("Handcoll on");
+            colliderHand.enabled = true;
+        }
+    }
+
+    public void AttackEnd(){
+        Debug.Log("coll Off");
+        if(Armed != "") {
+            colliderWeapon.enabled = false;
+            Debug.Log("Weaponcoll Off");
+        }
+        else {
+            colliderHand.enabled = false;
+            Debug.Log("Handcoll Off");
+        }
+    }
+
+    public void ArmedWeapon(){
+        
+    }
+
+    public void AttackIn(){
+        Debug.Log("bbabsd");
+        isAttack = true;
+    }
+
+    public void AttackOut(){
+        Debug.Log("ASaaaaaa");
+        isAttack = false;   
+    }   
+
     void SwapOut(){
         isSwap = false;
     }
+
     void Swap(){
         // if(sDown1 && (!hasWeapons[0] || equipWeaponIndex == 0))
         //     return;
@@ -123,6 +176,7 @@ public class MovementStateManager : MonoBehaviour
         //     return;
         // if(sDown3 && (!hasWeapons[2] || equipWeaponIndex == 2))
         //     return;
+        if(isAttack) return;
 
         int weaponIndex = -1;
         if(Input.GetButtonDown("Swap1")) weaponIndex = 0;
@@ -131,7 +185,15 @@ public class MovementStateManager : MonoBehaviour
         if(Input.GetButtonDown("Swap4")) weaponIndex = 3;
         if(Input.GetButtonDown("Swap5")) weaponIndex = 4;
 
-        if((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2") || Input.GetButtonDown("Swap3")
+        if(Input.GetKeyDown(KeyCode.G)) { // G는 버리는 키라서 인벤토리에서도 빼기
+            weaponIndex = -1;
+            equipWeapon.SetActive(false);
+            anim.SetTrigger("doSwap");
+            anim.SetBool(Armed, false);
+            Armed = "";
+            return;
+        }
+        else if((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2") || Input.GetButtonDown("Swap3")
             || Input.GetButtonDown("Swap4") || Input.GetButtonDown("Swap5"))){
             if(equipWeapon != null)
                 equipWeapon.SetActive(false);
@@ -142,10 +204,33 @@ public class MovementStateManager : MonoBehaviour
                         break;
                     }   
                 }
+                Debug.Log("swap" + 11231);
+            objWeapon = weapons[equipWeaponIndex];
+            
+
+            // 무기 들었을 때 애니메이션 변경
+            if(objWeapon.GetComponent<ItemData>().itemData.ItemType <= 10){
+                colliderWeapon = objWeapon.GetComponent<MeshCollider>();
+                if(objWeapon.GetComponent<ItemData>().itemData.ItemType <= 3) {
+                    anim.SetBool(Armed, false);
+                    Debug.Log("OtoT");
+                    Armed = "THW";
+                    anim.SetBool(Armed, true);
+                }
+                else {
+                    anim.SetBool(Armed, false);
+                    Debug.Log("TtoO");
+                    Armed = "OHW";
+                    anim.SetBool(Armed, true);
+                }
+            }
+            
+
+            
             equipWeapon = weapons[equipWeaponIndex];
             equipWeapon.SetActive(true);
-
-            //anim.Settrigger("doSwap");
+            
+            anim.SetTrigger("doSwap");
             
             isSwap = true;
 
