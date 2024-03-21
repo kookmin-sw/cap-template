@@ -16,6 +16,9 @@ public:
 	UPlayerListWidgetModifier(UPlayerListWidget* NewPlayerListWidget);
 private:
 	UPlayerListWidget* PlayerListWidget;
+
+	TMap<int32, int32> IdIndexMap;
 public:
 	virtual void PostLogin(APlayerController* NewPlayer) override;
+	virtual void Logout(AController* Exiting) override;
 };

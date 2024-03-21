@@ -26,3 +26,9 @@ void FPlayerListController::PostLogin(APlayerController* NewPlayer)
 			TEXT("nullptr"));
 	}
 }
+
+void FPlayerListController::Logout(AController* Exiting)
+{
+	IPlayerList::Logout(Exiting);
+	PlayerListUpdate->Logout(Exiting);
+}

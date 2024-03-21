@@ -24,5 +24,5 @@ public:
 	void SetInfo(const FString& NewNumber, const FString& NewName);
 	void Clear();
 
-	FString& GetName();
+	FString GetName();
 };

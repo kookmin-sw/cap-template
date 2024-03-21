@@ -21,4 +21,10 @@ void UPlayerListWidget::Remove(int32 Index)
 
 		PlayerElements[i]->SetInfo(FString::FromInt(Number), Name);
 	}
+	length -= 1;
+}
+
+int32 UPlayerListWidget::GetLength()
+{
+	return length;
 }

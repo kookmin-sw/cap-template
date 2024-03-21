@@ -21,6 +21,7 @@ public:
 
 	void Add(FString& NewName);
 	void Remove(int32 Index);
+	int32 GetLength();
 private:
 	int32 length = 0;
 };

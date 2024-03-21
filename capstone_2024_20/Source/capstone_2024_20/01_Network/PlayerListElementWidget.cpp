@@ -17,7 +17,7 @@ void UPlayerListElementWidget::Clear()
 	Name->SetText(FText::FromString(""));
 }
 
-FString& UPlayerListElementWidget::GetName()
+FString UPlayerListElementWidget::GetName()
 {
 	FString ReturnName = Name->GetText().ToString();
 	return ReturnName;

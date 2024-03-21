@@ -15,11 +15,13 @@ UCLASS()
 class CAPSTONE_2024_20_API AStageGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-
 	virtual void BeginPlay() override;
+
 	IPlayerList* PlayerListController = new FPlayerListController(GetWorld());
+
 public:
 	class AStageSelectController* StageSelectController;
 
 	virtual void PostLogin(APlayerController* NewPlayer) override;
+	virtual void Logout(AController* Exiting) override;
 };
