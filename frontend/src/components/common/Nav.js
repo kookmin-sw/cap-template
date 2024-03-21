@@ -14,9 +14,9 @@ function getItem(label, key, icon, children) {
 const items = [
   getItem("Option 1", "1", <PieChartOutlined />),
   getItem("Option 2", "2", <DesktopOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [getItem("Tom", "3"), getItem("Bill", "4"), getItem("Alex", "5")]),
-  getItem("Team", "sub2", <TeamOutlined />, [getItem("Team 1", "6"), getItem("Team 2", "8")]),
-  getItem("Files", "9", <FileOutlined />),
+  getItem("Option 3", "3", <UserOutlined />),
+  getItem("Option 4", "4", <TeamOutlined />),
+  getItem("Option 5", "5", <FileOutlined />),
 ];
 const Nav = () => {
   const [collapsed, setCollapsed] = useState(false);
