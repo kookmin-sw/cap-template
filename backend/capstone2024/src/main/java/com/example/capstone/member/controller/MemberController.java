@@ -1,17 +1,18 @@
 package com.example.capstone.member.controller;
 
+import com.example.capstone.member.dto.MemberCheckResponse;
 import com.example.capstone.member.model.Favorite;
 import com.example.capstone.member.model.Member;
 import com.example.capstone.member.repository.FavoriteRepository;
 import com.example.capstone.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/api") // 변경된 부분
 public class MemberController {
 
     @Autowired
@@ -21,31 +22,34 @@ public class MemberController {
     private FavoriteRepository favoriteRepository;
 
     @GetMapping("/checkMember")
-    public String checkMember(@RequestParam String uuid) {
+    public ResponseEntity<MemberCheckResponse> checkMember(@RequestParam String uuid) {
         System.out.println("UUID: " + uuid);
 
         List<Member> memberList = memberRepository.findByUuid(uuid);
         if (!memberList.isEmpty()) {
-            Member member = memberList.getFirst(); // getFirst() 대신에 get(0) 사용
-            System.out.println("member table에 있음 : " + member.toString());
+            Member member = memberList.getFirst();
+            System.out.println(member.toString());
 
             List<Favorite> favoriteList = favoriteRepository.findByMemberUuid(uuid);
             if (!favoriteList.isEmpty()) {
-                System.out.println("Favorite에 있음 : " + favoriteList.toString());
-                return "멤버 추가 x Member : " + member.toString() + "\nFavorite에 있음 : " + favoriteList.toString();
+                System.out.println(favoriteList.toString());
+                MemberCheckResponse response = new MemberCheckResponse(member, favoriteList);
+                return ResponseEntity.ok(response);
             } else {
-                System.out.println("Member에 있음 : " + member.toString());
-                System.out.println("Favorite에 없음 : ");
-                return "멤버 추가 x Member : " + member.toString() + "\n Favorite에 없음 : " + uuid;
+                System.out.println("즐겨찾기 X");
+                MemberCheckResponse response = new MemberCheckResponse(member, null);
+                return ResponseEntity.ok(response);
             }
         } else {
             Member newMember = new Member(uuid, new Timestamp(System.currentTimeMillis()));
             memberRepository.save(newMember);
+            System.out.println("member 추가");
 
-            return "Member 추가 : " + newMember.toString();
+            MemberCheckResponse response = new MemberCheckResponse(newMember, null);
+            System.out.println("즐겨찾기 X");
+            return ResponseEntity.ok(response);
         }
     }
-
     @PostMapping("/addFavorite")
     public String addFavorite(
             @RequestParam String uuid,
