@@ -9,6 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FavoriteResponse {
-    private String message;
     private Favorite favorite;
 }

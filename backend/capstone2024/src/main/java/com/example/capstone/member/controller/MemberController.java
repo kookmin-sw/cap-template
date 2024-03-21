@@ -1,5 +1,7 @@
 package com.example.capstone.member.controller;
 
+import com.example.capstone.member.dto.FavoriteRequest;
+import com.example.capstone.member.dto.FavoriteResponse;
 import com.example.capstone.member.dto.MemberCheckResponse;
 import com.example.capstone.member.model.Favorite;
 import com.example.capstone.member.model.Member;
@@ -8,7 +10,6 @@ import com.example.capstone.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -51,33 +52,33 @@ public class MemberController {
         }
     }
     @PostMapping("/addFavorite")
-    public String addFavorite(
-            @RequestParam String uuid,
-            @RequestParam String favoriteName,
-            @RequestParam String destinationName,
-            @RequestParam String destinationCoordinates
+    public ResponseEntity<FavoriteResponse> addFavorite(
+            @RequestBody FavoriteRequest favoriteRequest
     ) {
-        System.out.println("UUID: " + uuid);
-        System.out.println("즐겨찾기명: " + favoriteName);
-        System.out.println("도착지명: " + destinationName);
-        System.out.println("도착지좌표" + destinationCoordinates);
+        System.out.println("UUID : " + favoriteRequest.getMemberUuid());
+        System.out.println("즐겨찾기명 : " + favoriteRequest.getFavoriteName());
+        System.out.println("도착지명 : " + favoriteRequest.getDestinationName());
+        System.out.println("도착지좌표 : " + favoriteRequest.getDestinationCoordinates());
 
-        List<Member> memberList = memberRepository.findByUuid(uuid);
+        List<Member> memberList = memberRepository.findByUuid(favoriteRequest.getMemberUuid());
         if (memberList.isEmpty()) {
-            return "UUID 없음 : " + uuid;
+            System.out.println("member X");
+            return ResponseEntity.badRequest().body(new FavoriteResponse(null));
         }
 
         Member member = memberList.getFirst();
 
         Favorite newFavorite = new Favorite();
-        newFavorite.setMemberUuid(uuid);
-        newFavorite.setFavoriteName(favoriteName);
-        newFavorite.setDestinationName(destinationName);
-        newFavorite.setDestinationCoordinates(destinationCoordinates);
+        newFavorite.setMemberUuid(favoriteRequest.getMemberUuid());
+        newFavorite.setFavoriteName(favoriteRequest.getFavoriteName());
+        newFavorite.setDestinationName(favoriteRequest.getDestinationName());
+        newFavorite.setDestinationCoordinates(favoriteRequest.getDestinationCoordinates());
         newFavorite.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 
         favoriteRepository.save(newFavorite);
+        System.out.println("즐겨찾기 추가");
 
-        return "즐겨찾기 추가 완료 :\n" + newFavorite.toString();
+        FavoriteResponse response = new FavoriteResponse(newFavorite);
+        return ResponseEntity.ok(response);
     }
 }

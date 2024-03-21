@@ -19,17 +19,10 @@ public class Member {
     private String uuid;
     private Timestamp createdAt;
 
-
     public Member() {
     }
 
     public Member(String uuid, Timestamp createdAt) {
-        this.uuid = uuid;
-        this.createdAt = createdAt;
-    }
-
-    public Member(Long id, String uuid, Timestamp createdAt) {
-        this.id = id;
         this.uuid = uuid;
         this.createdAt = createdAt;
     }

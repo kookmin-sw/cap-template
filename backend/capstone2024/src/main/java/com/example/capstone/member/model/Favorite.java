@@ -27,18 +27,6 @@ public class Favorite {
 
     }
 
-    public Favorite(String uuid, String favoriteName, String destinationName, String destinationCoordinates, Timestamp timestamp) {
-    }
-
-    public Favorite(Long id, String memberUuid, String favoriteName, String destinationName, String destinationCoordinates, Timestamp createdAt) {
-        this.id = id;
-        this.memberUuid = memberUuid;
-        this.favoriteName = favoriteName;
-        this.destinationName = destinationName;
-        this.destinationCoordinates = destinationCoordinates;
-        this.createdAt = createdAt;
-    }
-
     @Override
     public String toString() {
         return "Favorite{" +
