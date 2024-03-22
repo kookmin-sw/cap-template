@@ -24,7 +24,7 @@ public class Interact : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward * interactDiastance, Color.blue, interactDiastance);
 
         //LayerMask.GetMask("Interact") : raycast가 Interact 레이어와만 상호작용 
-        Vector3 raycastStartingPoint = transform.position + transform.TransformDirection(raycastOffset);
+        Vector3 raycastStartingPoint = transform.position; // transform.TransformDirection(raycastOffset);
         if (Physics.Raycast(raycastStartingPoint, transform.TransformDirection(Vector3.forward), out hit, interactDiastance, LayerMask.GetMask("Interact")))
         {
             //셀렉된 타겟이 없거나 새로운 오브젝트라면 새로 셀렉 
