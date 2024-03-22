@@ -68,9 +68,8 @@
 
 # Compiled source files for the engine to use
 */Intermediate/*
-*/Plugins/*/Intermediate/*
-*/Plugins/**/Intermediate/*
-*/Plugins/Developer/RiderLink/Binaries/**/UnrealEditor.modules
+*/Plugins/**/Binaries
+*/Plugins/**/Intermediate
 
 # Cache files for the editor to use
 */DerivedDataCache/*
