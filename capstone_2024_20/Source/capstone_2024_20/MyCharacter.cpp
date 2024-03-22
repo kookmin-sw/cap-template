@@ -16,7 +16,7 @@ AMyCharacter::AMyCharacter()
 	TextWidget->SetupAttachment(GetMesh());
 	TextWidget->SetRelativeLocation(FVector(-60.0f,0.0f,180.0f));
 	TextWidget->SetWidgetSpace(EWidgetSpace::Screen);
-	static ConstructorHelpers::FClassFinder<UUserWidget> UI_HUD(TEXT("/Game/UMG/NewWidgetBlueprint"));
+	static ConstructorHelpers::FClassFinder<UUserWidget> UI_HUD(TEXT("/Game/WidgetBlueprints/NewWidgetBlueprint"));
 	if(UI_HUD.Succeeded())
 	{
 		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("UMG Success"));

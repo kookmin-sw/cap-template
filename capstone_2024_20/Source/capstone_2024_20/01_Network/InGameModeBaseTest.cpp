@@ -16,7 +16,7 @@
 
 AInGameModeBaseTest::AInGameModeBaseTest()
 {
-	static ConstructorHelpers::FClassFinder<AMyCharacter> pawn(TEXT("/Game/BP/BP_MyCharacter"));
+	static ConstructorHelpers::FClassFinder<AMyCharacter> pawn(TEXT("/Game/Blueprints/BP_MyCharacter"));
 	DefaultPawnClass = pawn.Class;
 
 	PlayerControllerClass = AMyPlayerController::StaticClass();

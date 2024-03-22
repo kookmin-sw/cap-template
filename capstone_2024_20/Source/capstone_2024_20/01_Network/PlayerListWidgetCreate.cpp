@@ -29,7 +29,7 @@ void PlayerListWidgetCreate::PostLogin(APlayerController* NewPlayer)
 
 UPlayerListWidget* PlayerListWidgetCreate::CreatePlayerListWidget()
 {
-	FString Path = FString("/Game/UMG/" + PlayerListWidgetClass);
+	FString Path = FString("/Game/WidgetBlueprints/" + PlayerListWidgetClass);
 
 	UBlueprint* BlueprintObject = LoadObject<UBlueprint>(nullptr, *Path);
 

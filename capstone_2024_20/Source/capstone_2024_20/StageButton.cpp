@@ -15,7 +15,7 @@ void UStageButton::SettingStagePopUpWidget()
 	//버튼 함수 연결
 	this->OnClicked.AddDynamic(this, &UStageButton::OnClickButton);
 	StagePopUpWidgetClass = StaticLoadClass(UUserWidget::StaticClass(), nullptr,
-		TEXT("/Game/UMG/StagePopUpWidget.StagePopUpWidget_C"));
+		TEXT("/Game/WidgetBlueprints/StagePopUpWidget.StagePopUpWidget_C"));
 	if(StagePopUpWidgetClass != nullptr)
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("aaa"));
 }
