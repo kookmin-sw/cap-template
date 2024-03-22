@@ -7583,6 +7583,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1458414886 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2858394551520588293, guid: ab884f296449a3e4c85cdc0f45781282, type: 3}
+  m_PrefabInstance: {fileID: 5277668092559540925}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1555104986
 GameObject:
   m_ObjectHideFlags: 0
@@ -8313,11 +8318,6 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 2301220640147119284}
---- !u!1 &8584900744068498703 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2789357584287048081, guid: ab884f296449a3e4c85cdc0f45781282, type: 3}
-  m_PrefabInstance: {fileID: 5277668092559540925}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8613601833284670316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8331,7 +8331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image_F: {fileID: 6468768879357146646}
-  circleGauge: {fileID: 8584900744068498703}
+  circleGauge: {fileID: 1458414886}
   quicSlot: {fileID: 3104323750557139120}
   isInvetigating: 0
 --- !u!1660057539 &9223372036854775807
