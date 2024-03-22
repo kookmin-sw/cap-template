@@ -43,6 +43,7 @@ public class MovementStateManager : MonoBehaviour
 
     void Start()
     {
+        uiManager = FindObjectOfType<UIManager>();
         pv = GetComponent<PhotonView>();
         anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();

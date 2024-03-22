@@ -18,6 +18,7 @@ public class AimStateManager : MonoBehaviourPun
     void Start()
     {
         pv = GetComponent<PhotonView>();
+        uiManager = FindObjectOfType<UIManager>();
         if (pv.IsMine)
         {
             var followCam = FindObjectOfType<CinemachineVirtualCamera>();

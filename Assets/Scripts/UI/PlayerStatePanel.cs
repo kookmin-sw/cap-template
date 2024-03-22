@@ -16,6 +16,7 @@ public class PlayerStatePanel : MonoBehaviour
     private PhotonView pv;
     void Awake()
     {
+        uiManager = FindObjectOfType<UIManager>();
         pv = GetComponent<PhotonView>();
         movement = GetComponent<MovementStateManager>();
     }
