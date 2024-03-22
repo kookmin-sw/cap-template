@@ -27,18 +27,18 @@ public class MovementStateManager : MonoBehaviour
     [HideInInspector] public bool jumped;
     Vector3 velocity;
 
-    public GameObject[] weapons;
-    public Inventory quickSlot;
-    GameObject equipWeapon;
-    int equipWeaponIndex = -1;
-    bool isSwap;
-    public bool isAttack;
+    public GameObject[] weapons; // 모든 무기 배열
+    public Inventory quickSlot; // 가지고 있는 무기
+    GameObject equipWeapon; // 장착 중인 무기
+    int equipWeaponIndex = -1; // 장착 중인 무기의 weapons에서의 위치
+    bool isSwap; // 스왑 상태
+    public bool isAttack; // 공격 상태
     public Transform RightHand;
 
-    MeshCollider colliderWeapon;
-    SphereCollider colliderHand;
-    public GameObject objWeapon;
-    public string Armed;
+    MeshCollider colliderWeapon; // 무기들의 collider
+    SphereCollider colliderHand; // 주먹 collider
+    public GameObject objWeapon; // 장착중인 무기 gameobject(무기 및 주먹)
+    public string Armed; // 현재 장착중인 무기 타입
 
     public MovementBaseState previousState;
     public MovementBaseState currentState;
@@ -59,11 +59,10 @@ public class MovementStateManager : MonoBehaviour
         controller = GetComponent<CharacterController>();
         quickSlot = GameObject.Find("ItemQuickSlots").GetComponent<Inventory>();
         SwitchState(Idle);
-        // obj를 받아와야하는데
 
-        objWeapon = RightHand.GetChild(1).gameObject;
+        objWeapon = RightHand.GetChild(1).gameObject; // 처음 시작할 때 주먹의 sphereCollider 받아옴
         colliderHand = objWeapon.GetComponent<SphereCollider>();
-        colliderHand.enabled = false;
+        colliderHand.enabled = false; // 기본적으로는 collider 꺼둠
     }
 
     void Update()
@@ -114,11 +113,14 @@ public class MovementStateManager : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
-    public void JumpForce() => velocity.y += jumpForce;
+    public void JumpForce(){
+        velocity.y += jumpForce;
+    } 
 
     public void Jumped() => jumped = true;
 
-    public void Attack(){ // 추후에 스크립트 따로 무기 별 
+    // 공격
+    public void Attack(){ 
         if (Input.GetMouseButton(0))
             {
                 Debug.Log("aTtatack");
@@ -127,6 +129,7 @@ public class MovementStateManager : MonoBehaviour
         else anim.SetBool("Attack", false);
     }
 
+    // 무기 장착 시와 비 장착시 공격 시작(collider on)
     public void AttackStart(){
         Debug.Log("Collider On");
         if(Armed != "") {
@@ -139,6 +142,7 @@ public class MovementStateManager : MonoBehaviour
         }
     }
 
+    // 무기 장착 시와 비 장착시 공격 끝(collider off)
     public void AttackEnd(){
         Debug.Log("coll Off");
         if(Armed != "") {
@@ -151,20 +155,19 @@ public class MovementStateManager : MonoBehaviour
         }
     }
 
-    public void ArmedWeapon(){
-        
-    }
-
+    // 공격 시작
     public void AttackIn(){
         Debug.Log("bbabsd");
         isAttack = true;
     }
 
+    // 공격 끝
     public void AttackOut(){
         Debug.Log("ASaaaaaa");
         isAttack = false;   
     }   
 
+    // 스왑 끝
     void SwapOut(){
         isSwap = false;
     }
@@ -176,7 +179,7 @@ public class MovementStateManager : MonoBehaviour
         //     return;
         // if(sDown3 && (!hasWeapons[2] || equipWeaponIndex == 2))
         //     return;
-        if(isAttack) return;
+        if(isAttack) return; // 공격 중에는 스왑 불가
 
         int weaponIndex = -1;
         if(Input.GetButtonDown("Swap1")) weaponIndex = 0;
@@ -193,7 +196,8 @@ public class MovementStateManager : MonoBehaviour
             Armed = "";
             return;
         }
-        else if((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2") || Input.GetButtonDown("Swap3")
+        // 버튼을 입력 받으면 
+        if((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2") || Input.GetButtonDown("Swap3")
             || Input.GetButtonDown("Swap4") || Input.GetButtonDown("Swap5"))){
             if(equipWeapon != null)
                 equipWeapon.SetActive(false);
@@ -225,8 +229,6 @@ public class MovementStateManager : MonoBehaviour
                 }
             }
             
-
-            
             equipWeapon = weapons[equipWeaponIndex];
             equipWeapon.SetActive(true);
             
@@ -234,10 +236,35 @@ public class MovementStateManager : MonoBehaviour
             
             isSwap = true;
 
-            //Invoke("SwapOut", 0.4f);
+            //Invoke("SwapOut", 0.4f);  // swap 애니메이션 넣으면 사용
         }
     }
 
+    void OnDamaged(Vector3 targetPos)
+    {
+        //player  damaged
+        gameObject.layer = 1;
+        
+        // 여기에 HP감소 넣기
+        Debug.Log("Hit");
+
+        //animation
+        anim.SetTrigger("doDamaged");
+
+        Invoke("OffDamaged", 2);
+    }
+
+    void OffDamaged()
+    {
+        gameObject.layer = 0;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        //적에게 닿았을때
+        if(collision.gameObject.tag == "Item") // tag변경 필요
+            OnDamaged(collision.transform.position);
+    }
     /*
     private void OnDrawGizmos()
     {
