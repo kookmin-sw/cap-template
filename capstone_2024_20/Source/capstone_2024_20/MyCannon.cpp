@@ -6,7 +6,6 @@
 #include "CannonBall.h"
 #include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
-#include "Settings/LevelEditorPlayNetworkEmulationSettings.h"
 
 // Sets default values
 AMyCannon::AMyCannon()
