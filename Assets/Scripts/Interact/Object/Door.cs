@@ -28,7 +28,7 @@ public class Door : MonoBehaviour
         if (open)
         {
             //transform.rotation = Quaternion.Euler(current_vector+doorOpenVector);
-            transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.Euler(), smoot * Time.deltaTime)
+            //transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.Euler(), smoot * Time.deltaTime)
 
             //Quaternion targetRotation = Quaternion.Euler(current_vector+doorOpenAngle);
             //transform.localRotation = Quaternion.Slerp(transform.rotation, targetRotation, smoot * Time.deltaTime);
@@ -37,7 +37,7 @@ public class Door : MonoBehaviour
         }
         else
         {
-            transform.rotation = Quaternion.Euler(current_vector + doorCloseVector);
+            //transform.rotation = Quaternion.Euler(current_vector + doorCloseVector);
             //Quaternion targetRotation2 = Quaternion.Euler(doorCloseAngle);
             //transform.localRotation = Quaternion.Slerp(current_angle, targetRotation2, smoot * Time.deltaTime);
 
