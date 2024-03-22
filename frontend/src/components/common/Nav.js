@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import { DesktopOutlined, FileOutlined, PieChartOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 const { Sider } = Layout;
@@ -41,7 +42,7 @@ const Nav = () => {
         minHeight: "100vh",
       }}>
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-        <div className="demo-logo-vertical" />
+        <DemoLogo />
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline" items={items} selectedKeys={currentKey()} />
       </Sider>
       <Layout>
@@ -51,3 +52,9 @@ const Nav = () => {
   );
 };
 export default Nav;
+
+const DemoLogo = styled.div`
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+`;
