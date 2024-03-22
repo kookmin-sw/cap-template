@@ -19,6 +19,12 @@ if (Test-Path $VersionPath) {
     Remove-Item -Recurse -Force $VersionPath
 }
 
+# If the zip file already exists, delete it
+$ExistZipPath = $VersionPath + ".zip"
+if (Test-Path $ExistZipPath) {
+    Remove-Item -Force $ExistZipPath
+}
+
 # Create a new folder for the build
 New-Item -ItemType Directory -Name $Version
 
@@ -53,8 +59,30 @@ $SourceFile = $ZipPath
 
 # Get the source file contents and details, encode in base64
 $SourceItem = Get-Item $SourceFile
-$SourceBase64 = [Convert]::ToBase64String([IO.File]::ReadAllBytes($SourceItem.FullName))
 $SourceMime = [System.Web.MimeMapping]::GetMimeMapping($SourceItem.FullName)
+
+try {
+    $BlockSize = $Base64Transform.InputBlockSize * 4
+    $Buffer = New-Object byte[] $BlockSize
+    $BytesRead = $null
+
+    do {
+        $BytesRead = $BinaryReader.Read($Buffer, 0, $BlockSize)
+
+        if ($BytesRead -gt 0) {
+            $TransformedBytes = $Base64Transform.TransformFinalBlock($Buffer, 0, $BytesRead)
+            $Base64String = [Text.Encoding]::UTF8.GetString($TransformedBytes)
+            Write-Output $Base64String
+        }
+    } while ($BytesRead -gt 0)
+}
+finally {
+    $Base64Transform.Dispose()
+    $BinaryReader.Dispose()
+    $FileStream.Dispose()
+}
+
+$SourceBase64 = $Base64String
 
 # If uploading to a Team Drive, set this to 'true'
 $SupportsTeamDrives = 'false'
