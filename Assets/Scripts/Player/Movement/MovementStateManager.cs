@@ -262,7 +262,7 @@ public class MovementStateManager : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         //적에게 닿았을때
-        if(collision.gameObject.tag == "Item") // tag변경 필요
+        if(collision.gameObject.tag == "Weapon") // tag변경 필요
             OnDamaged(collision.transform.position);
     }
     /*
