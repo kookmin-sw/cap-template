@@ -13,8 +13,9 @@ public class Interact : MonoBehaviour
 
 
     RaycastHit hit;
-    float interactDiastance = 2.0f;
+    float interactDiastance = 4.0f;
     Transform selectedTarget;
+
 
     void Update()
     {

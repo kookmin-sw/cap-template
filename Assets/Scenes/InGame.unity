@@ -7174,7 +7174,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Items:
   - {fileID: 11400000, guid: 4f5c97fe37e6049d08995b9c9353c996, type: 2}
-  ItemPrefab: {fileID: 0}
   maxDistance: 1
   m_InitialAngle: 70
 --- !u!1 &538544176
@@ -7358,7 +7357,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1b586aa55524247c1924e8c0c949f9e9, type: 2}
   - {fileID: 11400000, guid: da1e7137fe9214535abac10ade8bc32b, type: 2}
   - {fileID: 11400000, guid: 053dc8dd1cd3645e19ffb3db5751ef78, type: 2}
-  ItemPrefab: {fileID: 0}
   maxDistance: 1
   m_InitialAngle: 70
 --- !u!1 &970177677
@@ -8331,7 +8329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image_F: {fileID: 6468768879357146646}
-  circleGauge: {fileID: 1458414886}
+  circleGaugeControler: {fileID: 1458414886}
   quicSlot: {fileID: 3104323750557139120}
   isInvetigating: 0
 --- !u!1660057539 &9223372036854775807
