@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Data.SqlTypes;
 using ExitGames.Client.Photon;
+using static UnityEditor.Progress;
 
 public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPointerExitHandler
 {
@@ -12,6 +13,12 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
     private Color preColor;
     private Color hoverColor;
     private RectTransform slotRect;
+
+    [SerializeField] private RectTransform firstComSlotRect;
+    [SerializeField] private RectTransform secondComSlotRect;
+    [SerializeField] private Slot firstComSlot;
+    [SerializeField] private Slot secondComSlot;
+    [SerializeField] private CraftSlot craftSlot;
     void Awake()
     {
         slotImage = GetComponent<Image>();
@@ -49,6 +56,18 @@ public class DroppableUI : MonoBehaviour, IPointerEnterHandler, IDropHandler, IP
             }
             eventData.pointerDrag.transform.SetParent(transform);
             eventData.pointerDrag.GetComponent<RectTransform>().position = slotRect.position;
+
+            //if (eventData.pointerDrag.GetComponent<RectTransform>().position == firstComSlotRect.position)
+            //{
+            //    craftSlot.items.Add() firstComSlot.item;
+            //}
+            //else if (eventData.pointerDrag.GetComponent<RectTransform>().position == secondComSlotRect.position)
+            //{
+            //    craftSlot.items[1] = secondComSlot.item;
+            //}
+
         }
     }
+
+
 }

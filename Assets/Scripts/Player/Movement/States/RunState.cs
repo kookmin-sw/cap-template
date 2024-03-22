@@ -28,7 +28,7 @@ public class RunState : MovementBaseState
         else movement.currentMoveSpeed = movement.runSpeed;
     }
 
-    void ExitState(MovementStateManager movement, MovementBaseState state)
+    public void ExitState(MovementStateManager movement, MovementBaseState state)
     {
         movement.anim.SetBool("Running", false);
         movement.SwitchState(state);
