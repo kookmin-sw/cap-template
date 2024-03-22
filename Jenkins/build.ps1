@@ -8,10 +8,11 @@ param(
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-# Move to the build directory
-Set-Location "C:\\Work\\Career\\2_KMU\\CapstoneProject\\Builds"
+$BuildPath = "C:\\Work\\Career\\2_KMU\\CapstoneProject\\Builds"
+$VersionPath = $BuildPath + "\\" + $Version
 
-$VersionPath = Resolve-Path($Version)
+# Move to the build directory
+Set-Location $BuildPath
 
 # If the build already exists, delete it
 if (Test-Path $VersionPath) {
