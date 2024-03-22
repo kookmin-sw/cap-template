@@ -1,8 +1,8 @@
-package com.example.demo.exception;
+package com.capstone.server.exception;
 
 import java.util.Map;
 
-import com.example.demo.code.UserErrorCode;
+import com.capstone.server.code.UserErrorCode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

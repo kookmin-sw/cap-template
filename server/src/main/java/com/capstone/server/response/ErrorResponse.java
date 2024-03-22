@@ -1,9 +1,9 @@
-package com.example.demo.response;
+package com.capstone.server.response;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import com.example.demo.code.UserErrorCode;
+import com.capstone.server.code.UserErrorCode;
 
 import lombok.Getter;
 

@@ -1,8 +1,8 @@
-package com.example.demo.dto;
+package com.capstone.server.dto;
 
 import java.math.BigDecimal;
 
-import com.example.demo.model.UserEntity;
+import com.capstone.server.model.UserEntity;
 import jakarta.validation.constraints.*;
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.capstone.server.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
