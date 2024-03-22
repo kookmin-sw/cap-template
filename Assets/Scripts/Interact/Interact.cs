@@ -6,7 +6,7 @@ public class Interact : MonoBehaviour
 {
 
     public GameObject image_F;
-    public GameObject circleGauge;
+    public GameObject circleGaugeControler;
     public Inventory quicSlot;
 
     public bool isInvetigating = false; //수색중인가?
@@ -46,8 +46,8 @@ public class Interact : MonoBehaviour
                 {
                     Debug.Log("betterySpawner 와 상호작용");
 
-                    circleGauge.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화하고
-                    circleGauge.GetComponent<InteractGaugeControler>().AbleInvestinGaugeUI(); //게이지UI켜고 
+                    circleGaugeControler.GetComponent<InteractGaugeControler>().SetGuageZero();//수색 게이지 초기화하고
+                    circleGaugeControler.GetComponent<InteractGaugeControler>().AbleInvestinGaugeUI(); //게이지UI켜고 
                     isInvetigating = true;//수색시작
                 }
 
@@ -87,14 +87,14 @@ public class Interact : MonoBehaviour
         //수색여부(isInvetigating)에 따라 실행됨. 수색중이면 게이지 증g
         if (isInvetigating)
         {
-            if (circleGauge.GetComponent<InteractGaugeControler>().FillCircle())
+            if (circleGaugeControler.GetComponent<InteractGaugeControler>().FillCircle())
             {
                 //수색을 성공적으로 마쳤다면 아이템 스폰 
                 selectedTarget.GetComponent<ItemSpawner>().SpawnItem();
 
                 //수색종료
                 isInvetigating = false; 
-                circleGauge.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI();
+                circleGaugeControler.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI();
             }
         }
 
@@ -112,7 +112,7 @@ public class Interact : MonoBehaviour
 
 
         isInvetigating = false; //수색중이라면 취소하고
-        circleGauge.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI(); //게이지UI끄기 
+        circleGaugeControler.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI(); //게이지UI끄기 
 
     }
 
@@ -149,7 +149,6 @@ public class Interact : MonoBehaviour
         if (obj != null)
         {
             obj.gameObject.GetComponent<Outline>().enabled = false;
-            obj = null;
         }
     }
 
