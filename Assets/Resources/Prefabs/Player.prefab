@@ -1320,7 +1320,9 @@ MonoBehaviour:
   - {fileID: 4179278121092346930}
   quickSlot: {fileID: 0}
   isAttack: 0
-  RightHand: {fileID: 0}
+  RightHand: {fileID: 2391162994395400503}
+  objWeapon: {fileID: 0}
+  Armed: 
   anim: {fileID: 0}
 --- !u!143 &8536026664842187324
 CharacterController:
