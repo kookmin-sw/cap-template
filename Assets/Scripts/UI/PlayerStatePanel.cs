@@ -10,13 +10,16 @@ public class PlayerStatePanel : MonoBehaviour
     [SerializeField] private UIManager uiManager;
     [SerializeField] private Slider staminaBar;
     [SerializeField] private Slider healthPointBar;
-    [SerializeField] private TextMeshProUGUI healthPointCount;
+    [SerializeField] private TMP_Text healthPointCount;
 
     private MovementStateManager movement;
     private PhotonView pv;
     void Awake()
     {
         uiManager = FindObjectOfType<UIManager>();
+        staminaBar = GameObject.Find("StaminaBar").GetComponent<Slider>();
+        healthPointBar = GameObject.Find("HealthPointBar").GetComponent<Slider>();
+        healthPointCount = GameObject.Find("HealthPointCount").GetComponent<TextMeshProUGUI>();
         pv = GetComponent<PhotonView>();
         movement = GetComponent<MovementStateManager>();
     }
