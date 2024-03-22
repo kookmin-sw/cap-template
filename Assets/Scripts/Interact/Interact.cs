@@ -16,9 +16,6 @@ public class Interact : MonoBehaviour
     float interactDiastance = 2.0f;
     Transform selectedTarget;
 
-    // 레이케스트 시작점을 얼마나 변경할지 결정하는 벡터
-    private Vector3 raycastOffset = new Vector3(0f, -0.5f, -1f);
-
     void Update()
     {
         Debug.DrawRay(transform.position, transform.forward * interactDiastance, Color.blue, interactDiastance);
@@ -109,9 +106,10 @@ public class Interact : MonoBehaviour
     {
         if (selectedTarget == null) return;
 
-        Debug.Log(obj.name + " is unselected");
         removeOutline(obj);
         selectedTarget = null;
+        Debug.Log(obj.name + " is unselected");
+
 
         isInvetigating = false; //수색중이라면 취소하고
         circleGauge.GetComponent<InteractGaugeControler>().EnableInvestinGaugeUI(); //게이지UI끄기 
