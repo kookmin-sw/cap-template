@@ -60,6 +60,9 @@ $SourceFile = $ZipPath
 # Get the source file contents and details, encode in base64
 $SourceItem = Get-Item $SourceFile
 $SourceMime = [System.Web.MimeMapping]::GetMimeMapping($SourceItem.FullName)
+$FileStream = New-Object System.IO.FileStream($SourceItem.FullName, [System.IO.FileMode]::Open)
+$BinaryReader = New-Object System.IO.BinaryReader($FileStream)
+$Base64Transform = New-Object System.Security.Cryptography.ToBase64Transform
 
 try {
     $BlockSize = $Base64Transform.InputBlockSize * 4
