@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class item_rotater : MonoBehaviour
+public class Item_rotater : MonoBehaviour
 {
     public float rotationSpeed = 60f;  // 초당 회전 속도
 

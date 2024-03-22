@@ -23,22 +23,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public PhotonManager photonManager;
+    public string UserId { get; set; }
 
     void Awake()
     {
-        photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        if (_instance == null)
+        {
+            _instance = this;
+        }
+        else if (_instance != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
     }
 }

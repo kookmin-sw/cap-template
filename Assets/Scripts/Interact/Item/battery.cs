@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class battery : MonoBehaviour
+public class Battery : MonoBehaviour
 {
     bool is_collide = false;
     Vector3 stop_position;

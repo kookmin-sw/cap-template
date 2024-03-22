@@ -5,28 +5,36 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     public bool open = false;
-    public float doorOpenAngle = 90f;
-    public float doorCloseAngle = 0f;
     public float smoot = 2f;
+
+    public Vector3 doorOpenVector = new Vector3(0, -90f, 0);
+
+    Quaternion ToDoorAngle;
+
+    private void Update()
+    {
+        transform.rotation = Quaternion.Slerp(transform.rotation, ToDoorAngle, smoot * Time.deltaTime);
+    }
 
     public void ChangeDoorState()
     {
         open = !open;
+        ChangeDoorAngle(open);
     }
 
-
-
-    void Update()
+    void ChangeDoorAngle(bool open)
     {
         if (open)
         {
-            Quaternion targetRotation = Quaternion.Euler(0, doorOpenAngle, 0);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, smoot * Time.deltaTime);
+            ToDoorAngle = Quaternion.Euler(transform.eulerAngles + doorOpenVector);
+
         }
         else
         {
-            Quaternion targetRotation2 = Quaternion.Euler(0, doorCloseAngle, 0);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation2, smoot * Time.deltaTime);
+            ToDoorAngle = Quaternion.Euler(transform.eulerAngles - doorOpenVector);
         }
+
     }
+
 }
+
