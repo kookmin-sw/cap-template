@@ -41,6 +41,7 @@ MonoBehaviour:
   - RespawnSpaceship
   - ApplyUadatedHp
   - OnDamage
+  - ApplyUpdatedHp
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
