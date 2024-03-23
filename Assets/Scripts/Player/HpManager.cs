@@ -46,8 +46,8 @@ public class HpManager : MonoBehaviour
         // if (PhotonNetwork.IsMasterClient) 
         
         Debug.Log("데미지 입음");
-        Debug.Log("남은 hp: " + hp);
         hp -= damage;
+        Debug.Log("남은 hp: " + hp);
 
         pv.RPC("ApplyUpdatedHp", RpcTarget.Others, hp, isDead);
 
