@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using Photon.Pun;
+using Unity.VisualScripting;
 
 public class AimStateManager : MonoBehaviourPun
 {
     public Cinemachine.AxisState xAxis, yAxis;
     [SerializeField] Transform camFollowPos;
+
+    [SerializeField] UIManager uiManager;
 
     private PhotonView pv;
 
@@ -15,6 +18,7 @@ public class AimStateManager : MonoBehaviourPun
     void Start()
     {
         pv = GetComponent<PhotonView>();
+        uiManager = FindObjectOfType<UIManager>();
         if (pv.IsMine)
         {
             var followCam = FindObjectOfType<CinemachineVirtualCamera>();
@@ -26,7 +30,7 @@ public class AimStateManager : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        if (pv.IsMine)
+        if (pv.IsMine && uiManager.isUIActivate == false)
         {
             xAxis.Update(Time.deltaTime);
             yAxis.Update(Time.deltaTime);

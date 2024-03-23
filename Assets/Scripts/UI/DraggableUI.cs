@@ -26,6 +26,7 @@ public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         //드래그 직전에 소속되어 있던 부모Slot Transform 정보 저장
         preSlot = transform.parent;
 
+
         //현재 드래그 중인 아이콘이 화면의 최상단에 출력되도록
         transform.SetParent(canvas); //부모 오브젝트를 canvas로 설정
         transform.SetAsLastSibling(); // 아이콘을 가장 앞에 보이도록 마지막 자식으로 설정
