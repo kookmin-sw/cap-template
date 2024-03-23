@@ -6,8 +6,8 @@ public class ItemSpawner : MonoBehaviour
 {
     //스포너 오브젝트 근처로 포물선 운동을 하며 스폰됨
 
-    [SerializeField] private List<Item> Items; //스포너에서 스폰될 수 있는 아이템들. 인스펙터 창에서 골라 넣어주면 됨 
-    [SerializeField] private GameObject ItemPrefab;
+    [SerializeField] private List<Item> Items; //스포너에서 스폰될 수 있는 아이템들. 인스펙터 창에서 골라 넣어주면 됨
+    private GameObject ItemPrefab;
 
 
     public float maxDistance = 1f; // 아이템이 스폰될 최대 반경
@@ -21,11 +21,11 @@ public class ItemSpawner : MonoBehaviour
     public float m_InitialAngle = 70f; // 처음 날라가는 각도
     private Rigidbody itemRigidbody;
 
-    //interact 스크립트에서 호출됨
+    //interact 스크립트에서 호출됨. 아이템 리스트중 랜덤으로 하나를 뽑아서 스폰
     public void SpawnItem()
     {
-        int randomItemNumber = Random.Range(0, Items.Count);
-        Debug.Log("randomItemNumber : " + randomItemNumber);
+        int randomItemNumber = Random.Range(0, Items.Count); 
+        //Debug.Log("randomItemNumber : " + randomItemNumber);
         ItemPrefab = Items[randomItemNumber].itemPrefab;
 
         // 스포너 근처의랜덤 위치를 가져옵니다.
@@ -43,7 +43,7 @@ public class ItemSpawner : MonoBehaviour
 
 
 
-    //이건 그냥 가져옴..ㅋ 
+    //포물선을 그리며 스폰되도록 하는 함수. 이건 그냥 가져옴..ㅋ 
     public Vector3 GetVelocity(Vector3 start_pos, Vector3 target_pos, float initialAngle)
     {
         float gravity = Physics.gravity.magnitude;

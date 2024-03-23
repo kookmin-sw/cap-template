@@ -5,7 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - door
-  - betteryspawner
   - floor
   - battery
   - Weapon
@@ -13,6 +12,7 @@ TagManager:
   - Bullet
   - Item
   - ItemSpawner
+  - tmp
   layers:
   - Default
   - TransparentFX
