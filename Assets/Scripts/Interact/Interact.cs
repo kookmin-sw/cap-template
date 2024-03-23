@@ -37,6 +37,13 @@ public class Interact : MonoBehaviour
             //F를 누르면 상호작용 
             if (selectedTarget != null && Input.GetKeyDown(KeyCode.F))
             {
+                // 샌드백 치는 함수
+                // 나중에 f 말고 떄리는 기능 구현하면 삭제해야함
+                if (selectedTarget.CompareTag("tmp"))
+                {
+                    hit.collider.gameObject.GetComponent<HpManager>().OnDamage();
+                }
+
                 if (selectedTarget.CompareTag("door"))
                 {
                     Debug.Log("문 상호작용 ");

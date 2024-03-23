@@ -12,6 +12,7 @@ TagManager:
   - Bullet
   - Item
   - ItemSpawner
+  - tmp
   layers:
   - Default
   - TransparentFX
