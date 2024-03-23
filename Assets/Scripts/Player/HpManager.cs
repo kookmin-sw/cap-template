@@ -89,5 +89,6 @@ public class HpManager : MonoBehaviour
             onDeath();
         }
         isDead = true;
+        gameObject.SetActive(false);
     }
 }
