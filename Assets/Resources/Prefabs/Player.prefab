@@ -1276,6 +1276,7 @@ MonoBehaviour:
       m_LegacyHeadingDefinition: 0
       m_LegacyVelocityFilterStrength: 0
   camFollowPos: {fileID: 8625656909342029119}
+  uiManager: {fileID: 0}
 --- !u!114 &6740921852487332832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1344,7 +1345,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.7
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.0001
