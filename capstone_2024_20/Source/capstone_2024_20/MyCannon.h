@@ -49,10 +49,10 @@ public:
 	void MultiCastRPC_FireCannon();
 
 	UFUNCTION()
-	void MoveCannon(FRotator newRot);
+	void RotateCannon(FRotator newRot);
 
 	UFUNCTION(NetMulticast, Reliable)
-	void MultiCastRPC_MoveCannon(FRotator newRot);
+	void MultiCastRPC_RotateCannon(FRotator newRot);
 
 	
 };

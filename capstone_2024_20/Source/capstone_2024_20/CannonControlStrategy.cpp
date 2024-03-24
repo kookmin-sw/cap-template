@@ -2,9 +2,9 @@
 
 
 #include "CannonControlStrategy.h"
-
-#include "MyCannon.h"
 #include "MyPlayerController.h"
+#include "MyCannon.h"
+
 
 void CannonControlStrategy::Move(const FInputActionInstance& Instance, AActor* Actor,APlayerController* PlayerController, float DeltaTime)
 {
@@ -22,7 +22,7 @@ void CannonControlStrategy::Move(const FInputActionInstance& Instance, AActor* A
 		//Cannon->M_ShooterMesh->SetRelativeRotation(NewRotation);
 
 		AMyPlayerController* Controller = Cast<AMyPlayerController>(PlayerController);
-		Controller->ServerRPC_MoveCannon(Cannon, NewRotation);
+		Controller->ServerRPC_RotateCannon(Cannon, NewRotation);
 		
 		
 	}

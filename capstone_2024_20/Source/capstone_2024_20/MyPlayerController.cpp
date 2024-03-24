@@ -51,7 +51,8 @@ void AMyPlayerController::BeginPlay()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMyShip::StaticClass(), FoundShips);
 	if (FoundShips.Num() > 0)
 	{
-		Ship = Cast<APawn>(FoundShips[0]);
+		Ship = Cast<AMyShip>(FoundShips[0]);
+		
 	}
 
 	// 매핑 컨텐스트 할당
@@ -66,7 +67,7 @@ void AMyPlayerController::BeginPlay()
 	{
 		ControlledActor = Player;
 		if (Player->InputComponent)
-			SetupInputComponent(Player->InputComponent);
+			SetupPlayerInputComponent(Player->InputComponent);
 
 		// else
 		// {
@@ -94,7 +95,7 @@ void AMyPlayerController::Tick(float DeltaSeconds)
 				ControlledActor = Player;
 				if (Player->InputComponent)
 				{
-					SetupInputComponent(Player->InputComponent);
+					SetupPlayerInputComponent(Player->InputComponent);
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Player Component NOT NULL"));
 					flag = false;
 				}
@@ -104,7 +105,7 @@ void AMyPlayerController::Tick(float DeltaSeconds)
 }
 
 
-void AMyPlayerController::SetupInputComponent(UInputComponent* PlayerInputComponent)
+void AMyPlayerController::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupInputComponent();
 
@@ -172,7 +173,8 @@ void AMyPlayerController::SetControlMode(ControlMode NewControlMode)
 
 	case ControlMode::CANNON:
 		TargetArmLength = 1500.0f;
-		TargetRotation = FRotator(-30.0f, 0.0f, 0.0f);
+		TargetRotation = Cannon->GetActorRotation() + FRotator(-30.0f, -90.0f, 0.0f);
+		//TargetRotation = FRotator(-30.0f, 0.0f, 0.0f);
 		Player->SetIsChanging(TargetArmLength, TargetRotation, true);
 	}
 }
@@ -187,22 +189,24 @@ void AMyPlayerController::ViewChange()
 		if (Player->GetCurrentHitObjectName().Equals(TEXT("SteelWheel")))
 		{
 			// 현재 접근한 오브젝트가 "SteelWheel"이면, 컨트롤 모드를 SHIP으로 변경
-			SetControlMode(ControlMode::SHIP);
+			
 			LastMappingContext = DefaultMappingContext;
-			CurrentStrategy = new ShipControlStrategy();
+			CurrentStrategy = new ShipControlStrategy;
 			ControlledActor = Ship;
+			SetControlMode(ControlMode::SHIP);
 		}
 		else if (Player->GetCurrentHitObjectName().Equals(TEXT("Cannon")))
 		{
 			// 현재 접근한 오브젝트가 "Cannon"이면, 컨트롤 모드를 CANNON으로 변경
 			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("ChangeMapping"));
-			SetControlMode(ControlMode::CANNON);
+			
 			Subsystem->RemoveMappingContext(DefaultMappingContext);
 			Subsystem->AddMappingContext(CannonMappingContext, 0);
 			LastMappingContext = CannonMappingContext;
 			CurrentStrategy = new CannonControlStrategy();
 			ControlledActor = Player->GetCurrentHitObject();
 			Cannon = Cast<AMyCannon>(Player->GetCurrentHitObject());
+			SetControlMode(ControlMode::CANNON);
 		}
 		break;
 
@@ -236,10 +240,30 @@ void AMyPlayerController::ServerRPC_Shoot_Implementation(AMyCannon* CannonActor)
 	}
 }
 
-void AMyPlayerController::ServerRPC_MoveCannon_Implementation(AMyCannon* CannonActor, FRotator newRot)
+void AMyPlayerController::ServerRPC_RotateCannon_Implementation(AMyCannon* CannonActor, FRotator newRot)
 {
 	if(HasAuthority())
 	{
-		CannonActor->MultiCastRPC_MoveCannon(newRot);
+		CannonActor->MultiCastRPC_RotateCannon(newRot);
 	}
 }
+
+void AMyPlayerController::ServerRPC_MoveShip_Loc_Implementation(FVector newLoc)
+{
+	if(HasAuthority())
+	{
+		Ship->MulticastRPC_SetShipLocation(newLoc);
+	}
+}
+
+void AMyPlayerController::ServerRPC_MoveShip_Rot_Implementation(float newYaw, float speed)
+{
+	if(HasAuthority())
+	{
+		FRotator newRot = FRotator(0.0f, newYaw*speed*GetWorld()->GetDeltaSeconds(), 0.0f) + Ship->GetActorRotation();
+		Ship->TargetRotation = newRot;
+		//Ship->MulticastRPC_SetShipRotation(newYaw, speed);
+	}
+}
+
+

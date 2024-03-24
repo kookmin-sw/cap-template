@@ -27,7 +27,16 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
-	UPROPERTY(Category=Character, VisibleAnywhere)
-	UStaticMeshComponent* M_MeshComponent;
 	
+public:
+	UPROPERTY(Category=Character, VisibleAnywhere)
+    	UStaticMeshComponent* M_MeshComponent;
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastRPC_SetShipLocation(FVector newLoc);
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	UPROPERTY(Replicated)
+	FRotator TargetRotation;
+
 };
