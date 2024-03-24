@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.capstone.server.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
