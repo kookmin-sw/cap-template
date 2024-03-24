@@ -4,13 +4,13 @@
 #include "MyShip.h"
 
 #include "GameFramework/PawnMovementComponent.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values
 AMyShip::AMyShip()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
 	M_MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	RootComponent = M_MeshComponent;
 
@@ -34,12 +34,28 @@ void AMyShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	SetActorRotation(TargetRotation);
+
 }
+
+void AMyShip::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AMyShip, TargetRotation);
+}
+
 
 // Called to bind functionality to input
 void AMyShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
+
+void AMyShip::MulticastRPC_SetShipLocation_Implementation(FVector newLoc)
+{
+	AddActorWorldOffset(newLoc, true);
+}
+
+
 

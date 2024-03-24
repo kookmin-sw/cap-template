@@ -10,6 +10,7 @@
 #include "MyCannon.h"
 #include "CannonBall.h"
 #include "MyCharacter.h"
+#include "MyShip.h"
 #include "MyPlayerController.generated.h"
 
 /**
@@ -31,7 +32,7 @@ protected:
 	
 public:	
 	// Called to bind functionality to input
-	virtual void SetupInputComponent(class UInputComponent* PlayerInputComponent);
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent);
 
 private:
 	UPROPERTY(Category=Input, VisibleAnywhere)
@@ -55,7 +56,7 @@ public:
 private:
 	AActor* ControlledActor;
 	IControlStrategy* CurrentStrategy;
-	APawn* Ship;
+	AMyShip* Ship;
 	AMyCharacter* Player;
 	AMyCannon* Cannon;
 	UEnhancedInputLocalPlayerSubsystem* Subsystem;
@@ -70,7 +71,13 @@ public:
 	void ServerRPC_Shoot(AMyCannon* CannonActor);
 
 	UFUNCTION(Server, Reliable)
-	void ServerRPC_MoveCannon(AMyCannon* CannonActor, FRotator newRot);
+	void ServerRPC_RotateCannon(AMyCannon* CannonActor, FRotator newRot);
+
+	UFUNCTION(Server, Reliable)
+	void ServerRPC_MoveShip_Loc(FVector newLoc);
+
+	UFUNCTION(Server, Reliable)
+	void ServerRPC_MoveShip_Rot(float newYaw, float speed);
 	
 protected:
 	
