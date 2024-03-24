@@ -35,6 +35,20 @@ module "vpc" {
   cluster_name = var.cluster_name
 }
 
+module "efs_csi_irsa_role" {
+  source = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+
+  role_name             = "${var.cluster_name}-efs-csi"
+  attach_efs_csi_policy = true
+
+  oidc_providers = {
+    ex = {
+      provider_arn               = module.eks.oidc_provider_arn
+      namespace_service_accounts = ["kube-system:efs-csi-controller-sa"]
+    }
+  }
+}
+
 module "eks" {
   source = "terraform-aws-modules/eks/aws"
 
@@ -59,35 +73,53 @@ module "eks" {
         { namespace = "karpenter" }
       ]
     }
-    kube-system = {
-      selectors = [
-        { namespace = "kube-system" }
-      ]
-    }
+    # kube-system = {
+    #   selectors = [
+    #     { namespace = "kube-system" }
+    #   ]
+    # }
   }
 
   cluster_addons = {
     coredns = {
       most_recent = true
-      configuration_values = jsonencode({
-        computeType = "Fargate"
-        resources = {
-          limits = {
-            cpu = "0.25"
-            memory = "256M"
-          }
-          requests = {
-            cpu = "0.25"
-            memory = "256M"
-          }
-        }
-      })
+      # configuration_values = jsonencode({
+      #   computeType = "Fargate"
+      #   resources = {
+      #     limits = {
+      #       cpu = "0.25"
+      #       memory = "256M"
+      #     }
+      #     requests = {
+      #       cpu = "0.25"
+      #       memory = "256M"
+      #     }
+      #   }
+      # })
     }
     kube-proxy = {
       most_recent = true
     }
     vpc-cni = {
       most_recent = true
+    }
+    aws-efs-csi-driver = {
+      most_recent = true
+      service_account_role_arn = module.efs_csi_irsa_role.iam_role_arn
+    }
+  }
+
+  eks_managed_node_group_defaults = {
+    ami_type                   = "BOTTLEROCKET_x86_64"
+    instance_types             = ["t3.medium"]
+    iam_role_attach_cni_policy = true
+  }
+
+  eks_managed_node_groups = {
+    addon_node = {
+      min_size     = 2
+      max_size     = 6
+      desired_size = 2
     }
   }
 
