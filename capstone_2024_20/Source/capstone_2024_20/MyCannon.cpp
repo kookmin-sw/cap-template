@@ -64,12 +64,12 @@ void AMyCannon::MultiCastRPC_FireCannon_Implementation()
 	// 발사체에 추가적인 로직이 필요하면 여기에 작성
 }
 
-void AMyCannon::MoveCannon(FRotator newRot)
+void AMyCannon::RotateCannon(FRotator newRot)
 {
-	MultiCastRPC_MoveCannon(newRot);
+	MultiCastRPC_RotateCannon(newRot);
 }
 
-void AMyCannon::MultiCastRPC_MoveCannon_Implementation(FRotator newRot)
+void AMyCannon::MultiCastRPC_RotateCannon_Implementation(FRotator newRot)
 {
 	M_ShooterMesh->SetRelativeRotation(newRot);
 }

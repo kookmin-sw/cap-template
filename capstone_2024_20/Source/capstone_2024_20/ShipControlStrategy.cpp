@@ -2,7 +2,7 @@
 
 
 #include "ShipControlStrategy.h"
-
+#include "MyPlayerController.h"
 #include "MyShip.h"
 
 void ShipControlStrategy::Move(const FInputActionInstance& Instance, AActor* Actor,APlayerController* PlayerController, float DeltaTime)
@@ -15,8 +15,12 @@ void ShipControlStrategy::Move(const FInputActionInstance& Instance, AActor* Act
 		if(MoveVec.Y > 0)
 		{
 			FVector ForwardDirection = Ship->GetActorForwardVector();
-			Ship->AddActorWorldOffset(-ForwardDirection * MoveVec.Y * MoveSpeed * DeltaTime, true);
-		
+			//Ship->AddActorWorldOffset(-ForwardDirection * MoveVec.Y * MoveSpeed * DeltaTime, true);
+
+			FVector newLoc = -ForwardDirection * MoveVec.Y * MoveSpeed * DeltaTime;
+			AMyPlayerController* Controller = Cast<AMyPlayerController>(PlayerController);
+			Controller->ServerRPC_MoveShip_Loc(newLoc);
+			
 			if(MoveVec.X != 0)
 			{
 				int InputDirection = 0;
@@ -36,12 +40,10 @@ void ShipControlStrategy::Move(const FInputActionInstance& Instance, AActor* Act
 				{
 					// 입력 방향이 바뀌었거나 첫 입력인 경우, 회전 속도를 초기화합니다.
 					CurrentRotationSpeed = 1.0f;
-				}	
-				// 회전 처리를 합니다.
-				FRotator CurrentRotation = Ship->GetActorRotation();
-				float TargetYaw = CurrentRotation.Yaw + MoveVec.X * CurrentRotationSpeed * DeltaTime;
-				Ship->SetActorRotation(FRotator(0.0f, TargetYaw, 0.0f));
-
+				}
+				
+				Controller->ServerRPC_MoveShip_Rot(InputDirection, CurrentRotationSpeed);
+				
 				// 마지막 입력 방향을 업데이트합니다.
 				LastInputDirection = InputDirection;
 			}
