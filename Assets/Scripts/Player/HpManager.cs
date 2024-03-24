@@ -57,7 +57,7 @@ public class HpManager : MonoBehaviour
     }
     public void OnDamage()
     {
-        pv.RPC("OnDamage", RpcTarget.Others, 10f, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
+        pv.RPC("OnDamage", RpcTarget.All, 10f, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
     }
 
     // 체력 회복 함수
