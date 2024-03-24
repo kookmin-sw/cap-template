@@ -42,16 +42,11 @@ public class HpManager : MonoBehaviour
     [PunRPC]
     public void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
-        // 호스트에서만 실행하게 하는 조건문
-        // if (PhotonNetwork.IsMasterClient) 
-        
         Debug.Log("데미지 입음");
         hp -= damage;
         Debug.Log("남은 hp: " + hp);
 
         pv.RPC("ApplyUpdatedHp", RpcTarget.Others, hp, isDead);
-
-        pv.RPC("OnDamage", RpcTarget.Others, damage, hitPoint, hitNormal);
 
         // 체력이 0 이하이고 살아있으면 사망
         if (hp <= 0 && !isDead)
@@ -60,10 +55,9 @@ public class HpManager : MonoBehaviour
         }
         
     }
-    [PunRPC]
     public void OnDamage()
     {
-        OnDamage(10f, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
+        pv.RPC("OnDamage", RpcTarget.All, 10f, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
     }
 
     // 체력 회복 함수
