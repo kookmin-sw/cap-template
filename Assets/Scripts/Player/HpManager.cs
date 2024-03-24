@@ -43,15 +43,16 @@ public class HpManager : MonoBehaviour
     public void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         // 호스트에서만 실행하게 하는 조건문
-        // if (PhotonNetwork.IsMasterClient) 
-        
-        Debug.Log("데미지 입음");
-        hp -= damage;
-        Debug.Log("남은 hp: " + hp);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("데미지 입음");
+            hp -= damage;
+            Debug.Log("남은 hp: " + hp);
 
-        pv.RPC("ApplyUpdatedHp", RpcTarget.Others, hp, isDead);
+            pv.RPC("ApplyUpdatedHp", RpcTarget.Others, hp, isDead);
 
-        pv.RPC("OnDamage", RpcTarget.Others, damage, hitPoint, hitNormal);
+            pv.RPC("OnDamage", RpcTarget.Others, damage, hitPoint, hitNormal);
+        }
 
         // 체력이 0 이하이고 살아있으면 사망
         if (hp <= 0 && !isDead)
