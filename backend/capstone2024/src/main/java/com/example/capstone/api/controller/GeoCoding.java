@@ -1,5 +1,7 @@
 package com.example.capstone.api.controller;
 
+import com.example.capstone.api.dto.Coordinate;
+import com.example.capstone.api.dto.TmapGeoCodingResponseDto;
 import com.example.capstone.api.service.GeoCodingService;
 import com.example.capstone.api.service.PedestrianService;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +15,14 @@ public class GeoCoding {
 
     private final GeoCodingService geoCodingService;
     private final PedestrianService pedestrianService;
-    @GetMapping("/test")
-    public String testGPS(@RequestParam(value = "address") String address){
-        return geoCodingService.requestGeoCoding(address).toString();
+    @GetMapping("/address-to-coord")
+    public Coordinate testGPS(@RequestParam(value = "address") String address){
+        Coordinate coordinate;
+        coordinate = geoCodingService.requestGeoCoding(address).getCoordinateInfo().getCoordinate().get(0);
+        return coordinate;
     }
 
-    @GetMapping("/testpede")
+    @GetMapping("/find-way")
     public String testPede(@RequestParam(value = "startAddress") String startAddress,@RequestParam(value = "endAddress") String endAddress) throws Exception {
         System.out.println("startAddress = " + startAddress);
         System.out.println("endAddress = " + endAddress);
