@@ -228,8 +228,6 @@ resource "helm_release" "kube-prometheus-stack" {
     value = "/monitor"
   }
 
-
-
   set {
     name  = "prometheus-node-exporter.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].key"
     value = "eks.amazonaws.com/compute-type"
@@ -244,4 +242,6 @@ resource "helm_release" "kube-prometheus-stack" {
     name  = "prometheus-node-exporter.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].values[0]"
     value = "fargate"
   }
+  
+  depends_on = [ module.eks ]
 }
