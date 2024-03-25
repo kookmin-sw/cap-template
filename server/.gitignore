@@ -35,3 +35,5 @@ out/
 
 ### VS Code ###
 .vscode/
+
+server/src/main/resources/*.properties
