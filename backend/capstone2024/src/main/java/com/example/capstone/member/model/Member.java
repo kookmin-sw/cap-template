@@ -1,10 +1,8 @@
 package com.example.capstone.member.model;
 
 import java.sql.Timestamp;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,9 +12,9 @@ import lombok.Setter;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String uuid;
+
+    @Column(name = "created_at")
     private Timestamp createdAt;
 
     public Member() {
@@ -30,7 +28,6 @@ public class Member {
     @Override
     public String toString() {
         return "Member{" +
-                "id=" + id +
                 ", uuid='" + uuid + '\'' +
                 ", createdAt=" + createdAt +
                 '}';
