@@ -45,12 +45,13 @@ public class SearchHistoryEntity {
     private List<SearchResultEntity> searchResultEntities;
 
     private LocalDateTime createdAt;
-    
+
     private LocalDateTime updatedAt;
 
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
         searchStartTime = LocalDateTime.now();
     }
 

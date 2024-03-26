@@ -65,6 +65,7 @@ public class MissingPeopleEntity {
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
         registrationAt = LocalDateTime.now();
     }
 

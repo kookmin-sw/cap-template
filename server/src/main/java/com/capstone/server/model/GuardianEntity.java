@@ -26,12 +26,13 @@ public class GuardianEntity {
     private String guardianRelationship;
 
     private LocalDateTime createdAt;
-    
+
     private LocalDateTime updatedAt;
     
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate 
