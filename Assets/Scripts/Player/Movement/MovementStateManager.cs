@@ -37,8 +37,13 @@ public class MovementStateManager : MonoBehaviour
 
     MeshCollider colliderWeapon; // 무기들의 collider
     SphereCollider colliderHand; // 주먹 collider
-    public GameObject objWeapon; // 장착중인 무기 gameobject(무기 및 주먹)
+    Weapon objWeapon; // 장착중인 무기 gameobject(무기 및 주먹)
     public string Armed; // 현재 장착중인 무기 타입
+    ///////Attack
+    float fireDelay;
+    bool fDown;
+    bool isFireReady;
+    ////// Attack
 
     public MovementBaseState previousState;
     public MovementBaseState currentState;
@@ -60,7 +65,7 @@ public class MovementStateManager : MonoBehaviour
         quickSlot = GameObject.Find("ItemQuickSlots").GetComponent<Inventory>();
         SwitchState(Idle);
 
-        objWeapon = RightHand.GetChild(1).gameObject; // 처음 시작할 때 주먹의 sphereCollider 받아옴
+        objWeapon = RightHand.GetChild(1).gameObject.GetComponent<Weapon>(); // 처음 시작할 때 주먹의 sphereCollider 받아옴
         colliderHand = objWeapon.GetComponent<SphereCollider>();
         colliderHand.enabled = false; // 기본적으로는 collider 꺼둠
     }
@@ -209,7 +214,7 @@ public class MovementStateManager : MonoBehaviour
                     }   
                 }
                 Debug.Log("swap" + 11231);
-            objWeapon = weapons[equipWeaponIndex];
+            objWeapon = weapons[equipWeaponIndex].GetComponent<Weapon>();
             
 
             // 무기 들었을 때 애니메이션 변경
