@@ -40,10 +40,10 @@ resource "aws_iam_role_policy_attachment" "lambda_vpc_full_access" {
 resource "aws_lambda_function" "lambda" {
   function_name = "${var.prefix}-aws-lambda"
   package_type  = "Image"
-  architectures = ["x86_64"]
+  architectures = ["arm64"]
   image_uri     = "${var.container_registry}/${var.container_repository}:${var.container_image_tag}"
   memory_size   = var.ram_mib
-  timeout       = 120
+  timeout       = 900
   role          = aws_iam_role.lambda-role.arn
 }
 
