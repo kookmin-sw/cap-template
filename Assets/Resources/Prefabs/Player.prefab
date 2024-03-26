@@ -1196,7 +1196,7 @@ Transform:
   m_GameObject: {fileID: 4314169015944983941}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1302,7 +1302,7 @@ MonoBehaviour:
   crouchFastSpeed: 2
   crouchFastBackSpeed: 2
   jumpPower: 100
-  groundYOffset: -0.43
+  groundYOffset: -0.3
   groundMask:
     serializedVersion: 2
     m_Bits: 64
@@ -1435,12 +1435,18 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: IsSwap
-  - Type: 4
-    SynchronizeType: 0
-    Name: New Bool 0
   - Type: 9
     SynchronizeType: 0
     Name: doSwap
+  - Type: 9
+    SynchronizeType: 0
+    Name: IsHit
+  - Type: 9
+    SynchronizeType: 0
+    Name: SwapOut
+  - Type: 4
+    SynchronizeType: 0
+    Name: Idle
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -1454,6 +1460,8 @@ MonoBehaviour:
     LayerIndex: 4
   - SynchronizeType: 0
     LayerIndex: 5
+  - SynchronizeType: 0
+    LayerIndex: 6
 --- !u!1 &4407433462298312627
 GameObject:
   m_ObjectHideFlags: 0

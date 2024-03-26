@@ -24,7 +24,7 @@ public class MovementStateManager : MonoBehaviour
 
     [SerializeField] float jumpForce = 5;
     [SerializeField] float gravity = -9.81f;
-    [HideInInspector] public bool jumped;
+    public bool jumped;
     Vector3 velocity;
 
     public GameObject[] weapons; // 모든 무기 배열
@@ -66,7 +66,7 @@ public class MovementStateManager : MonoBehaviour
         SwitchState(Idle);
 
         objWeapon = RightHand.GetChild(1).gameObject.GetComponent<Weapon>(); // 처음 시작할 때 주먹의 sphereCollider 받아옴
-        colliderHand = objWeapon.GetComponent<SphereCollider>();
+        colliderHand = RightHand.GetChild(1).gameObject.GetComponent<SphereCollider>();
         colliderHand.enabled = false; // 기본적으로는 collider 꺼둠
     }
 
@@ -84,6 +84,7 @@ public class MovementStateManager : MonoBehaviour
 
             Attack();   
             Swap();
+            //if(controller.isGrounded) Debug.Log("COnGROD");
         }
     }
 
@@ -106,10 +107,13 @@ public class MovementStateManager : MonoBehaviour
     public bool IsGrounded()
     {
         spherePos = new Vector3(transform.position.x, transform.position.y - groundYOffset, transform.position.z);
-        if (Physics.CheckSphere(spherePos, controller.radius - 0.05f, groundMask)) return true;
+        if (Physics.CheckSphere(spherePos, controller.radius + 0.05f, groundMask)) {
+            return true;
+        }
         return false;
     }
 
+    
     void Gravity()
     {
         if (!IsGrounded()) velocity.y += gravity * Time.deltaTime;
@@ -175,6 +179,8 @@ public class MovementStateManager : MonoBehaviour
     // 스왑 끝
     void SwapOut(){
         isSwap = false;
+        anim.SetTrigger("SwapOut");
+        
     }
 
     void Swap(){
@@ -241,7 +247,7 @@ public class MovementStateManager : MonoBehaviour
             
             isSwap = true;
 
-            //Invoke("SwapOut", 0.4f);  // swap 애니메이션 넣으면 사용
+            Invoke("SwapOut", 0.3f);  // swap 애니메이션 넣으면 사용
         }
     }
 
@@ -270,11 +276,11 @@ public class MovementStateManager : MonoBehaviour
         if(collision.gameObject.tag == "Weapon") // tag변경 필요
             OnDamaged(collision.transform.position);
     }
-    /*
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(spherePos, controller.radius - 0.05f);
-    }
-    */
+    
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawWireSphere(spherePos, controller.radius - 0.05f);
+    // }
+    
 }
