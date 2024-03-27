@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Photon.Pun;
+using TMPro;
+using UnityEngine.UI;
+
 
 
 public class HpManager : MonoBehaviour
@@ -10,6 +13,11 @@ public class HpManager : MonoBehaviour
     public float maxHp { get; set; } = 100;
     public float hp { get; set; }
     public bool isDead { get; set; } // 죽었는지 확인
+
+    [SerializeField] private Slider healthPointBar;
+    [SerializeField] private TMP_Text healthPointCount;
+    [SerializeField] private UIManager uiManager;
+
 
     // 죽었을 때 작동할 함수들을 저장하는 변수
     // onDeath += 함수이름; 이렇게 이벤트 등록 가능
@@ -21,13 +29,17 @@ public class HpManager : MonoBehaviour
     void Start()
     {
         pv = GetComponent<PhotonView>();
+        uiManager = FindObjectOfType<UIManager>();
+        healthPointBar = GameObject.Find("HealthPointBar").GetComponent<Slider>();
+        healthPointCount = GameObject.Find("HealthPointCount").GetComponent<TextMeshProUGUI>();
     }
 
     // 캐릭터 생성, 부활 등등 활성화 될 때 실행되는 코드
     void OnEnable()
     {
         hp = maxHp;
-
+        healthPointBar.value = hp;
+        healthPointCount.text = hp.ToString();
         isDead = false;
     }
 
@@ -44,6 +56,8 @@ public class HpManager : MonoBehaviour
     {
         Debug.Log("데미지 입음");
         hp -= damage;
+        healthPointBar.value = hp;
+        healthPointCount.text = hp.ToString();
         Debug.Log("남은 hp: " + hp);
 
         pv.RPC("ApplyUpdatedHp", RpcTarget.Others, hp, isDead);
@@ -53,7 +67,6 @@ public class HpManager : MonoBehaviour
         {
             Die();
         }
-        
     }
     public void OnDamage()
     {
@@ -67,6 +80,8 @@ public class HpManager : MonoBehaviour
         if (!isDead)
         {
             hp += recovery;
+            healthPointBar.value = hp;
+            healthPointCount.text = hp.ToString();
             if (hp > maxHp)
             {
                 hp = maxHp;
@@ -85,5 +100,7 @@ public class HpManager : MonoBehaviour
         }
         isDead = true;
         gameObject.SetActive(false);
+        uiManager.isGameOver = true;
+        uiManager.isUIActivate = true;
     }
 }
