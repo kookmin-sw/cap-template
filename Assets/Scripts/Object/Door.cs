@@ -13,11 +13,12 @@ public class Door : MonoBehaviour
 
     Quaternion ToDoorAngle;
 
-    private PhotonView pv;
+    public PhotonView pv;
 
     private void Start()
     {
-        pv = GetComponent<PhotonView>();
+        pv = gameObject.AddComponent<PhotonView>();
+        pv.ViewID = PhotonNetwork.AllocateViewID(0);
     }
 
     private void Update()
@@ -34,7 +35,7 @@ public class Door : MonoBehaviour
 
     public void ChangeDoorState()
     {
-        pv.RPC("OnDamage", RpcTarget.All);
+        pv.RPC("ChangeDoorStateRPC", RpcTarget.All);
     }
 
     void ChangeDoorAngle(bool open)

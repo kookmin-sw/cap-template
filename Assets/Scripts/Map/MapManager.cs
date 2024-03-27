@@ -22,7 +22,7 @@ public class MapManager : MonoBehaviour
                 gameObjs[i].isStatic = false; // 이걸 해줘야 회전함!!
 
                 // 문에 PhotonView 컴포넌트 추가
-                gameObjs[i].AddComponent<PhotonView>();
+                // gameObjs[i].AddComponent<PhotonView>();
             }
         }
 
