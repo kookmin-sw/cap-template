@@ -1,23 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+
 
 public class MapManager : MonoBehaviour
 {
-    GameObject[] gameobjs;
+    GameObject[] gameObjs;
 
     private void Awake()
     {
-        gameobjs = FindObjectsOfType<GameObject>();
+        gameObjs = FindObjectsOfType<GameObject>();
 
-        for(int i = 0; i < gameobjs.Length; i++)
+        for(int i = 0; i < gameObjs.Length; i++)
         {
-            if (gameobjs[i].name.Contains("Door") && !gameobjs[i].name.Contains("Frame"))
+            if (gameObjs[i].name.Contains("Door") && !gameObjs[i].name.Contains("Frame"))
             {
-                addDoorScript(gameobjs[i]);
-                gameobjs[i].tag = "door";
-                gameobjs[i].layer = LayerMask.NameToLayer("Interact");
-                gameobjs[i].isStatic = false; // 이걸 해줘야 회전함!!
+                addDoorScript(gameObjs[i]);
+                gameObjs[i].tag = "door";
+                gameObjs[i].layer = LayerMask.NameToLayer("Interact");
+                gameObjs[i].isStatic = false; // 이걸 해줘야 회전함!!
+
+                // 문에 PhotonView 컴포넌트 추가
+                // gameObjs[i].AddComponent<PhotonView>();
             }
         }
 
