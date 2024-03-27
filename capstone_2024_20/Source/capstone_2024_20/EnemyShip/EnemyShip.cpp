@@ -19,6 +19,21 @@ void AEnemyShip::LookAtMyShip(const AMyShip* MyShip)
 	const auto Direction = MyShip->GetActorLocation() - GetActorLocation();
 	const auto Rotation = FRotationMatrix::MakeFromX(Direction).Rotator();
 	SetActorRotation(Rotation);
+}
 
-	UE_LOG(LogTemp, Warning, TEXT("EnemyShip %s is looking at MyShip %s, Direction: %s"), *GetName(), *MyShip->GetName(), *Direction.ToString());
+void AEnemyShip::MoveToMyShip(const AMyShip* MyShip)
+{
+	const auto MyShipLocation = MyShip->GetActorLocation();
+	const auto Direction = MyShipLocation - GetActorLocation();
+
+	// Todo@autumn - This is a temporary solution, replace it with data.
+	if (Direction.Size() < 4000.0f)
+	{
+		return;
+	}
+	
+	const auto NormalizedDirection = Direction.GetSafeNormal();
+	constexpr auto Speed = 2500.0f; // Todo@autumn - This is a temporary solution, replace it with data.
+	const auto NewLocation = GetActorLocation() + NormalizedDirection * Speed * GetWorld()->DeltaTimeSeconds;
+	SetActorLocation(NewLocation);
 }

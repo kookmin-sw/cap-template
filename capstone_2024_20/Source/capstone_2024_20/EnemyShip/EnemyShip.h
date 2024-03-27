@@ -14,6 +14,7 @@ public:
 	virtual void BeginPlay() override;
 	
 	void LookAtMyShip(const AMyShip* MyShip);
+	void MoveToMyShip(const AMyShip* MyShip);
 
 private:
 	UPROPERTY(EditAnywhere)
