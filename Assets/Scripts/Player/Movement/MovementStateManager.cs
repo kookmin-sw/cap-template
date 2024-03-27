@@ -15,14 +15,14 @@ public class MovementStateManager : MonoBehaviour
     public float runSpeed = 7, runBackSpeed = 5;
     public float crouchSpeed = 1, crouchBackSpeed = 1;
     public float crouchFastSpeed = 2, crouchFastBackSpeed = 2;
-    public float jumpPower = 5;
+    public float jumpPower = 0;
     CharacterController controller;
 
     [SerializeField] float groundYOffset;
     [SerializeField] LayerMask groundMask;
     Vector3 spherePos;
 
-    [SerializeField] float jumpForce = 5;
+    [SerializeField] float jumpForce = 3;
     [SerializeField] float gravity = -9.81f;
     public bool jumped;
     Vector3 velocity;
