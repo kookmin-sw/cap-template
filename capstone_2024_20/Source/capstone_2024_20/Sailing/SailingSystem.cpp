@@ -2,7 +2,6 @@
 #include "../EnemyShip/EnemyShip.h"
 #include "../MyShip.h"
 #include "../Event/Event.h"
-#include "EntitySystem/MovieSceneEntitySystemRunner.h"
 #include "Kismet/GameplayStatics.h"
 
 ASailingSystem::ASailingSystem(): MyShip(nullptr)
