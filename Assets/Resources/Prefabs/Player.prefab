@@ -1196,7 +1196,7 @@ Transform:
   m_GameObject: {fileID: 4314169015944983941}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1302,7 +1302,7 @@ MonoBehaviour:
   crouchFastSpeed: 2
   crouchFastBackSpeed: 2
   jumpPower: 100
-  groundYOffset: -0.43
+  groundYOffset: -0.3
   groundMask:
     serializedVersion: 2
     m_Bits: 64
@@ -1322,7 +1322,6 @@ MonoBehaviour:
   quickSlot: {fileID: 0}
   isAttack: 0
   RightHand: {fileID: 2391162994395400503}
-  objWeapon: {fileID: 0}
   Armed: 
   anim: {fileID: 0}
 --- !u!143 &8536026664842187324
@@ -1436,12 +1435,18 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: IsSwap
-  - Type: 4
-    SynchronizeType: 0
-    Name: New Bool 0
   - Type: 9
     SynchronizeType: 0
     Name: doSwap
+  - Type: 9
+    SynchronizeType: 0
+    Name: IsHit
+  - Type: 9
+    SynchronizeType: 0
+    Name: SwapOut
+  - Type: 4
+    SynchronizeType: 0
+    Name: Idle
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -1455,6 +1460,8 @@ MonoBehaviour:
     LayerIndex: 4
   - SynchronizeType: 0
     LayerIndex: 5
+  - SynchronizeType: 0
+    LayerIndex: 6
 --- !u!1 &4407433462298312627
 GameObject:
   m_ObjectHideFlags: 0
@@ -1941,6 +1948,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 862613532942922620}
+  - component: {fileID: 6062307010138000580}
   - component: {fileID: 7884949822480849385}
   m_Layer: 0
   m_Name: mixamorig:RightHandMiddle1
@@ -1965,6 +1973,23 @@ Transform:
   - {fileID: 8047783206581398709}
   m_Father: {fileID: 2391162994395400503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6062307010138000580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7446736389349518023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c425119a1c134ebc5ca5b2aec1a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 0
+  rate: 0
+  meleeArea: {fileID: 0}
+  trailEffect: {fileID: 0}
 --- !u!135 &7884949822480849385
 SphereCollider:
   m_ObjectHideFlags: 0

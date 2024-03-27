@@ -11,9 +11,9 @@ public class CrouchState : MovementBaseState
 
     public override void UpdateState(MovementStateManager movement)
     {
-        // ´Þ¸®±â¸¦ Áö¼ÓÇÏ´Â µµÁß c¸¦ ´©¸£¸é Àá½Ã ¿õÅ©·È´Ù°¡ ´Ù½Ã ´Þ¸®±â ½ÃÀÛ
+        // ï¿½Þ¸ï¿½ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ cï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½È´Ù°ï¿½ ï¿½Ù½ï¿½ ï¿½Þ¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         //if (Input.GetKey(KeyCode.LeftShift)) ExitState(movement, movement.Run); 
-        if(Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space)) // ´Þ¸®´Â µµÁß c¸¦ ´©¸£¸é ¾î¶² »óÅÂµç ¹Ù·Î crouchingÀ¸·Î º¯È¯
+        if(Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space)) // ï¿½Þ¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ cï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½î¶² ï¿½ï¿½ï¿½Âµï¿½ ï¿½Ù·ï¿½ crouchingï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
         {   
             if(movement.moveDir.magnitude > 0.1f){
                 if (Input.GetKey(KeyCode.LeftShift)) ExitState(movement, movement.Run);
@@ -23,11 +23,11 @@ public class CrouchState : MovementBaseState
         }
 
         
-        // shift¸¦ ´©¸£¸é ¼Óµµ ´õ ºü¸£°Ô
+        // shiftï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if(Input.GetKey(KeyCode.LeftShift)) movement.currentMoveSpeed = movement.crouchFastBackSpeed;
         else movement.currentMoveSpeed = movement.crouchBackSpeed;
 
-        // zÃàÀÌ À½¼öÀÌ¸é µÚ·Î°¡´Â °Å´Ï µÚ·Î°¡´Â ½ºÇÇµå·Î
+        // zï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Ú·Î°ï¿½ï¿½ï¿½ ï¿½Å´ï¿½ ï¿½Ú·Î°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Çµï¿½ï¿½
         // if (movement.zAxis < 0) {
         //     if(Input.GetKey(KeyCode.LeftShift)) movement.currentMoveSpeed = movement.crouchFastBackSpeed;
         //     else movement.currentMoveSpeed = movement.crouchBackSpeed;
