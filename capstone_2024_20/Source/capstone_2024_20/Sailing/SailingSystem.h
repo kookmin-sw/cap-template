@@ -5,6 +5,7 @@
 #include "SailingSystem.generated.h"
 
 class AMyShip;
+class AEnemyShip;
 
 UCLASS()
 class CAPSTONE_2024_20_API ASailingSystem : public AActor
@@ -21,6 +22,7 @@ public:
 
 private:
 	inline static float SpawnEnemyShipTimer = 0.0f;
+	TArray<AEnemyShip*> EnemyShips;
 
 	UPROPERTY()
 	AMyShip* MyShip;

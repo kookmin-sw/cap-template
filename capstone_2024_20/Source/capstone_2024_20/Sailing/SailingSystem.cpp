@@ -30,6 +30,11 @@ void ASailingSystem::Tick(float DeltaTime)
 		SpawnEnemyShip();
 		SpawnEnemyShipTimer = 0.0f;
 	}
+
+	for (const auto EnemyShip : EnemyShips)
+	{
+		EnemyShip->LookAtMyShip(MyShip);
+	}
 }
 
 void ASailingSystem::SpawnEnemyShip()
@@ -43,7 +48,8 @@ void ASailingSystem::SpawnEnemyShip()
 	RandomY = RandomY < 0 ? RandomY - 10000.0f : RandomY + 10000.0f;
 	
 	const auto RandomLocation = FVector(RandomX, RandomY, 0.0f);
-	GetWorld()->SpawnActor<AEnemyShip>(AEnemyShip::StaticClass(), FTransform(RandomLocation));
+	AEnemyShip* SpawnedEnemyShip = GetWorld()->SpawnActor<AEnemyShip>(AEnemyShip::StaticClass(), FTransform(RandomLocation));
+	EnemyShips.Add(SpawnedEnemyShip);
 }
 
 void ASailingSystem::SetMyShip()

@@ -1,4 +1,5 @@
 ﻿#include "EnemyShip.h"
+#include "../MyShip.h"
 
 AEnemyShip::AEnemyShip(): StaticMesh(nullptr)
 {
@@ -11,4 +12,13 @@ AEnemyShip::AEnemyShip(): StaticMesh(nullptr)
 void AEnemyShip::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void AEnemyShip::LookAtMyShip(const AMyShip* MyShip)
+{
+	const auto Direction = MyShip->GetActorLocation() - GetActorLocation();
+	const auto Rotation = FRotationMatrix::MakeFromX(Direction).Rotator();
+	SetActorRotation(Rotation);
+
+	UE_LOG(LogTemp, Warning, TEXT("EnemyShip %s is looking at MyShip %s, Direction: %s"), *GetName(), *MyShip->GetName(), *Direction.ToString());
 }

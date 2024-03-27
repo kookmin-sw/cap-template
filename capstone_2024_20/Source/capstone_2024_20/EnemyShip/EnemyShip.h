@@ -2,6 +2,8 @@
 
 #include "EnemyShip.generated.h"
 
+class AMyShip;
+
 UCLASS()
 class AEnemyShip : public AActor
 {
@@ -10,6 +12,8 @@ class AEnemyShip : public AActor
 public:
 	AEnemyShip();
 	virtual void BeginPlay() override;
+	
+	void LookAtMyShip(const AMyShip* MyShip);
 
 private:
 	UPROPERTY(EditAnywhere)
