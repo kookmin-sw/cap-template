@@ -3,15 +3,17 @@
 #include "MyPlayerController.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Engine/StaticMeshActor.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 
+class AStaticMeshActor;
 // Sets default values
 AMyCharacter::AMyCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	
+
 	TextWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HPBARWIDGET"));
 	TextWidget->SetupAttachment(GetMesh());
 	TextWidget->SetRelativeLocation(FVector(-60.0f,0.0f,180.0f));
@@ -99,15 +101,21 @@ void AMyCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
     TextWidget->SetVisibility(true);
     bIsOverlap = true;
 	
-	if(OtherComp->ComponentTags.Contains(TEXT("Cannon")))
-		CurrentHitObjectName = TEXT("Cannon");
-	else if(OtherComp->ComponentTags.Contains(TEXT("SteelWheel")))
-		CurrentHitObjectName = TEXT("SteelWheel");
+	for (const FString& Tag : ObjectList)
+	{
+		if (OtherComp->ComponentTags.Contains(Tag))
+		{
+			CurrentHitObjectName = Tag;
+			break;
+		}
+	}
 
 	CurrentHitObject = OtherActor;
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, CurrentHitObject->GetName());
 		
 }
+
+
 
 void AMyCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
@@ -150,6 +158,40 @@ AActor* AMyCharacter::GetCurrentHitObject()
 FString AMyCharacter::GetCurrentHitObjectName()
 {
 	return CurrentHitObjectName;
+}
+
+void AMyCharacter::SpawnCannonBall()
+{
+	if (!BP_CannonBallClass) return;
+
+	// 캐릭터 앞 방향에 캐논볼을 소환할 위치 및 회전 계산
+	FVector SpawnLocation = GetActorLocation() + GetActorForwardVector() * 100.0f;
+	FRotator SpawnRotation = GetActorRotation();
+
+	
+	// 캐논볼 소환
+	SpawnedCannonBall = GetWorld()->SpawnActor<AActor>(BP_CannonBallClass, SpawnLocation, SpawnRotation);
+
+	if (SpawnedCannonBall != nullptr)
+	{
+		// 캐논볼을 캐릭터의 RootComponent에 붙입니다.
+		SpawnedCannonBall->AttachToComponent(GetRootComponent(),FAttachmentTransformRules::KeepWorldTransform);
+	}
+
+}
+
+void AMyCharacter::SetPlayerState(PlayerState NewPlayerState)
+{
+	CurrentPlayerState = NewPlayerState;
+}
+
+void AMyCharacter::DestroyCannonBall()
+{
+	if(SpawnedCannonBall)
+	{
+		SpawnedCannonBall->Destroy();
+		SpawnedCannonBall = nullptr;
+	}	
 }
 
 

@@ -19,6 +19,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+private:
+	bool IsLoad = false;
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -54,5 +57,7 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void MultiCastRPC_RotateCannon(FRotator newRot);
 
+	bool GetIsLoad();
+	void SetIsLoad(bool b);
 	
 };

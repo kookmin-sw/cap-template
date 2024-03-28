@@ -7,6 +7,7 @@
 #include "CoreMinimal.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
+#include "UObject/ObjectRename.h"
 #include "MyCharacter.generated.h"
 
 
@@ -52,6 +53,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUserWidget> GameOverPopUpWidgetClass;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TSubclassOf<AActor> BP_CannonBallClass;
+	
 protected:
 	
 	bool bIsChanging=false;
@@ -62,7 +66,8 @@ protected:
 
 	AActor* CurrentHitObject;
 	FString CurrentHitObjectName;
-
+	AActor* SpawnedCannonBall;
+	
 	UFUNCTION()
 	virtual void BeginOverlap(UPrimitiveComponent* OverlappedComponent,
 		AActor* OtherActor,
@@ -73,8 +78,28 @@ protected:
 		AActor* OtherActor,
 		UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex);
+
+
+	
+
 	
 public:
+
+	TArray<FString> ObjectList = {
+		TEXT("Cannon"), 
+		TEXT("SteelWheel"), 
+		TEXT("CannonBallBox"), 
+		TEXT("Telescope")
+	};
+
+	enum class PlayerState
+	{
+		NONE,
+		CARRYING,
+		DRAGGING
+	};
+	PlayerState CurrentPlayerState = PlayerState::NONE;
+	void SetPlayerState(PlayerState NewPlayerState);
 	
 	UFUNCTION()
 	bool GetIsOverLap();
@@ -94,5 +119,10 @@ public:
 	UFUNCTION()
 	FString GetCurrentHitObjectName();
 
-	
+	UFUNCTION()
+	void SpawnCannonBall();	
+
+	UFUNCTION()
+	void DestroyCannonBall();
+
 };
