@@ -1,6 +1,7 @@
 ﻿#include "SailingSystem.h"
 #include "../EnemyShip/EnemyShip.h"
 #include "../MyShip.h"
+#include "../Event/Event.h"
 #include "Kismet/GameplayStatics.h"
 
 ASailingSystem::ASailingSystem(): MyShip(nullptr)
@@ -36,6 +37,15 @@ void ASailingSystem::Tick(float DeltaTime)
 		EnemyShip->LookAtMyShip(MyShip);
 		EnemyShip->MoveToMyShip(MyShip);
 	}
+
+	SpawnEventTimer += DeltaTime;
+	// Run SpawnEvent every 10 seconds
+	// Todo@autumn - This is a temporary solution, replace it with data.
+	if (SpawnEventTimer >= 10.0f)
+	{
+		SpawnEvent();
+		SpawnEventTimer = 0.0f;
+	}
 }
 
 void ASailingSystem::SpawnEnemyShip()
@@ -53,6 +63,19 @@ void ASailingSystem::SpawnEnemyShip()
 	EnemyShips.Add(SpawnedEnemyShip);
 }
 
+void ASailingSystem::SpawnEvent()
+{
+	// Todo@autumn - This is a temporary solution, replace it with data.
+	const auto RandomX = FMath::RandRange(-100.0f, 100.0f);
+	const auto RandomY = FMath::RandRange(-100.0f, 100.0f);
+	const auto RandomLocation = FVector(RandomX, RandomY, 880.0f);
+
+	// Spawn Event by relative location to the ship
+	AEvent* SpawnedEvent = GetWorld()->SpawnActor<AEvent>(AEvent::StaticClass(), FTransform(MyShip->GetActorLocation() + RandomLocation));
+	SpawnedEvent->AttachToActor(MyShip, FAttachmentTransformRules::KeepRelativeTransform);
+	Events.Add(SpawnedEvent);
+}
+
 void ASailingSystem::SetMyShip()
 {
 	// Todo@autumn - This is a temporary solution, replace it.
@@ -63,4 +86,3 @@ void ASailingSystem::SetMyShip()
 		MyShip = Cast<AMyShip>(FoundActors[0]);
 	}
 }
-
