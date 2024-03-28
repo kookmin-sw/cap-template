@@ -72,6 +72,7 @@ void ASailingSystem::SpawnEvent()
 
 	// Spawn Event by relative location to the ship
 	AEvent* SpawnedEvent = GetWorld()->SpawnActor<AEvent>(AEvent::StaticClass(), FTransform(MyShip->GetActorLocation() + RandomLocation));
+	SpawnedEvent->AttachToActor(MyShip, FAttachmentTransformRules::KeepRelativeTransform);
 	Events.Add(SpawnedEvent);
 }
 
