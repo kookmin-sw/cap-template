@@ -97,33 +97,37 @@ void AMyCharacter::Tick(float DeltaTime)
 //충돌 처리
 void AMyCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Hit"));
-    TextWidget->SetVisibility(true);
-    bIsOverlap = true;
-	
-	for (const FString& Tag : ObjectList)
+	if(CurrentPlayerState != PlayerState::DRAGGING)
 	{
-		if (OtherComp->ComponentTags.Contains(Tag))
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Hit"));
+		TextWidget->SetVisibility(true);
+		bIsOverlap = true;
+	
+		for (const FString& Tag : ObjectList)
 		{
-			CurrentHitObjectName = Tag;
-			break;
+			if (OtherComp->ComponentTags.Contains(Tag))
+			{
+				CurrentHitObjectName = Tag;
+				break;
+			}
 		}
-	}
 
-	CurrentHitObject = OtherActor;
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, CurrentHitObject->GetName());
+		CurrentHitObject = OtherActor;
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, CurrentHitObject->GetName());
+	}
 		
 }
 
-
-
 void AMyCharacter::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if(OtherComp->ComponentTags.Contains(TEXT("Object")))
+	if(CurrentPlayerState != PlayerState::DRAGGING)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Hit Out"));
-		TextWidget->SetVisibility(false);
-		bIsOverlap = false;
+		if(OtherComp->ComponentTags.Contains(TEXT("Object")))
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Hit Out"));
+			TextWidget->SetVisibility(false);
+			bIsOverlap = false;
+		}
 	}
 }
 
@@ -193,6 +197,45 @@ void AMyCharacter::DestroyCannonBall()
 		SpawnedCannonBall = nullptr;
 	}	
 }
+
+void AMyCharacter::DragObject()
+{
+	CurrentHitObject->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+
+	if (CurrentHitObject)
+	{
+		TArray<UPrimitiveComponent*> Components;
+		CurrentHitObject->GetComponents<UPrimitiveComponent>(Components);
+
+		for (UPrimitiveComponent* Component : Components)
+		{
+			if (!Component->GetName().Equals(TEXT("Box")))
+			{
+				Component->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			}
+		}
+	}
+                    
+
+}
+
+void AMyCharacter::DropObject(AActor* ship)
+{
+	CurrentHitObject->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+	CurrentHitObject->AttachToActor(ship, FAttachmentTransformRules::KeepWorldTransform);
+
+	if (CurrentHitObject)
+	{
+		TArray<UPrimitiveComponent*> Components;
+		CurrentHitObject->GetComponents<UPrimitiveComponent>(Components);
+
+		for (UPrimitiveComponent* Component : Components)
+		{
+			Component->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		}
+	}
+}
+
 
 
 

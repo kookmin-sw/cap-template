@@ -22,6 +22,9 @@ AMyPlayerController::AMyPlayerController()
 		TEXT("/Script/EnhancedInput.InputAction'/Game/Inputs/Actions/Interaction.Interaction'"));
 	static ConstructorHelpers::FObjectFinder<UInputAction> AC_Shoot(
 		TEXT("/Script/EnhancedInput.InputAction'/Game/Inputs/Actions/Shoot.Shoot'"));
+	static ConstructorHelpers::FObjectFinder<UInputAction> AC_DraggingRotate(
+		TEXT("/Script/EnhancedInput.InputAction'/Game/Inputs/Actions/DraggingRotate.DraggingRotate'"));
+	
 	static ConstructorHelpers::FObjectFinder<UInputMappingContext> IMC_Default_Mapping(
 		TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Inputs/Mappings/IMC_test.IMC_test'"));
 	static ConstructorHelpers::FObjectFinder<UInputMappingContext> IMC_Shoot_Mapping(
@@ -30,6 +33,7 @@ AMyPlayerController::AMyPlayerController()
 	MoveAction = AC_Move.Object;
 	InteractionAction = AC_Interaction.Object;
 	ShootAction = AC_Shoot.Object;
+	DraggingRotateAction = AC_DraggingRotate.Object;
 	DefaultMappingContext = IMC_Default_Mapping.Object;
 	CannonMappingContext = IMC_Shoot_Mapping.Object;
 
@@ -102,6 +106,13 @@ void AMyPlayerController::Tick(float DeltaSeconds)
 			}
 		}
 	}
+
+	// 키를 누르고 있으면 시간을 측정
+	if (bIsPressingKey)
+	{
+		PressDuration += GetWorld()->DeltaTimeSeconds;
+	}
+	
 }
 
 
@@ -114,7 +125,10 @@ void AMyPlayerController::SetupPlayerInputComponent(UInputComponent* PlayerInput
 	if (Input != nullptr)
 	{
 		Input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMyPlayerController::Move);
-		Input->BindAction(InteractionAction, ETriggerEvent::Started, this, &AMyPlayerController::Interaction);
+		Input->BindAction(InteractionAction, ETriggerEvent::Started, this, &AMyPlayerController::Interaction_Pressed);
+		Input->BindAction(InteractionAction, ETriggerEvent::Triggered, this, &AMyPlayerController::Interaction_Trigger);
+		Input->BindAction(InteractionAction, ETriggerEvent::Completed, this, &AMyPlayerController::Interaction_Released);
+		Input->BindAction(DraggingRotateAction, ETriggerEvent::Triggered, this, &AMyPlayerController::DraggingRotate);
 		Input->BindAction(ShootAction, ETriggerEvent::Started, this, &AMyPlayerController::Shoot);
 	}
 }
@@ -137,10 +151,70 @@ void AMyPlayerController::Interaction(const FInputActionInstance& Instance)
 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("Interaction"));
 		Player->SetTextWidgetVisible(!Player->GetTextWidgetVisible());
 		ViewChange();
-
-
 	}
 }
+
+void AMyPlayerController::Interaction_Pressed()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("Interaction start"));
+	bIsPressingKey = true;
+	PressDuration = 0.0f; // 타이머 리셋
+}
+
+void AMyPlayerController::Interaction_Trigger()
+{
+	if (Player->GetIsOverLap())
+	{
+		// 여기서 PressDuration을 사용하여 길게 누르고 있는지 판단하고, 원하는 로직 실행
+		if (PressDuration >= 3.0f) // 3초 넘게 누르면 DRAGGING 상태로 전환
+		{
+			//무언가를 끌고 있지 않을때만 끌기가 가능하게
+			if(Player->CurrentPlayerState == AMyCharacter::PlayerState::NONE)
+				Player->DragObject();
+
+			Player->SetPlayerState(AMyCharacter::PlayerState::DRAGGING);
+			
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("ing"));
+		}
+	}
+}
+
+
+void AMyPlayerController::Interaction_Released()
+{
+	bIsPressingKey = false;
+	if (Player->GetIsOverLap())
+	{
+		if (PressDuration < 3.0f) // 3초 안됐으면 그냥 상호작용
+		{
+			UE_LOG(LogTemp, Log, TEXT("interaction"));
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("Interaction"));
+			Player->SetTextWidgetVisible(!Player->GetTextWidgetVisible());
+			ViewChange();
+		}
+	
+		else
+		{
+			Player->SetPlayerState(AMyCharacter::PlayerState::NONE);
+			//이동하는 오브젝트 놔주는 함수
+			//다시 Ship의 자식으로
+			Player->DropObject(Ship);
+			
+		}
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("Interaction end"));
+	}
+}
+
+void AMyPlayerController::DraggingRotate(const FInputActionInstance& Instance)
+{
+	if(Player->CurrentPlayerState==AMyCharacter::PlayerState::DRAGGING)
+	{
+		FRotator NewRotation = FRotator(0.0f, Instance.GetValue().Get<float>(),0.0f);
+		Player->GetCurrentHitObject()->AddActorLocalRotation(NewRotation);
+	}
+}
+
+
 
 void AMyPlayerController::SetControlMode(ControlMode NewControlMode)
 {

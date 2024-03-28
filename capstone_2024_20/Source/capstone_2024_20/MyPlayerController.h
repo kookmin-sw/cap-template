@@ -49,6 +49,10 @@ private:
 	
 	UPROPERTY(Category=Input, VisibleAnywhere)
 	UInputAction* ShootAction;
+
+	UPROPERTY(Category=Input, VisibleAnywhere)
+	UInputAction* DraggingRotateAction;
+	
 public:
 	UPROPERTY(Category=UI, VisibleAnywhere)
 	class UWidgetComponent* TextWidget;
@@ -63,6 +67,19 @@ private:
 	UEnhancedInputLocalPlayerSubsystem* Subsystem;
 	UInputMappingContext* LastMappingContext;
 
+	
+	// 키를 누르고 있는지의 상태를 추적하는 변수
+	bool bIsPressingKey = false;
+
+	// 키를 누른 시점부터의 시간을 측정하기 위한 변수
+	float PressDuration = 0.0f;
+
+	void Interaction_Pressed();
+	void Interaction_Trigger();
+	void Interaction_Released();
+	void DraggingRotate(const FInputActionInstance& Instance);
+
+	
 public:
 	void Move(const FInputActionInstance& Instance);
     void Interaction(const FInputActionInstance& Instance);

@@ -125,4 +125,10 @@ public:
 	UFUNCTION()
 	void DestroyCannonBall();
 
+	UFUNCTION()
+	void DragObject();
+
+	UFUNCTION()
+	void DropObject(AActor* ship);
+
 };
