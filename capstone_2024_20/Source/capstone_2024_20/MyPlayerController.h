@@ -59,6 +59,7 @@ private:
 	AMyShip* Ship;
 	AMyCharacter* Player;
 	AMyCannon* Cannon;
+	UStaticMesh* CannonBall;
 	UEnhancedInputLocalPlayerSubsystem* Subsystem;
 	UInputMappingContext* LastMappingContext;
 
@@ -78,7 +79,8 @@ public:
 
 	UFUNCTION(Server, Reliable)
 	void ServerRPC_MoveShip_Rot(float newYaw, float speed);
-	
+
+
 protected:
 	
 	enum class ControlMode

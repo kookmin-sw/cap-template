@@ -73,3 +73,14 @@ void AMyCannon::MultiCastRPC_RotateCannon_Implementation(FRotator newRot)
 {
 	M_ShooterMesh->SetRelativeRotation(newRot);
 }
+
+bool AMyCannon::GetIsLoad()
+{
+	return IsLoad;
+}
+
+void AMyCannon::SetIsLoad(bool b)
+{
+	IsLoad = b;
+}
+

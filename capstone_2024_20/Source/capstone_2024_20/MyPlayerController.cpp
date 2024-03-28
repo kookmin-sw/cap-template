@@ -9,6 +9,8 @@
 #include "ShipControlStrategy.h"
 #include "Kismet/GameplayStatics.h"
 
+class AStaticMeshActor;
+
 AMyPlayerController::AMyPlayerController()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -35,6 +37,8 @@ AMyPlayerController::AMyPlayerController()
 
 	CurrentStrategy = new CharacterControlStrategy();
 }
+
+
 
 
 void AMyPlayerController::BeginPlay()
@@ -68,16 +72,12 @@ void AMyPlayerController::BeginPlay()
 		ControlledActor = Player;
 		if (Player->InputComponent)
 			SetupPlayerInputComponent(Player->InputComponent);
-
-		// else
-		// {
-		// 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("InputComponent NULL"));
-		// }
 	}
 	else
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Player NULL"));
 	}
+	
 }
 
 void AMyPlayerController::Tick(float DeltaSeconds)
@@ -139,16 +139,6 @@ void AMyPlayerController::Interaction(const FInputActionInstance& Instance)
 		ViewChange();
 
 
-		//스테이지 클리어 팝업 띄우기
-		// UUserWidget* PopUpWidget = CreateWidget<UUserWidget>(GetWorld(), ClearPopUpWidgetClass);
-		// if(PopUpWidget != nullptr)
-		// {
-		// 	PopUpWidget->AddToViewport();
-		// 	AMyPlayerController* PlayerController = Cast<AMyPlayerController>(Controller);
-		// 	PlayerController->bShowMouseCursor = true;
-		// 	FInputModeUIOnly InputMode;
-		// 	PlayerController->SetInputMode(InputMode);
-		// }
 	}
 }
 
@@ -197,16 +187,43 @@ void AMyPlayerController::ViewChange()
 		}
 		else if (Player->GetCurrentHitObjectName().Equals(TEXT("Cannon")))
 		{
-			// 현재 접근한 오브젝트가 "Cannon"이면, 컨트롤 모드를 CANNON으로 변경
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("ChangeMapping"));
+
+			// if 캐릭터 스테이트가 carrying이라면
+			if(Player->CurrentPlayerState == AMyCharacter::PlayerState::NONE)
+			{
+				// else None 이라면 아니면 (아무것도 들고 있지 않은 상태면 Cannon 조작으로
+				// 현재 접근한 오브젝트가 "Cannon"이면, 컨트롤 모드를 CANNON으로 변경
+				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("ChangeMapping"));
+				Subsystem->RemoveMappingContext(DefaultMappingContext);
+				Subsystem->AddMappingContext(CannonMappingContext, 0);
+				LastMappingContext = CannonMappingContext;
+				CurrentStrategy = new CannonControlStrategy();
+				ControlledActor = Player->GetCurrentHitObject();
+				Cannon = Cast<AMyCannon>(Player->GetCurrentHitObject());
+				SetControlMode(ControlMode::CANNON);
+			}
+			else if(Player->CurrentPlayerState == AMyCharacter::PlayerState::CARRYING)
+			{
+				//나중에 옮기는 오브젝트가 뭔지도 검사
+				//지금은 무조건 대포알로 간주
+
+				//대포 장전
+				Cannon = Cast<AMyCannon>(Player->GetCurrentHitObject());
+				Cannon->SetIsLoad(true);
+				Player->SetPlayerState(AMyCharacter::PlayerState::NONE);
+				Player->DestroyCannonBall();
+			}
+
 			
-			Subsystem->RemoveMappingContext(DefaultMappingContext);
-			Subsystem->AddMappingContext(CannonMappingContext, 0);
-			LastMappingContext = CannonMappingContext;
-			CurrentStrategy = new CannonControlStrategy();
-			ControlledActor = Player->GetCurrentHitObject();
-			Cannon = Cast<AMyCannon>(Player->GetCurrentHitObject());
-			SetControlMode(ControlMode::CANNON);
+		}
+		else if (Player->GetCurrentHitObjectName().Equals(TEXT("CannonBallBox")))
+		{
+			if(Player->CurrentPlayerState == AMyCharacter::PlayerState::NONE)
+			{
+				// 현재 접근한 오브젝트가 "CannonBallBox"면 캐논볼 생성
+				Player->SpawnCannonBall();
+				Player->SetPlayerState(AMyCharacter::PlayerState::CARRYING);
+			}
 		}
 		break;
 
@@ -223,11 +240,16 @@ void AMyPlayerController::ViewChange()
 	}
 }
 
+
+
+
 void AMyPlayerController::Shoot(const FInputActionInstance& Instance)
 {
-	if (IsLocalController())
+	//대포알이 장전됐을때만 발사 가능
+	if (IsLocalController() && Cannon->GetIsLoad())
 	{
 		ServerRPC_Shoot(Cannon);
+		Cannon->SetIsLoad(false);
 	}
 }
 
